@@ -55,16 +55,21 @@ The three job names are the required status checks. Do not rename them without u
 
 | Check | What it does | What it blocks |
 | --- | --- | --- |
-| `verify` | `pnpm install --frozen-lockfile`, `pnpm check` (Astro + TS), `pnpm test` (Vitest, `tests/unit` and `tests/ingest`), `pnpm build`; uploads `dist/` as an artifact | type errors, failing unit tests, a broken build, or a lockfile that is out of sync |
-| `e2e` | Downloads `dist/`, installs Chromium, runs Playwright (`tests/e2e`) against `pnpm preview`, in normal **and** reduced-motion modes | runtime page errors, an empty character grid, broken card → character page navigation, a spoiler switch that does not persist, and motion running under `prefers-reduced-motion` (the heading must not be split into letters) |
+| `verify` | `pnpm install --frozen-lockfile`, `pnpm check` (Astro + TS), `pnpm test` (Vitest, `tests/unit` and `tests/ingest`), `pnpm build`, `pnpm budgets`; uploads `dist/` as an artifact | type errors, failing unit tests, a broken build, a lockfile that is out of sync, or a route over its bundle budget |
+| `e2e` | Downloads `dist/`, installs Chromium, runs Playwright (`tests/e2e`) against `pnpm preview`, in normal **and** reduced-motion modes | runtime page errors, broken internal links (a crawl from `/`), spoiler leaks (hidden text, titles, search results), broken interactions (search, graph, takeover, scroll timeline), motion running under `prefers-reduced-motion`, and **axe accessibility violations** on every page template in light and dark |
 | `merge-order` | On PRs: checks base/head against the branching model. On `merge_group` and `push` it passes immediately so the required check is always satisfied | `main` ← anything but `stable`; `stable` ← anything but `develop`; `develop` ← `stable`/`main`; any PR whose base is another feature branch (unmerged stack) |
 
 Runs on the same PR cancel each other; pushes to long-lived branches never cancel.
 
+### Quality gates
+
+- **Bundle budgets** (`budgets.json`, checked by `scripts/check-budgets.mjs`): gzip KiB per route for HTML, CSS and JS, counting the page's scripts, island entry points and their static imports. Search (Pagefind) and dynamic imports load on demand and are not counted. Raise a number only with a reason in the PR.
+- **Accessibility** (`tests/e2e/a11y.spec.ts`): axe-core with the WCAG 2.0/2.1 A and AA rules plus best practices, on one page per template at the highest spoiler level (so every gated block is present), in both colour schemes, plus the default spoiler-hiding state, the spoiler wall and the open dialogs.
+
 Run the same checks locally:
 
 ```sh
-pnpm check && pnpm test && pnpm build
+pnpm check && pnpm test && pnpm build && pnpm budgets
 pnpm test:e2e      # serves dist/ with `pnpm preview`; needs `pnpm exec playwright install chromium` once
 ```
 
