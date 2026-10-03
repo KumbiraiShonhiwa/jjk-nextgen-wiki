@@ -18,6 +18,8 @@ interface Props {
 }
 const { level, as: Tag = 'span', scramble = false, silent = false, class: className } = Astro.props;
 const label = LEVEL_LABELS[level].short;
+// Inside a list the placeholder must be a list item too, or the list markup is invalid.
+const Placeholder = Tag === 'li' ? 'li' : 'span';
 // Search indexes a page at its own level, so text gated above it must stay out of the index.
 const unindexed = !isVisible(level, Astro.locals.pageLevel ?? 'none') ? 'all' : undefined;
 ---
@@ -33,7 +35,7 @@ const unindexed = !isVisible(level, Astro.locals.pageLevel ?? 'none') ? 'all' : 
         <slot />
       </Tag>
       {!silent && (
-        <span
+        <Placeholder
           data-redacted={level}
           data-pagefind-ignore="all"
           class="items-center gap-1.5 rounded-sm border border-dashed border-line px-2 py-0.5 align-middle text-step--1 text-paper-dim"
@@ -41,7 +43,7 @@ const unindexed = !isVisible(level, Astro.locals.pageLevel ?? 'none') ? 'all' : 
         >
           <span aria-hidden="true">▮▮▮</span>
           <span>{label} spoiler</span>
-        </span>
+        </Placeholder>
       )}
     </>
   )

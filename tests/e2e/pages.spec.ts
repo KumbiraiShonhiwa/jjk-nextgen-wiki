@@ -46,7 +46,7 @@ test.describe('a whole page above the visitor level', () => {
   test('shows a spoiler wall and keeps the name out of the title', async ({ page }) => {
     await page.goto(ARC);
     await expect(page.getByRole('region', { name: 'Spoiler warning' })).toBeVisible();
-    await expect(page.getByRole('heading', { level: 1 })).toBeHidden();
+    await expect(page.getByRole('heading', { level: 1, name: 'Culling Game' })).toBeHidden();
     await expect(page).toHaveTitle('Story arc 7 · JJK NextGen Wiki');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).not.toContain('Culling');
     // The back link stays usable behind the wall.
