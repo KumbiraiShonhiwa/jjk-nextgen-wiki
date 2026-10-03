@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Badge from '../../components/Badge.astro';
 import EntityCard from '../../components/EntityCard.astro';
+import CharacterArt from '../../components/CharacterArt.astro';
 import Gated from '../../components/Gated.astro';
 import GatedText from '../../components/GatedText.astro';
 import EntityHeader from '../../components/EntityHeader.astro';
@@ -92,6 +93,7 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
         </div>
 
         <aside aria-labelledby="connections">
+          <CharacterArt character={c} eager class="mb-8 max-w-xs" />
           {
             connections.length > 0 && (
               <>

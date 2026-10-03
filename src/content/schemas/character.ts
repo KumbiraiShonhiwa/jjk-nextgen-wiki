@@ -3,6 +3,15 @@ import { gated, grade, provenance, slug, spoilerLevel } from './common';
 
 export const SPECIES = ['human', 'cursed-spirit', 'vessel', 'incarnated-sorcerer', 'cursed-womb', 'shikigami', 'other'] as const;
 
+/** AI-generated portrait, written by `pnpm art`. Always shown with an "AI-generated" label. */
+export const characterArt = z.object({
+  src: z.string().regex(/^\/art\/[a-z0-9-]+\.(webp|png|jpg)$/),
+  alt: z.string().min(1),
+  model: z.string().min(1),
+  prompt: z.string().min(1),
+  generatedAt: z.string(),
+});
+
 export const character = z.object({
   slug,
   level: spoilerLevel.default('none'),
@@ -17,6 +26,7 @@ export const character = z.object({
   domain: slug.optional(),
   /** Our own theming colour, not from the source. */
   accent: z.string().regex(/^#[0-9a-f]{6}$/i).optional(),
+  art: characterArt.optional(),
   /** Hand-written placeholder until the scraper produces real records. */
   fixture: z.boolean().default(false),
   provenance: z.array(provenance).default([]),
