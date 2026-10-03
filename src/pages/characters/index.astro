@@ -4,19 +4,85 @@ import EntityCard from '../../components/EntityCard.astro';
 import { loadIndex } from '../../lib/content';
 import { characterMeta } from '../../lib/format';
 
-const characters = [...(await loadIndex()).characters.values()].sort((a, b) => a.name.en.localeCompare(b.name.en));
+const ix = await loadIndex();
+const characters = [...ix.characters.values()].sort((a, b) => a.name.en.localeCompare(b.name.en));
+const orgs = [...ix.organizations.values()].filter((o) => characters.some((c) => c.affiliations.includes(o.slug)));
+const levelAttr = (level: string) => (level === 'none' ? undefined : level);
 ---
 
 <Base title="Characters" description="Every character in the Jujutsu Kaisen encyclopedia, with spoilers kept behind your chosen level.">
   <section data-cascade class="py-12">
     <h1 class="font-display text-step-5 leading-none">Characters</h1>
     <p class="mt-3 text-step--1 text-paper-dim">{characters.length} characters</p>
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <fieldset class="mt-6">
+      <legend class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">Affiliation</legend>
+      <div class="mt-2 flex flex-wrap gap-2" data-grid-filters>
+        <button type="button" data-filter="" aria-pressed="true" class="chip">Everyone</button>
+        {
+          orgs.map((o) => (
+            <button type="button" data-filter={o.slug} aria-pressed="false" class="chip" data-level={levelAttr(o.level)}>
+              {o.name.en}
+            </button>
+          ))
+        }
+      </div>
+    </fieldset>
+    <div data-grid class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
         characters.map((c) => (
-          <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={c.level} redact />
+          <div data-grid-item data-orgs={c.affiliations.join(' ')}>
+            <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={c.level} redact />
+          </div>
         ))
       }
     </div>
   </section>
 </Base>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: var(--step--1);
+    color: var(--paper-dim);
+    transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+  }
+  .chip[aria-pressed='true'] {
+    color: var(--paper);
+    border-color: var(--ce-blue);
+    background: color-mix(in oklab, var(--ce-blue) 14%, transparent);
+  }
+  [data-grid-item][hidden] {
+    display: none;
+  }
+</style>
+
+<script>
+  import { gridReflow, motionScope } from '../../motion';
+
+  function setup(grid: HTMLElement) {
+    const buttons = [...document.querySelectorAll<HTMLButtonElement>('[data-grid-filters] [data-filter]')];
+    motionScope(grid, ({ reduced }) => {
+      const reflow = gridReflow(grid, reduced);
+      const onClick = (e: Event) => {
+        const btn = e.currentTarget as HTMLButtonElement;
+        const org = btn.dataset.filter!;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        reflow.filter((el) => !org || el.dataset.orgs!.split(' ').includes(org));
+      };
+      buttons.forEach((b) => b.addEventListener('click', onClick));
+      return () => {
+        buttons.forEach((b) => b.removeEventListener('click', onClick));
+        reflow.revert();
+      };
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const grid = document.querySelector<HTMLElement>('[data-grid]');
+    if (grid) setup(grid);
+  });
+</script>
