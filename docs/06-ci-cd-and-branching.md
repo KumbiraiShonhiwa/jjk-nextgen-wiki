@@ -120,3 +120,11 @@ Rulesets are kept as JSON, one per branch, in `.github/rulesets/`, so they can b
 - Allowed merge method: merge commit only
 - No force pushes, no deletion
 - All conversations must be resolved
+
+## One-time repository setup
+
+Import the rulesets only after this pipeline is on `develop`; until then the required checks don't exist and every PR would be blocked.
+
+1. *Settings → General*: default branch `develop`; tick **Automatically delete head branches** and **Allow auto-merge**; untick **Allow rebase merging**.
+2. *Settings → Rules → Rulesets → New ruleset → Import a ruleset*: import `develop.json`, `stable.json` and `main.json` from `.github/rulesets/`.
+3. Optional: add `PROMOTE_TOKEN`, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` under *Settings → Secrets and variables → Actions*.
