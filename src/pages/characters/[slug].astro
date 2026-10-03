@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('characters');
+  return entries.map((e) => ({ params: { slug: e.data.slug }, props: { character: e.data } }));
+}
+
+const { character: c } = Astro.props;
+---
+
+<Base title={c.name.en} description={c.summary.find((s) => s.level === 'none')?.value}>
+  <article class="py-16" style={`--accent:${c.accent ?? 'var(--ce-blue)'}`}>
+    <a href="/characters" class="text-sm text-paper-dim hover:text-paper">← Characters</a>
+    <h1 data-kinetic class="mt-6 font-display text-6xl md:text-7xl">{c.name.en}</h1>
+    {c.name.ja && <p class="mt-2 text-paper-dim" lang="ja">{c.name.ja}</p>}
+    <div class="mt-10 max-w-2xl space-y-4 text-lg leading-relaxed">
+      {c.summary.map((s) => <p data-level={s.level}>{s.value}</p>)}
+    </div>
+    {c.fixture && (
+      <p class="mt-10 text-xs text-paper-dim">Placeholder entry; the content pipeline will replace it with sourced text.</p>
+    )}
+  </article>
+</Base>
+
+<script>
+  import { motionScope, kineticHeading } from '../../motion';
+
+  document.addEventListener('astro:page-load', () => {
+    const heading = document.querySelector<HTMLElement>('[data-kinetic]');
+    if (heading) motionScope(heading, ({ reduced }) => void (!reduced && kineticHeading(heading)));
+  });
+</script>

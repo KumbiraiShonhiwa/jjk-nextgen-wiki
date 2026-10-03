@@ -1,0 +1,25 @@
+---
+/** Original line-art sigil (no source artwork). Drawn stroke by stroke with Anime.js createDrawable. */
+interface Props { class?: string }
+const { class: className = '' } = Astro.props;
+---
+
+<svg
+  data-sigil
+  class={className}
+  viewBox="0 0 200 200"
+  fill="none"
+  stroke="var(--ce-blue)"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  role="img"
+  aria-label="Cursed seal"
+>
+  <circle cx="100" cy="100" r="88"></circle>
+  <circle cx="100" cy="100" r="62"></circle>
+  <path d="M100 12 L176 144 L24 144 Z"></path>
+  <path d="M100 188 L24 56 L176 56 Z"></path>
+  <path d="M100 52 C 120 80, 120 120, 100 148 C 80 120, 80 80, 100 52 Z" stroke="var(--ce-violet)"></path>
+  <line x1="100" y1="2" x2="100" y2="198" stroke-opacity="0.4"></line>
+  <line x1="2" y1="100" x2="198" y2="100" stroke-opacity="0.4"></line>
+</svg>

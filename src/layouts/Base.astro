@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import SpoilerControl from '../components/SpoilerControl.svelte';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'An unofficial, motion-first Jujutsu Kaisen encyclopedia.' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · JJK NextGen Wiki</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Zen+Antique&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      document.documentElement.classList.add('js-motion');
+    </script>
+    <ClientRouter />
+  </head>
+  <body class="min-h-dvh bg-ink text-paper antialiased">
+    <header class="sticky top-0 z-10 border-b border-line bg-ink/80 backdrop-blur">
+      <nav class="mx-auto flex max-w-6xl items-center gap-6 px-4 py-3">
+        <a href="/" class="font-display text-lg tracking-wide">呪術 · NextGen</a>
+        <a href="/characters" class="text-sm text-paper-dim hover:text-paper">Characters</a>
+        <div class="ml-auto"><SpoilerControl client:idle /></div>
+      </nav>
+    </header>
+    <main class="mx-auto max-w-6xl px-4">
+      <slot />
+    </main>
+    <footer class="mx-auto mt-24 max-w-6xl border-t border-line px-4 py-8 text-xs text-paper-dim">
+      Unofficial fan project. Jujutsu Kaisen © Gege Akutami / Shueisha, MAPPA. Text adapted from Wikipedia and the
+      Jujutsu Kaisen Wiki under <a class="underline" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Sigil from '../components/Sigil.astro';
+import CharacterCard from '../components/CharacterCard.astro';
+
+const characters = (await getCollection('characters')).map((e) => e.data);
+---
+
+<Base title="Home">
+  <section data-hero class="grid min-h-[80dvh] items-center gap-10 py-16 md:grid-cols-[1.2fr_1fr]">
+    <div>
+      <p class="text-xs uppercase tracking-[0.3em] text-ce-blue">Unofficial encyclopedia</p>
+      <h1 data-kinetic class="mt-4 font-display text-6xl leading-none md:text-8xl">Jujutsu Kaisen</h1>
+      <p class="mt-6 max-w-md text-paper-dim">
+        Characters, cursed techniques and arcs, with spoilers kept behind the level you choose.
+      </p>
+    </div>
+    <Sigil class="mx-auto w-64 md:w-80" />
+  </section>
+
+  <section data-cascade class="py-12">
+    <h2 class="font-display text-3xl">Characters</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {characters.map((c) => <CharacterCard character={c} />)}
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { motionScope, kineticHeading, drawSigil, revealCascade, showAll } from '../motion';
+
+  function init() {
+    const hero = document.querySelector<HTMLElement>('[data-hero]');
+    const cascade = document.querySelector<HTMLElement>('[data-cascade]');
+    if (hero) {
+      motionScope(hero, ({ reduced }) => {
+        if (reduced) return;
+        const heading = hero.querySelector<HTMLElement>('[data-kinetic]');
+        const sigil = hero.querySelector<SVGSVGElement>('[data-sigil]');
+        if (heading) kineticHeading(heading);
+        if (sigil) drawSigil(sigil);
+      });
+    }
+    if (cascade) {
+      motionScope(cascade, ({ reduced }) => (reduced ? showAll(cascade) : void revealCascade(cascade)));
+    }
+  }
+
+  document.addEventListener('astro:page-load', init);
+</script>

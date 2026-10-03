@@ -1,0 +1,9 @@
+{
+  "slug": "kugisaki-nobara",
+  "name": { "en": "Nobara Kugisaki", "ja": "釘崎 野薔薇" },
+  "summary": [{ "value": "A first-year student at Tokyo Jujutsu High who fights with a hammer and nails.", "level": "none" }],
+  "grade": [{ "value": "3", "level": "none" }],
+  "affiliations": ["tokyo-jujutsu-high"],
+  "accent": "#ff7ab6",
+  "fixture": true
+}

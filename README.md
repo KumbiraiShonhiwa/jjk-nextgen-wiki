@@ -21,3 +21,17 @@ Foundation phase. See [`docs/`](docs/):
 - **Code** is released under the [MIT licence](LICENSE).
 - **Content** in `content/` and text rendered on the site is adapted from English Wikipedia and the Jujutsu Kaisen Fandom wiki and released under [CC BY-SA 4.0](content/LICENSE). Each page credits its source article and authors.
 - No images from either wiki are used.
+
+## Development
+
+Requires Node 22.12+ and pnpm 10.
+
+```sh
+pnpm install
+pnpm dev      # http://localhost:4321
+pnpm check    # Astro + TypeScript diagnostics
+pnpm test     # unit tests (Vitest)
+pnpm build    # static site in dist/
+```
+
+Animations live in `src/motion/` (Anime.js 4.5 presets, tokens and reduced-motion handling). Pages call presets such as `kineticHeading`, `drawSigil` and `revealCascade` inside `motionScope`, which reverts everything on page change.
