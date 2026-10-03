@@ -25,7 +25,7 @@ export function rewriteHtml(html, file) {
   // Client-side navigation swaps documents, which breaks relative URLs at different depths; use full page loads.
   const plain = html
     .replace(/<meta name="astro-view-transitions-[a-z]+" content="[^"]*">/g, '')
-    .replace(/<script[^>]*ClientRouter[^>]*><\/script>/g, '');
+    .replace(/<script\b[^>]*ClientRouter[^>]*>\s*<\/script\s*>/gi, '');
   const out = plain.replace(new RegExp(`(\\s(?:${ATTRS})=")(/[^"]*)"`, 'g'), (_, pre, url) => `${pre}${relativeTarget(file, url)}"`);
   return out.replace(/<html\b([^>]*)>/i, (_, attrs) => `<html${attrs} data-root="${root}" data-index="${INDEX}">`);
 }
