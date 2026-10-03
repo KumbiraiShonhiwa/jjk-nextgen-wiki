@@ -3,4 +3,5 @@ export * from './reduced';
 export * from './scope';
 export * from './presets';
 export * from './interactions';
+export * from './domain';
 export * from './graph';
