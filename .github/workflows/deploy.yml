@@ -1,5 +1,9 @@
 # Deploys the live site (main) to Cloudflare Pages. Skips cleanly when the
 # Cloudflare secrets are not configured.
+#
+# Security: this workflow only triggers on push to main (never pull_request or
+# pull_request_target), so secrets are never exposed to PR-supplied code. Dependencies are
+# installed with --ignore-scripts (the build needs no lifecycle scripts).
 name: Deploy
 
 on:
@@ -32,21 +36,23 @@ jobs:
           fi
 
       - if: steps.secrets.outputs.enabled == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
       - if: steps.secrets.outputs.enabled == 'true'
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
       - if: steps.secrets.outputs.enabled == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: .nvmrc
           cache: pnpm
       - if: steps.secrets.outputs.enabled == 'true'
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
       - if: steps.secrets.outputs.enabled == 'true'
         run: pnpm build
       - name: Deploy to Cloudflare Pages
         if: steps.secrets.outputs.enabled == 'true'
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3.15.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

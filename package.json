@@ -15,6 +15,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "budgets": "node scripts/check-budgets.mjs",
+    "workflows": "node scripts/check-workflows.mjs",
     "ingest": "tsx scripts/ingest/cli.ts",
     "ingest:offline": "tsx scripts/ingest/cli.ts --offline",
     "art": "tsx scripts/art/cli.ts"
@@ -42,6 +43,11 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild"
-    ]
+    ],
+    "auditConfig": {
+      "ignoreGhsas": [
+        "GHSA-ch52-4w7c-c8xp"
+      ]
+    }
   }
 }

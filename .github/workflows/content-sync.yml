@@ -25,8 +25,7 @@ on:
         type: string
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: content-sync
@@ -36,20 +35,25 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    # Least privilege: only this job writes (content/sync branch and the PR).
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: develop
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+          persist-credentials: false
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: .nvmrc
           cache: pnpm
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile --ignore-scripts
 
       # Raw API responses. Revision content is immutable, so a warm cache saves requests.
       - name: Restore API cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: .cache/raw
           key: ingest-raw-${{ github.run_id }}
@@ -84,7 +88,7 @@ jobs:
 
       - name: Upload report
         if: always() && steps.report.outputs.path != ''
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ingest-report
           path: ${{ steps.report.outputs.path }}
@@ -129,7 +133,7 @@ jobs:
       - name: Open or update the sync PR
         if: steps.diff.outputs.changed == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
         with:
           token: ${{ secrets.PROMOTE_TOKEN || secrets.GITHUB_TOKEN }}
           base: develop
