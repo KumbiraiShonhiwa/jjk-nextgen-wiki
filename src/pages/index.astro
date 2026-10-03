@@ -1,10 +1,12 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Sigil from '../components/Sigil.astro';
 import CharacterCard from '../components/CharacterCard.astro';
 
-const characters = (await getCollection('characters')).map((e) => e.data);
+import { loadIndex } from '../lib/content';
+
+const ix = await loadIndex();
+const characters = [...ix.characters.values()].filter((c) => c.level === 'none');
 ---
 
 <Base title="Home">

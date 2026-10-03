@@ -1,0 +1,15 @@
+{
+  "slug": "zenin-clan",
+  "name": {
+    "en": "Zenin Clan",
+    "ja": "禪院家"
+  },
+  "kind": "clan",
+  "summary": [
+    {
+      "value": "One of the three great sorcerer families, whose inherited techniques include the Ten Shadows.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

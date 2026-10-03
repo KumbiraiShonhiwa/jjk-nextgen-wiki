@@ -1,9 +1,10 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import CharacterCard from '../../components/CharacterCard.astro';
 
-const characters = (await getCollection('characters')).map((e) => e.data).sort((a, b) => a.name.en.localeCompare(b.name.en));
+import { loadIndex } from '../../lib/content';
+
+const characters = [...(await loadIndex()).characters.values()].sort((a, b) => a.name.en.localeCompare(b.name.en));
 ---
 
 <Base title="Characters">
