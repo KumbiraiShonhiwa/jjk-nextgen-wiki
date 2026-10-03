@@ -1,8 +1,8 @@
 {
-  "slug": "fushiguro-megumi",
+  "slug": "inumaki-toge",
   "name": {
-    "en": "Megumi Fushiguro",
-    "ja": "伏黒 恵"
+    "en": "Toge Inumaki",
+    "ja": "狗巻 棘"
   },
   "species": [
     {
@@ -12,7 +12,7 @@
   ],
   "grade": [
     {
-      "value": "2",
+      "value": "semi-1",
       "level": "none"
     }
   ],
@@ -20,13 +20,12 @@
     "tokyo-jujutsu-high"
   ],
   "techniques": [
-    "ten-shadows"
+    "cursed-speech"
   ],
-  "domain": "chimera-shadow-garden",
-  "accent": "#5b8cff",
+  "accent": "#b9c2d0",
   "summary": [
     {
-      "value": "A first-year student at Tokyo Jujutsu High who fights by summoning shikigami from shadows.",
+      "value": "A second-year student at Tokyo Jujutsu High who speaks only in rice ball ingredients to keep his cursed speech in check.",
       "level": "none"
     }
   ],
