@@ -9,6 +9,11 @@ import { durations, eases, staggers } from './tokens';
 /** Kinetic heading: characters rise out of an ink baseline, centre first. */
 export function kineticHeading(el: HTMLElement): Timeline {
   const { chars } = splitText(el, { chars: { wrap: 'clip' } });
+  // The clip wrapper is as tall as the line box; with tight leading it shears descenders (j, p, g). Grow it downwards without moving the text.
+  for (const c of chars) {
+    const wrap = c.parentElement;
+    if (wrap) Object.assign(wrap.style, { paddingBottom: '0.25em', marginBottom: '-0.25em' });
+  }
   return createTimeline().add(chars, {
     y: ['110%', '0%'],
     rotate: [8, 0],
