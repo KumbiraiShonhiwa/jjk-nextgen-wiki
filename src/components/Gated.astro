@@ -1,0 +1,44 @@
+---
+/**
+ * Renders content gated at a spoiler level. All levels ship in the HTML; global CSS hides what is
+ * above the visitor's setting and shows the redacted placeholder instead (docs/04, docs/07).
+ */
+import type { SpoilerLevel } from '../content/schemas';
+import { LEVEL_LABELS } from '../lib/spoiler';
+
+interface Props {
+  level: SpoilerLevel;
+  as?: 'span' | 'div' | 'p' | 'li' | 'section';
+  /** Scramble the text in when revealed (short text only). */
+  scramble?: boolean;
+  /** Hide the placeholder entirely (e.g. inside lists where an empty slot is better). */
+  silent?: boolean;
+  class?: string;
+}
+const { level, as: Tag = 'span', scramble = false, silent = false, class: className } = Astro.props;
+const label = LEVEL_LABELS[level].short;
+---
+
+{
+  level === 'none' ? (
+    <Tag class={className}>
+      <slot />
+    </Tag>
+  ) : (
+    <>
+      <Tag class={className} data-level={level} data-scramble={scramble ? '' : undefined}>
+        <slot />
+      </Tag>
+      {!silent && (
+        <span
+          data-redacted={level}
+          class="items-center gap-1.5 rounded-sm border border-dashed border-line px-2 py-0.5 align-middle text-step--1 text-paper-dim"
+          title={`Hidden: ${LEVEL_LABELS[level].long} spoiler. Raise your spoiler level to see it.`}
+        >
+          <span aria-hidden="true">▮▮▮</span>
+          <span>{label} spoiler</span>
+        </span>
+      )}
+    </>
+  )
+}
