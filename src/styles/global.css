@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+/* Latin subsets only: the Japanese slices add ~120 @font-face rules (60 KiB of CSS). Japanese falls back to a system Mincho. */
+@import '@fontsource/zen-antique/latin-400.css';
+@import '@fontsource/zen-antique/latin-ext-400.css';
+
+/*
+ * Design tokens (docs/07-design-system.md).
+ * Defined once as CSS custom properties so Tailwind utilities, components and Anime.js
+ * (which can animate to `var(--token)`) all read the same source.
+ * Dark "ink" is the default; light "paper" follows the OS unless the visitor picks a theme.
+ */
+:root {
+  color-scheme: dark;
+  /* Surfaces */
+  --ink: #0b0b10;
+  --ink-2: #13131b;
+  --ink-3: #1c1c28;
+  --line: #2a2a38;
+  /* Text */
+  --paper: #f3efe6;
+  --paper-dim: #a9a49a;
+  /* Cursed energy */
+  --ce-blue: #5b8cff;
+  --ce-violet: #9b6bff;
+  --ce-red: #e5484d;
+  --ce-glow: color-mix(in oklab, var(--ce-blue) 55%, transparent);
+  /* Status */
+  --ok: #3fbf8f;
+  --warn: #e7b14a;
+
+  /* Type scale (1.25 modular, fluid at the top end) */
+  --step--1: 0.8rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.563rem;
+  --step-3: clamp(1.75rem, 1.4rem + 1.6vw, 2.441rem);
+  --step-4: clamp(2.2rem, 1.6rem + 3vw, 3.815rem);
+  --step-5: clamp(2.8rem, 1.8rem + 5vw, 5.96rem);
+
+  /* Radius and elevation */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-1: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-glow: 0 0 0 1px var(--ce-glow), 0 0 32px -8px var(--ce-glow);
+
+  /* Motion (mirrors src/motion/tokens.ts) */
+  --dur-xs: 120ms;
+  --dur-sm: 240ms;
+  --dur-md: 480ms;
+  --dur-lg: 900ms;
+  --ease-enter: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+    --ink: #f6f3ec;
+    --ink-2: #ece7dc;
+    --ink-3: #e2dccf;
+    --line: #d3ccbd;
+    --paper: #121218;
+    --paper-dim: #55514a;
+    --ce-blue: #2f5fe0;
+    --ce-violet: #6a3fe0;
+    --ce-red: #c4282e;
+    --shadow-1: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 8px 24px -14px rgb(0 0 0 / 0.25);
+  }
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-paper-dim: var(--paper-dim);
+  --color-ce-blue: var(--ce-blue);
+  --color-ce-violet: var(--ce-violet);
+  --color-ce-red: var(--ce-red);
+  --font-display: 'Zen Antique', 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+  --font-body: 'Inter Variable', system-ui, sans-serif;
+  --text-step--1: var(--step--1);
+  --text-step-0: var(--step-0);
+  --text-step-1: var(--step-1);
+  --text-step-2: var(--step-2);
+  --text-step-3: var(--step-3);
+  --text-step-4: var(--step-4);
+  --text-step-5: var(--step-5);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+html {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-feature-settings: 'cv11', 'ss01';
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--ce-blue) 40%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ce-blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Paper grain over the ink background: a tiny inline SVG noise, no network request. */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Cascade items start hidden only when JS and motion are available; Base.astro animates them in. */
+.js-motion [data-cascade] [data-reveal] {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-motion [data-cascade] [data-reveal] {
+    opacity: 1;
+  }
+}
+
+/*
+ * Spoiler gating (docs/04). Every level is rendered server-side; CSS hides what is above the
+ * visitor's level before first paint (html[data-spoiler] is set by an inline head script).
+ * Without JS the default is anime-s1. [data-redacted] placeholders appear in place of hidden content.
+ */
+[data-redacted] {
+  display: none;
+}
+html:not([data-spoiler]) [data-level='anime-s2'],
+html:not([data-spoiler]) [data-level='anime-s3'],
+html:not([data-spoiler]) [data-level='manga'] {
+  display: none !important;
+}
+html:not([data-spoiler]) [data-redacted='anime-s2'],
+html:not([data-spoiler]) [data-redacted='anime-s3'],
+html:not([data-spoiler]) [data-redacted='manga'] {
+  display: var(--redacted-display, inline-flex);
+}
+html[data-spoiler='anime-s1'] [data-level='anime-s2'],
+html[data-spoiler='anime-s1'] [data-level='anime-s3'],
+html[data-spoiler='anime-s1'] [data-level='manga'] {
+  display: none !important;
+}
+html[data-spoiler='anime-s1'] [data-redacted='anime-s2'],
+html[data-spoiler='anime-s1'] [data-redacted='anime-s3'],
+html[data-spoiler='anime-s1'] [data-redacted='manga'] {
+  display: var(--redacted-display, inline-flex);
+}
+html[data-spoiler='anime-s2'] [data-level='anime-s3'],
+html[data-spoiler='anime-s2'] [data-level='manga'] {
+  display: none !important;
+}
+html[data-spoiler='anime-s2'] [data-redacted='anime-s3'],
+html[data-spoiler='anime-s2'] [data-redacted='manga'] {
+  display: var(--redacted-display, inline-flex);
+}
+html[data-spoiler='anime-s3'] [data-level='manga'] {
+  display: none !important;
+}
+html[data-spoiler='anime-s3'] [data-redacted='manga'] {
+  display: var(--redacted-display, inline-flex);
+}

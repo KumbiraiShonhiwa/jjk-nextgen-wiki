@@ -1,0 +1,45 @@
+{
+  "slug": "shibuya-incident",
+  "name": "Shibuya Incident",
+  "order": 6,
+  "level": "anime-s2",
+  "summary": [
+    {
+      "value": "A large-scale attack in Shibuya on Halloween pulls every sorcerer into the city.",
+      "level": "anime-s2"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "fushiguro-megumi",
+    "kugisaki-nobara",
+    "gojo-satoru",
+    "nanami-kento",
+    "mahito",
+    "ryomen-sukuna"
+  ],
+  "locations": [
+    "shibuya"
+  ],
+  "fixture": true,
+  "chapters": [
+    79,
+    136
+  ],
+  "episodes": [
+    2,
+    6,
+    23
+  ],
+  "events": [
+    {
+      "title": "A curtain falls over Shibuya",
+      "detail": "Civilians are trapped inside a barrier on Halloween night.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "Sorcerers split up to reach the station",
+      "level": "anime-s2"
+    }
+  ]
+}

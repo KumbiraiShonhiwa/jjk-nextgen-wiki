@@ -1,0 +1,299 @@
+---
+import Base from '../layouts/Base.astro';
+import { loadIndex } from '../lib/content';
+import { relationshipGraph } from '../lib/graph';
+import { forceLayout } from '../lib/layout';
+import { hrefFor } from '../lib/routes';
+import { titleCase } from '../lib/format';
+import { GRAPH_VIEW } from '../motion/graph';
+import { LEVEL_LABELS } from '../lib/spoiler';
+
+const ix = await loadIndex();
+const { nodes, links } = relationshipGraph(ix);
+const pos = forceLayout(
+  nodes.map((n) => n.slug),
+  links.map((l) => [l.from, l.to] as [string, string]),
+  { ...GRAPH_VIEW, padding: 70 },
+);
+const kinds = [...new Set(links.map((l) => l.kind))].sort();
+const orgs = [...ix.organizations.values()].filter((o) => nodes.some((n) => n.affiliations.includes(o.slug)));
+const at = (slug: string) => pos.get(slug)!;
+const levelAttr = (level: string) => (level === 'none' ? undefined : level);
+const name = (slug: string) => ix.characters.get(slug)!.name.en;
+---
+
+<Base title="Relationship graph" description="How the characters of Jujutsu Kaisen are connected, filtered to your spoiler level.">
+  <section class="py-12">
+    <h1 data-kinetic class="font-display text-step-5 leading-none">Relationship graph</h1>
+    <p class="mt-3 max-w-prose text-paper-dim">
+      Drag a character to pull on their connections. Select one to open their page. People and relationships past your spoiler level stay hidden.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-x-8 gap-y-4" data-graph-filters>
+      <fieldset>
+        <legend class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">Relationships</legend>
+        <div class="mt-2 flex flex-wrap gap-2">
+          {
+            kinds.map((k) => (
+              <button type="button" data-kind-toggle={k} aria-pressed="true" class="chip">
+                <span class={`swatch kind-${k}`} aria-hidden="true" />
+                {titleCase(k)}
+              </button>
+            ))
+          }
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">Highlight</legend>
+        <div class="mt-2 flex flex-wrap gap-2">
+          {
+            orgs.map((o) => (
+              <button type="button" data-org-toggle={o.slug} aria-pressed="false" class="chip" data-level={levelAttr(o.level)}>
+                {o.name.en}
+              </button>
+            ))
+          }
+        </div>
+      </fieldset>
+    </div>
+
+    <div class="mt-6 overflow-x-auto rounded-lg border border-line bg-ink-2">
+      <div data-graph data-intro class="relative aspect-[1000/640] min-w-[44rem] touch-none select-none">
+        <svg class="absolute inset-0 size-full" viewBox={`0 0 ${GRAPH_VIEW.width} ${GRAPH_VIEW.height}`} preserveAspectRatio="none" aria-hidden="true">
+          {
+            links.map((l) => (
+              <line
+                data-from={l.from}
+                data-to={l.to}
+                data-kind={l.kind}
+                data-level={levelAttr(l.level)}
+                class={`edge kind-${l.kind}`}
+                x1={at(l.from).x}
+                y1={at(l.from).y}
+                x2={at(l.to).x}
+                y2={at(l.to).y}
+                vector-effect="non-scaling-stroke"
+              />
+            ))
+          }
+        </svg>
+        {
+          nodes.map((n) => {
+            const p = at(n.slug);
+            return (
+              <a
+                href={hrefFor('characters', n.slug)}
+                data-node={n.slug}
+                draggable="false"
+                data-orgs={n.affiliations.join(' ')}
+                data-level={levelAttr(n.level)}
+                class="graph-node absolute -translate-x-1/2 -translate-y-1/2"
+                style={`left:${(p.x / GRAPH_VIEW.width) * 100}%;top:${(p.y / GRAPH_VIEW.height) * 100}%;--accent:${n.accent ?? 'var(--ce-blue)'}`}
+              >
+                <span data-follow class="block">
+                  <span data-drag class="flex flex-col items-center gap-1.5">
+                    <span data-dot class="dot" />
+                    <span class="label">{n.label}</span>
+                  </span>
+                </span>
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+
+    <details class="mt-10">
+      <summary class="cursor-pointer font-display text-step-2">All connections as a list</summary>
+      <table class="mt-4 w-full max-w-3xl text-left">
+        <thead class="text-step--1 uppercase tracking-[0.14em] text-paper-dim">
+          <tr><th class="py-2 pr-4 font-normal">From</th><th class="py-2 pr-4 font-normal">Relationship</th><th class="py-2 font-normal">To</th></tr>
+        </thead>
+        <tbody>
+          {
+            links.map((l) => (
+              <tr data-level={levelAttr(l.level)} class="border-t border-line">
+                <td class="py-2 pr-4"><a class="underline" href={hrefFor('characters', l.from)}>{name(l.from)}</a></td>
+                <td class="py-2 pr-4 text-paper-dim">{l.label}</td>
+                <td class="py-2"><a class="underline" href={hrefFor('characters', l.to)}>{name(l.to)}</a></td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <p class="mt-3 text-step--1 text-paper-dim">Rows past your level ({LEVEL_LABELS['anime-s1'].short} by default) are hidden.</p>
+    </details>
+  </section>
+</Base>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.2rem 0.75rem;
+    font-size: var(--step--1);
+    color: var(--paper-dim);
+    transition: border-color 0.2s, color 0.2s, background-color 0.2s;
+  }
+  .chip[aria-pressed='true'] {
+    color: var(--paper);
+    border-color: var(--ce-blue);
+    background: color-mix(in oklab, var(--ce-blue) 14%, transparent);
+  }
+  .swatch {
+    width: 0.9rem;
+    height: 2px;
+    background: var(--edge-color);
+  }
+
+  .kind-teacher-student { --edge-color: var(--ce-blue); }
+  .kind-classmate { --edge-color: var(--paper-dim); }
+  .kind-ally { --edge-color: #6ee7b7; }
+  .kind-family { --edge-color: #fbbf24; }
+  .kind-rival { --edge-color: var(--ce-violet); }
+  .kind-enemy { --edge-color: var(--ce-red); }
+  .kind-vessel-of { --edge-color: #f472b6; }
+  .kind-member-of { --edge-color: var(--line); }
+
+  .edge {
+    stroke: var(--edge-color);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .edge[data-off] {
+    display: none;
+  }
+
+  .graph-node {
+    display: block;
+    outline: none;
+    touch-action: none;
+  }
+  .dot {
+    display: block;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 20%, transparent), 0 0 18px -2px var(--accent);
+    transition: transform 0.2s;
+  }
+  .label {
+    white-space: nowrap;
+    border-radius: 4px;
+    padding: 0.05rem 0.4rem;
+    font-size: var(--step--1);
+    background: color-mix(in oklab, var(--ink) 75%, transparent);
+  }
+  .graph-node:hover .dot,
+  .graph-node:focus-visible .dot,
+  .graph-node[data-dragging] .dot {
+    transform: scale(1.35);
+  }
+  .graph-node:focus-visible .label {
+    outline: 2px solid var(--ce-blue);
+  }
+
+  /* Focus and highlight: dim everything not lit. */
+  [data-graph][data-dim] .graph-node:not([data-lit]),
+  [data-graph][data-dim] .edge:not([data-lit]) {
+    opacity: 0.18;
+  }
+  .graph-node,
+  .edge {
+    transition: opacity 0.25s;
+  }
+
+  /* Motion-enabled pages start the nodes hidden; the intro animates them in. */
+  :global(.js-motion) [data-graph][data-intro] [data-drag] {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js-motion) [data-graph][data-intro] [data-drag] {
+      opacity: 1;
+    }
+  }
+</style>
+
+<script>
+  import { graphIntro, graphPhysics, motionScope, pulseEdges } from '../motion';
+
+  function setup(root: HTMLElement) {
+    const nodes = [...root.querySelectorAll<HTMLElement>('[data-node]')];
+    const lines = [...root.querySelectorAll<SVGLineElement>('line[data-from]')];
+    let org: string | null = null;
+
+    const clearLit = () => {
+      root.querySelectorAll('[data-lit]').forEach((el) => el.removeAttribute('data-lit'));
+      root.removeAttribute('data-dim');
+    };
+
+    const applyOrg = () => {
+      clearLit();
+      if (!org) return;
+      root.setAttribute('data-dim', '');
+      nodes.forEach((n) => n.dataset.orgs!.split(' ').includes(org!) && n.setAttribute('data-lit', ''));
+      lines.forEach((l) => {
+        const lit = (s: string) => root.querySelector(`[data-node="${s}"]`)?.hasAttribute('data-lit');
+        if (lit(l.dataset.from!) && lit(l.dataset.to!)) l.setAttribute('data-lit', '');
+      });
+    };
+
+    // Hovering or focusing a node lights it, its edges and its neighbours.
+    const focusNode = (slug: string) => {
+      clearLit();
+      root.setAttribute('data-dim', '');
+      const mine = lines.filter((l) => l.dataset.from === slug || l.dataset.to === slug);
+      mine.forEach((l) => {
+        l.setAttribute('data-lit', '');
+        root.querySelector(`[data-node="${l.dataset.from}"]`)?.setAttribute('data-lit', '');
+        root.querySelector(`[data-node="${l.dataset.to}"]`)?.setAttribute('data-lit', '');
+      });
+      root.querySelector(`[data-node="${slug}"]`)?.setAttribute('data-lit', '');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) pulseEdges(mine);
+    };
+    for (const n of nodes) {
+      n.addEventListener('pointerenter', () => focusNode(n.dataset.node!));
+      n.addEventListener('focus', () => focusNode(n.dataset.node!));
+      n.addEventListener('pointerleave', applyOrg);
+      n.addEventListener('blur', applyOrg);
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('[data-kind-toggle]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const on = btn.getAttribute('aria-pressed') !== 'true';
+        btn.setAttribute('aria-pressed', String(on));
+        lines.filter((l) => l.dataset.kind === btn.dataset.kindToggle).forEach((l) => l.toggleAttribute('data-off', !on));
+      });
+    });
+
+    const orgButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-org-toggle]')];
+    orgButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        org = org === btn.dataset.orgToggle ? null : btn.dataset.orgToggle!;
+        orgButtons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.orgToggle === org)));
+        applyOrg();
+      });
+    });
+
+    motionScope(root, ({ reduced }) => {
+      if (reduced) {
+        root.removeAttribute('data-intro');
+        return;
+      }
+      graphIntro(root).then(() => root.removeAttribute('data-intro'));
+      // Dragging needs a precise pointer or touch; it is decoration over plain links either way.
+      return graphPhysics(root);
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const root = document.querySelector<HTMLElement>('[data-graph]');
+    if (root) setup(root);
+  });
+</script>

@@ -1,0 +1,18 @@
+{
+  "slug": "cursed-speech",
+  "name": {
+    "en": "Cursed Speech",
+    "ja": "呪言"
+  },
+  "kind": "inherited",
+  "users": [
+    "inumaki-toge"
+  ],
+  "summary": [
+    {
+      "value": "An inherited technique that turns spoken commands into binding cursed orders, at a cost to the speaker.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

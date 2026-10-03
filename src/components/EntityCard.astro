@@ -1,0 +1,49 @@
+---
+import type { SpoilerLevel } from '../content/schemas';
+import Gated from './Gated.astro';
+import { LEVEL_LABELS } from '../lib/spoiler';
+
+interface Props {
+  href: string;
+  title: string;
+  subtitle?: string;
+  meta?: string;
+  accent?: string;
+  level?: SpoilerLevel;
+  /** Show a card-shaped placeholder when hidden, instead of dropping the card (galleries, timelines). */
+  redact?: boolean;
+}
+const { href, title, subtitle, meta, accent, level = 'none', redact = false } = Astro.props;
+---
+
+<Gated level={level} as="div" silent class="h-full">
+  <a
+    href={href}
+    data-reveal
+    data-tilt
+    class="card group relative block h-full overflow-hidden rounded-md border border-line bg-ink-2 p-5 shadow-[var(--shadow-1)] transition-colors duration-200 hover:border-[var(--accent)] [transform-style:preserve-3d]"
+    style={`--accent:${accent ?? 'var(--ce-blue)'}`}
+  >
+    <span class="absolute inset-x-0 top-0 h-0.5 bg-[var(--accent)] opacity-70" aria-hidden="true"></span>
+    <span
+      class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      style="background: radial-gradient(240px circle at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%);"
+      aria-hidden="true"></span>
+    <span class="relative block font-display text-step-2 leading-tight">{title}</span>
+    {subtitle && <span class="relative mt-1 block text-step--1 text-paper-dim" lang="ja">{subtitle}</span>}
+    {meta && <span class="relative mt-4 block text-step--1 uppercase tracking-[0.14em] text-paper-dim">{meta}</span>}
+  </a>
+</Gated>
+{
+  redact && level !== 'none' && (
+    <div
+      data-redacted={level}
+      style="--redacted-display: flex"
+      class="h-full min-h-28 flex-col justify-between rounded-md border border-dashed border-line p-5 text-paper-dim"
+      title={`Hidden: ${LEVEL_LABELS[level].long} spoiler`}
+    >
+      <span class="font-display text-step-2" aria-hidden="true">▮▮▮▮</span>
+      <span class="text-step--1 uppercase tracking-[0.14em]">{LEVEL_LABELS[level].short} spoiler</span>
+    </div>
+  )
+}

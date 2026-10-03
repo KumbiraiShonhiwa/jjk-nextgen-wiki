@@ -1,0 +1,34 @@
+---
+import Base from '../../layouts/Base.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import { TECHNIQUE_KINDS } from '../../content/schemas';
+import { loadIndex } from '../../lib/content';
+import { titleCase } from '../../lib/format';
+import { hrefFor } from '../../lib/routes';
+
+const ix = await loadIndex();
+const techniques = [...ix.techniques.values()].sort((a, b) => a.name.en.localeCompare(b.name.en));
+const groups = TECHNIQUE_KINDS.map((kind) => ({ kind, items: techniques.filter((t) => t.kind === kind) })).filter((g) => g.items.length);
+const accentOf = (users: string[]) => ix.characters.get(users[0] ?? '')?.accent;
+---
+
+<Base title="Cursed techniques" description="Every cursed technique in the Jujutsu Kaisen encyclopedia, grouped by type.">
+  <section class="py-12">
+    <h1 data-kinetic class="font-display text-step-5 leading-none">Cursed techniques</h1>
+    <p class="mt-3 text-step--1 text-paper-dim">{techniques.length} techniques</p>
+    {
+      groups.map(({ kind, items }) => (
+        <section data-cascade class="mt-12" aria-labelledby={`kind-${kind}`}>
+          <h2 id={`kind-${kind}`} class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">
+            {titleCase(kind)}
+          </h2>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {items.map((t) => (
+              <EntityCard href={hrefFor('techniques', t.slug)} title={t.name.en} subtitle={t.name.ja} accent={accentOf(t.users)} level={t.level} redact />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </section>
+</Base>

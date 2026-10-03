@@ -1,0 +1,27 @@
+{
+  "slug": "self-embodiment-of-perfection",
+  "name": {
+    "en": "Self-Embodiment of Perfection",
+    "ja": "自閉円頓裹"
+  },
+  "user": "mahito",
+  "technique": "idle-transfiguration",
+  "level": "anime-s1",
+  "palette": [
+    "#0d1f1d",
+    "#6fd3c7"
+  ],
+  "summary": [
+    {
+      "value": "Mahito's Domain Expansion, a cage of hands.",
+      "level": "anime-s1"
+    }
+  ],
+  "sureHit": [
+    {
+      "value": "Guarantees that Idle Transfiguration lands on anyone inside.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "culling-game",
+  "name": "Culling Game",
+  "order": 7,
+  "level": "anime-s3",
+  "summary": [
+    {
+      "value": "Sorcerers are drawn into a deadly game played across colonies throughout Japan.",
+      "level": "anime-s3"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "fushiguro-megumi",
+    "zenin-maki"
+  ],
+  "fixture": true
+}

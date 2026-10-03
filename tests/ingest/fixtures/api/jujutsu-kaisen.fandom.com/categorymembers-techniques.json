@@ -1,0 +1,16 @@
+{
+  "params": {
+    "action": "query",
+    "list": "categorymembers",
+    "cmtitle": "Category:Techniques",
+    "cmnamespace": "0",
+    "cmtype": "page",
+    "cmlimit": "500"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "categorymembers": []
+    }
+  }
+}

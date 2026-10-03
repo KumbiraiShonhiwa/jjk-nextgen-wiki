@@ -1,0 +1,16 @@
+{
+  "slug": "kyoto-jujutsu-high",
+  "name": {
+    "en": "Kyoto Jujutsu High",
+    "ja": "京都府立呪術高等専門学校"
+  },
+  "kind": "school",
+  "location": "kyoto",
+  "summary": [
+    {
+      "value": "The sister school of Tokyo Jujutsu High, located in Kyoto.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

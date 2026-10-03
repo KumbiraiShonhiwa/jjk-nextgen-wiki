@@ -1,0 +1,15 @@
+{
+  "slug": "gojo-clan",
+  "name": {
+    "en": "Gojo Clan",
+    "ja": "五条家"
+  },
+  "kind": "clan",
+  "summary": [
+    {
+      "value": "One of the three great sorcerer families, whose inherited technique is Limitless.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

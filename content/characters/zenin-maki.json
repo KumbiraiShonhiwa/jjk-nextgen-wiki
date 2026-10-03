@@ -1,0 +1,31 @@
+{
+  "slug": "zenin-maki",
+  "name": {
+    "en": "Maki Zenin",
+    "ja": "禪院 真希"
+  },
+  "species": [
+    {
+      "value": "human",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "4",
+      "level": "none"
+    }
+  ],
+  "affiliations": [
+    "tokyo-jujutsu-high",
+    "zenin-clan"
+  ],
+  "accent": "#3fbf8f",
+  "summary": [
+    {
+      "value": "A second-year student at Tokyo Jujutsu High who fights with cursed tools despite having almost no cursed energy.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

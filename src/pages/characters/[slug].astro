@@ -1,0 +1,135 @@
+---
+import Base from '../../layouts/Base.astro';
+import Badge from '../../components/Badge.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import Gated from '../../components/Gated.astro';
+import GatedText from '../../components/GatedText.astro';
+import EntityHeader from '../../components/EntityHeader.astro';
+import Sources from '../../components/Sources.astro';
+import SpoilerWall from '../../components/SpoilerWall.astro';
+import { loadIndex } from '../../lib/content';
+import { gradeLabel, titleCase } from '../../lib/format';
+import { arcsFor, maxLevel, neighbours, safeValue } from '../../lib/graph';
+import { hrefFor, safeTitle } from '../../lib/routes';
+import type { Character } from '../../content/schemas';
+
+export async function getStaticPaths() {
+  const ix = await loadIndex();
+  return [...ix.characters.values()].map((character) => ({ params: { slug: character.slug }, props: { character } }));
+}
+
+const { character: c } = Astro.props as { character: Character };
+const ix = await loadIndex();
+const techniques = c.techniques.map((s) => ix.techniques.get(s)!);
+const domain = c.domain ? ix.domains.get(c.domain) : undefined;
+const connections = neighbours(ix, c.slug).map((n) => ({ ...n, character: ix.characters.get(n.other) })).filter((n) => n.character);
+const arcs = arcsFor(ix, c.slug);
+const title = safeTitle(c, c.name.en, 'Character');
+const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in the Jujutsu Kaisen encyclopedia.`;
+---
+
+<Base title={title} description={description}>
+  <article class="py-12" style={`--accent:${c.accent ?? 'var(--ce-blue)'}`}>
+    <a href="/characters" class="text-step--1 text-paper-dim hover:text-paper">← Characters</a>
+
+    <SpoilerWall level={c.level} type="Character">
+      <EntityHeader title={c.name.en} ja={c.name.ja}>
+        <Fragment slot="badges">
+          {c.grade.map((g) => <Gated level={g.level}><Badge tone="blue">{gradeLabel(g.value)}</Badge></Gated>)}
+          {c.species.map((s) => <Gated level={s.level}><Badge>{titleCase(s.value)}</Badge></Gated>)}
+          {c.status.map((s) => <Gated level={s.level}><Badge tone={s.value === 'deceased' ? 'red' : 'neutral'}>{s.value}</Badge></Gated>)}
+        </Fragment>
+      </EntityHeader>
+
+      <div class="mt-10 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div>
+          <GatedText values={c.summary} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
+
+          {
+            techniques.length > 0 && (
+              <section class="mt-14" aria-labelledby="techniques">
+                <h2 id="techniques" class="font-display text-step-3">Techniques</h2>
+                <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                  {techniques.map((t) => (
+                    <EntityCard href={hrefFor('techniques', t.slug)} title={t.name.en} subtitle={t.name.ja} meta={titleCase(t.kind)} level={maxLevel(t.level, c.level)} accent={c.accent} />
+                  ))}
+                </div>
+              </section>
+            )
+          }
+
+          {
+            domain && (
+              <section class="mt-14" aria-labelledby="domain">
+                <h2 id="domain" class="font-display text-step-3">Domain Expansion</h2>
+                <div class="mt-5">
+                  <Gated level={domain.level} as="div" scramble>
+                    <a href={hrefFor('domains', domain.slug)} class="font-display text-step-2 underline decoration-[var(--accent)] underline-offset-4">
+                      {domain.name.en}
+                    </a>
+                  </Gated>
+                </div>
+              </section>
+            )
+          }
+
+          {
+            arcs.length > 0 && (
+              <section class="mt-14" aria-labelledby="arcs">
+                <h2 id="arcs" class="font-display text-step-3">Story arcs</h2>
+                <ol class="mt-5 flex flex-wrap gap-2">
+                  {arcs.map((a) => (
+                    <Gated level={a.level} as="li">
+                      <a href={hrefFor('arcs', a.slug)} class="inline-block rounded-full border border-line px-3 py-1 text-step--1 hover:border-[var(--accent)]">
+                        {a.name}
+                      </a>
+                    </Gated>
+                  ))}
+                </ol>
+              </section>
+            )
+          }
+        </div>
+
+        <aside aria-labelledby="connections">
+          {
+            connections.length > 0 && (
+              <>
+                <h2 id="connections" class="font-display text-step-2">Connections</h2>
+                <ul class="mt-4 space-y-2">
+                  {connections.map(({ edge, character }) => (
+                    <Gated level={maxLevel(edge.level, character!.level)} as="li">
+                      <a href={hrefFor('characters', character!.slug)} class="flex items-baseline justify-between gap-3 rounded-sm border border-line px-3 py-2 hover:border-[var(--accent)]">
+                        <span>{character!.name.en}</span>
+                        <span class="text-step--1 text-paper-dim">{edge.label ?? titleCase(edge.kind)}</span>
+                      </a>
+                    </Gated>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+          {
+            c.affiliations.length > 0 && (
+              <>
+                <h2 class="mt-10 font-display text-step-2">Affiliations</h2>
+                <ul class="mt-4 space-y-1 text-paper-dim">
+                  {c.affiliations.map((s) => {
+                    const o = ix.organizations.get(s)!;
+                    return (
+                      <Gated level={o.level} as="li">
+                        <a href={hrefFor('organizations', o.slug)} class="hover:text-paper">{o.name.en}</a>
+                      </Gated>
+                    );
+                  })}
+                </ul>
+              </>
+            )
+          }
+        </aside>
+      </div>
+
+      <Sources provenance={c.provenance} fixture={c.fixture} />
+    </SpoilerWall>
+  </article>
+</Base>

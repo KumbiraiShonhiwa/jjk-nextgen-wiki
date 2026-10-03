@@ -1,0 +1,31 @@
+{
+  "slug": "geto-suguru",
+  "name": {
+    "en": "Suguru Geto",
+    "ja": "夏油 傑"
+  },
+  "species": [
+    {
+      "value": "human",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "special",
+      "level": "none"
+    }
+  ],
+  "techniques": [
+    "cursed-spirit-manipulation"
+  ],
+  "accent": "#8a7cff",
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "A special grade curse user and former classmate of Satoru Gojo.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}

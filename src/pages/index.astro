@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Sigil from '../components/Sigil.astro';
+import EntityCard from '../components/EntityCard.astro';
+import { characterMeta } from '../lib/format';
+
+import { loadIndex } from '../lib/content';
+
+const ix = await loadIndex();
+const characters = [...ix.characters.values()].filter((c) => c.level === 'none');
+---
+
+<Base title="Home">
+  <section data-hero class="grid min-h-[80dvh] items-center gap-10 py-16 md:grid-cols-[1.2fr_1fr]">
+    <div>
+      <p class="text-xs uppercase tracking-[0.3em] text-ce-blue">Unofficial encyclopedia</p>
+      <h1 data-kinetic class="mt-4 font-display text-6xl leading-none md:text-8xl">Jujutsu Kaisen</h1>
+      <p class="mt-6 max-w-md text-paper-dim">
+        Characters, cursed techniques and arcs, with spoilers kept behind the level you choose.
+      </p>
+    </div>
+    <Sigil class="mx-auto w-64 md:w-80" />
+  </section>
+
+  <section data-cascade class="py-12">
+    <h2 class="font-display text-3xl">Characters</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {characters.map((c) => <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} />)}
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { motionScope, drawSigil } from '../motion';
+
+  document.addEventListener('astro:page-load', () => {
+    const sigil = document.querySelector<SVGSVGElement>('[data-hero] [data-sigil]');
+    if (sigil) motionScope(sigil, ({ reduced }) => void (!reduced && drawSigil(sigil)));
+  });
+</script>

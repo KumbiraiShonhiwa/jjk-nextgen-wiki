@@ -1,0 +1,21 @@
+{
+  "slug": "chimera-shadow-garden",
+  "name": {
+    "en": "Chimera Shadow Garden",
+    "ja": "嵌合暗翳庭"
+  },
+  "user": "fushiguro-megumi",
+  "technique": "ten-shadows",
+  "level": "anime-s1",
+  "palette": [
+    "#05060a",
+    "#5b8cff"
+  ],
+  "summary": [
+    {
+      "value": "Megumi's incomplete Domain Expansion, which floods the area with liquid shadow.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}

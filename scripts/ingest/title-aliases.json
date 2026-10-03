@@ -1,0 +1,11 @@
+{
+  "characters/ryomen-sukuna": ["Sukuna", "Ryomen Sukuna"],
+  "characters/zenin-maki": ["Maki Zenin", "Maki Zen'in"],
+  "organizations/zenin-clan": ["Zenin Clan", "Zen'in Clan", "Zen'in Family"],
+  "organizations/gojo-clan": ["Gojo Clan", "Gojo Family"],
+  "organizations/tokyo-jujutsu-high": ["Tokyo Jujutsu High", "Tokyo Prefectural Jujutsu High School", "Tokyo Metropolitan Curse Technical College"],
+  "organizations/kyoto-jujutsu-high": ["Kyoto Jujutsu High", "Kyoto Prefectural Jujutsu High School", "Kyoto Prefectural Curse Technical College"],
+  "techniques/ten-shadows": ["Ten Shadows Technique", "Ten Shadows"],
+  "techniques/cursed-spirit-manipulation": ["Cursed Spirit Manipulation"],
+  "techniques/divergent-fist": ["Divergent Fist"]
+}
