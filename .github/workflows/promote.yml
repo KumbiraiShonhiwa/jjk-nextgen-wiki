@@ -1,0 +1,79 @@
+# Opens a promotion PR: develop -> stable (release candidate) or stable -> main (live).
+# PRs created with GITHUB_TOKEN do not trigger pull_request workflows, so the required
+# checks would never run. The PR is therefore opened with the PROMOTE_TOKEN secret
+# (a fine-grained PAT: Pull requests read/write, Contents read). Without it, the job
+# prints the command and compare URL to open it by hand, and succeeds.
+name: Promote
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: Branch to promote into
+        required: true
+        type: choice
+        options: [stable, main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: promote-${{ inputs.target }}
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Open or report the promotion PR
+        env:
+          TARGET: ${{ inputs.target }}
+          REPO: ${{ github.repository }}
+          SERVER: ${{ github.server_url }}
+          GITHUB_TOKEN: ${{ github.token }}
+          PROMOTE_TOKEN: ${{ secrets.PROMOTE_TOKEN }}
+        run: |
+          set -euo pipefail
+          case "$TARGET" in
+            stable) SOURCE=develop ;;
+            main)   SOURCE=stable ;;
+            *) echo "::error::Unknown target '$TARGET'"; exit 1 ;;
+          esac
+          TITLE="Promote $SOURCE -> $TARGET"
+          BODY="Promotion of \`$SOURCE\` into \`$TARGET\`. Merge with a merge commit (not squash) once verify, e2e and merge-order pass."
+          COMPARE_URL="$SERVER/$REPO/compare/$TARGET...$SOURCE?expand=1"
+
+          existing=$(GH_TOKEN="$GITHUB_TOKEN" gh pr list --repo "$REPO" --base "$TARGET" --head "$SOURCE" --state open --json url --jq '.[0].url // empty')
+          if [ -n "$existing" ]; then
+            echo "Promotion PR already open: $existing"
+            echo "Promotion PR already open: $existing" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          ahead=$(GH_TOKEN="$GITHUB_TOKEN" gh api "repos/$REPO/compare/$TARGET...$SOURCE" --jq '.ahead_by')
+          if [ "$ahead" = "0" ]; then
+            echo "$SOURCE has no commits that are not in $TARGET; nothing to promote." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          if [ -n "$PROMOTE_TOKEN" ]; then
+            url=$(GH_TOKEN="$PROMOTE_TOKEN" gh pr create --repo "$REPO" --base "$TARGET" --head "$SOURCE" --title "$TITLE" --body "$BODY")
+            echo "Opened promotion PR: $url"
+            echo "Opened promotion PR: $url" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          echo "::notice title=promote::PROMOTE_TOKEN is not set, so the PR was not opened (a GITHUB_TOKEN PR would not run CI). See the job summary."
+          {
+            echo "## Open the promotion PR manually"
+            echo
+            echo "The \`PROMOTE_TOKEN\` secret is not set. A PR opened with \`GITHUB_TOKEN\` would not trigger CI, so open it yourself:"
+            echo
+            echo '```sh'
+            echo "gh pr create --repo $REPO --base $TARGET --head $SOURCE --title \"$TITLE\" --body \"$BODY\""
+            echo '```'
+            echo
+            echo "Or in the browser: $COMPARE_URL"
+          } >> "$GITHUB_STEP_SUMMARY"
