@@ -17,7 +17,8 @@
     "budgets": "node scripts/check-budgets.mjs",
     "workflows": "node scripts/check-workflows.mjs",
     "ingest": "tsx scripts/ingest/cli.ts",
-    "ingest:offline": "tsx scripts/ingest/cli.ts --offline"
+    "ingest:offline": "tsx scripts/ingest/cli.ts --offline",
+    "art": "tsx scripts/art/cli.ts"
   },
   "dependencies": {
     "@astrojs/svelte": "^9.0.1",
