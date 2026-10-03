@@ -1,0 +1,43 @@
+---
+import type { Character } from '../content/schemas';
+import { portraitSpec } from '../lib/art';
+
+/**
+ * Character portrait. Uses the AI-generated image when one exists (labelled as such),
+ * otherwise a deterministic generative placeholder so every card has a face.
+ */
+interface Props {
+  character: Pick<Character, 'slug' | 'name' | 'accent' | 'art'>;
+  class?: string;
+  eager?: boolean;
+}
+const { character: c, class: className = '', eager = false } = Astro.props;
+const spec = portraitSpec(c.slug, c.name.en);
+---
+
+<figure class={`portrait relative m-0 aspect-[3/4] overflow-hidden rounded-md border border-line ${className}`} data-portrait={c.art ? 'art' : 'placeholder'}>
+  {
+    c.art ? (
+      <>
+        <img src={c.art.src} alt={c.art.alt} width="768" height="1024" loading={eager ? 'eager' : 'lazy'} decoding="async" class="size-full object-cover" />
+        <figcaption class="absolute bottom-2 left-2 rounded-full bg-ink/80 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.2em] text-paper-dim">AI-generated</figcaption>
+      </>
+    ) : (
+      <svg viewBox="0 0 120 160" class="size-full" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id={`g-${c.slug}`} cx={spec.cx / 120} cy={spec.cy / 160} r="0.9">
+            <stop offset="0" stop-color={c.accent ?? 'var(--ce-blue)'} stop-opacity="0.55" />
+            <stop offset="1" stop-color="var(--ink-2)" />
+          </radialGradient>
+        </defs>
+        <rect width="120" height="160" fill={`url(#g-${c.slug})`} />
+        <g fill="none" stroke={c.accent ?? 'var(--ce-blue)'} stroke-opacity="0.55" stroke-width="0.6">
+          {spec.rings.map((r) => <circle cx={spec.cx} cy={spec.cy} r={r} />)}
+          <line x1={spec.cx - 90} y1={spec.cy} x2={spec.cx + 90} y2={spec.cy} transform={`rotate(${spec.angle} ${spec.cx} ${spec.cy})`} />
+          <line x1={spec.cx - 90} y1={spec.cy} x2={spec.cx + 90} y2={spec.cy} transform={`rotate(${spec.angle + 90} ${spec.cx} ${spec.cy})`} stroke-opacity="0.3" />
+        </g>
+        <text x="60" y="146" text-anchor="middle" font-size="22" fill="var(--paper)" fill-opacity="0.85" style="font-family: var(--font-display)">{spec.initials}</text>
+      </svg>
+    )
+  }
+</figure>
