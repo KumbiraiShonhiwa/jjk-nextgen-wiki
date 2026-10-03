@@ -15,6 +15,7 @@ Foundation phase. See [`docs/`](docs/):
 | 03 | [Data Acquisition & Licensing Plan](docs/03-data-acquisition-licensing.md) |
 | 04 | [Information Architecture](docs/04-information-architecture.md) |
 | 05 | [Tech Stack & ADRs](docs/05-tech-stack-adrs.md) |
+| 06 | [CI/CD & Branching](docs/06-ci-cd-and-branching.md) |
 
 ## Licences
 
@@ -32,6 +33,9 @@ pnpm dev      # http://localhost:4321
 pnpm check    # Astro + TypeScript diagnostics
 pnpm test     # unit tests (Vitest)
 pnpm build    # static site in dist/
+pnpm test:e2e # Playwright smoke tests against the built site
 ```
+
+Branching, CI checks, promotion and deploy are described in [docs/06](docs/06-ci-cd-and-branching.md).
 
 Animations live in `src/motion/` (Anime.js 4.5 presets, tokens and reduced-motion handling). Pages call presets such as `kineticHeading`, `drawSigil` and `revealCascade` inside `motionScope`, which reverts everything on page change.
