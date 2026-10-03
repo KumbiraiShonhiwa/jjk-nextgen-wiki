@@ -51,7 +51,7 @@ test('character grid shows cards and a card opens its character page', async ({ 
 
   const first = cards.first();
   const href = await first.getAttribute('href');
-  const name = (await first.locator('p').first().textContent())?.trim();
+  const name = (await first.locator('.font-display').first().textContent())?.trim();
   expect(href).toBeTruthy();
   expect(name).toBeTruthy();
 

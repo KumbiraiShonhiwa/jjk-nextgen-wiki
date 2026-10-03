@@ -16,6 +16,8 @@ Foundation phase. See [`docs/`](docs/):
 | 04 | [Information Architecture](docs/04-information-architecture.md) |
 | 05 | [Tech Stack & ADRs](docs/05-tech-stack-adrs.md) |
 | 06 | [CI/CD & Branching](docs/06-ci-cd-and-branching.md) |
+| 07 | [Design System](docs/07-design-system.md) |
+| 08 | [Motion Language & Anime.js Spec](docs/08-motion-language.md) |
 
 ## Licences
 
