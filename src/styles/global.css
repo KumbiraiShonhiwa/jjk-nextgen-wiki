@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
-@import '@fontsource/zen-antique';
+/* Latin subsets only: the Japanese slices add ~120 @font-face rules (60 KiB of CSS). Japanese falls back to a system Mincho. */
+@import '@fontsource/zen-antique/latin-400.css';
+@import '@fontsource/zen-antique/latin-ext-400.css';
 
 /*
  * Design tokens (docs/07-design-system.md).
@@ -77,7 +79,7 @@
   --color-ce-blue: var(--ce-blue);
   --color-ce-violet: var(--ce-violet);
   --color-ce-red: var(--ce-red);
-  --font-display: 'Zen Antique', 'Hiragino Mincho ProN', serif;
+  --font-display: 'Zen Antique', 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
   --font-body: 'Inter Variable', system-ui, sans-serif;
   --text-step--1: var(--step--1);
   --text-step-0: var(--step-0);
