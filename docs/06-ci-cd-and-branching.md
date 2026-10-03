@@ -179,3 +179,11 @@ Import the rulesets only after this pipeline is on `develop`; until then the req
 2. *Settings → Rules → Rulesets → New ruleset → Import a ruleset*: import `develop.json`, `stable.json` and `main.json` from `.github/rulesets/`.
 3. Optional: add `PROMOTE_TOKEN` (*Pull requests: read and write*, *Contents: read and write* so it can serve both Promote and Content sync), `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` under *Settings → Secrets and variables → Actions*.
 4. For Content sync: *Settings → Actions → General → Workflow permissions*, tick **Allow GitHub Actions to create and approve pull requests** (needed when `PROMOTE_TOKEN` is not set). Create the `content` label, or the action creates it on first use.
+
+### Accepted advisories
+
+`package.json` lists accepted advisories under `pnpm.auditConfig.ignoreGhsas`. Each needs a reason here and a review date.
+
+| Advisory | Package | Why accepted | Review |
+| --- | --- | --- | --- |
+| GHSA-ch52-4w7c-c8xp (high) | `http-cache-semantics` <= 4.2.0, via `astro` | No patched release exists. It is a build-time dependency of Astro's remote image fetching; the site ships static files and runs no HTTP cache for visitors, so cross-user cache disclosure does not apply. | Remove the entry when a patched version exists; check at each Astro upgrade. |
