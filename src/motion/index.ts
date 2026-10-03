@@ -6,3 +6,4 @@ export * from './interactions';
 export * from './domain';
 export * from './graph';
 export * from './reflow';
+export * from './timeline';
