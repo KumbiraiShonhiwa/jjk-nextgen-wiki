@@ -1,0 +1,5 @@
+# Changes to the pipeline and the dependency surface need the owner's review.
+/.github/**        @KumbiraiShonhiwa
+/scripts/**        @KumbiraiShonhiwa
+/package.json      @KumbiraiShonhiwa
+/pnpm-lock.yaml    @KumbiraiShonhiwa
