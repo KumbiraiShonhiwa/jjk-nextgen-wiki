@@ -1,37 +1,48 @@
 ---
 /**
- * Gates a whole page body. When the entity itself is above the visitor's level, a full-width notice
- * stands in for the content; raising the level reveals it in place (docs/04, spoiler gating).
+ * Gates a whole entity page body and marks it as the search-indexed region.
+ *
+ * When the entity itself is above the visitor's level, a full-width notice stands in for the content;
+ * raising the level reveals it in place (docs/04, spoiler gating). For search, the page is filtered
+ * by its level, and gated text above that level is left out of the index (see Gated.astro).
  */
 import type { SpoilerLevel } from '../content/schemas';
 import { LEVEL_LABELS } from '../lib/spoiler';
 
 interface Props {
   level: SpoilerLevel;
+  /** Search result group, e.g. "Character". */
+  type: string;
 }
-const { level } = Astro.props;
+const { level, type } = Astro.props;
+Astro.locals.pageLevel = level;
 ---
 
-{
-  level === 'none' ? (
-    <slot />
-  ) : (
-    <>
+<div data-pagefind-body data-pagefind-filter={`level:${level}`} data-pagefind-meta={`type:${type}`}>
+  {
+    level === 'none' ? (
+      <slot />
+    ) : (
       <div data-level={level}>
         <slot />
       </div>
-      <section
-        data-redacted={level}
-        style="--redacted-display: flex"
-        class="my-16 flex-col items-start gap-4 rounded-md border border-dashed border-line bg-ink-2 p-8"
-        aria-label="Spoiler warning"
-      >
-        <p class="font-display text-step-3" aria-hidden="true">▮▮▮▮▮▮</p>
-        <p class="max-w-prose text-step-1">
-          This page covers events from <strong>{LEVEL_LABELS[level].long}</strong>. It is hidden at your current spoiler level.
-        </p>
-        <p class="text-step--1 text-paper-dim">Raise your spoiler level in the header to read it. Nothing reloads.</p>
-      </section>
-    </>
+    )
+  }
+</div>
+{
+  level !== 'none' && (
+    <section
+      data-redacted={level}
+      data-pagefind-ignore="all"
+      style="--redacted-display: flex"
+      class="my-16 flex-col items-start gap-4 rounded-md border border-dashed border-line bg-ink-2 p-8"
+      aria-label="Spoiler warning"
+    >
+      <p class="font-display text-step-3" aria-hidden="true">▮▮▮▮▮▮</p>
+      <p class="max-w-prose text-step-1">
+        This page covers events from <strong>{LEVEL_LABELS[level].long}</strong>. It is hidden at your current spoiler level.
+      </p>
+      <p class="text-step--1 text-paper-dim">Raise your spoiler level in the header to read it. Nothing reloads.</p>
+    </section>
   )
 }

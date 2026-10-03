@@ -31,7 +31,7 @@ const episodes = episodeRange(a.episodes);
 <Base title={arcTitle(a)} description={`Story arc ${a.order} of Jujutsu Kaisen.`}>
   <article class="py-12" style="--accent: var(--ce-blue)">
     <a href="/arcs" class="text-step--1 text-paper-dim hover:text-paper">← Arcs</a>
-    <SpoilerWall level={a.level}>
+    <SpoilerWall level={a.level} type="Arc">
       <EntityHeader title={a.name} eyebrow={`Arc ${a.order}`}>
         <Fragment slot="badges">
           {chapters && <Badge tone="blue">{chapters}</Badge>}

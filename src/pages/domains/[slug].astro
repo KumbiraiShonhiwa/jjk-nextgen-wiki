@@ -27,7 +27,7 @@ const [deep, glow] = d.palette ?? ['#0b0b10', user.accent ?? '#7cc4ff'];
 <Base title={domainTitle(d)} description="A Domain Expansion in the Jujutsu Kaisen encyclopedia.">
   <article class="py-12" style={`--accent:${glow};--domain-deep:${deep};--domain-glow:${glow}`}>
     <a href="/domains" class="text-step--1 text-paper-dim hover:text-paper">← Domains</a>
-    <SpoilerWall level={d.level}>
+    <SpoilerWall level={d.level} type="Domain">
       <header
         data-domain-hero
         class="relative mt-8 grid min-h-[60dvh] place-items-center overflow-hidden rounded-lg border border-line p-8 text-center"
