@@ -50,10 +50,10 @@ Characters show a 3:4 portrait. Until real art exists, a deterministic generativ
 ### Generate
 
 ```sh
-pnpm art -- --dry-run                 # print the prompts, write nothing (default when no key is set)
-pnpm art -- --only=gojo-satoru        # one character
+pnpm art --dry-run                 # print the prompts, write nothing (default when no key is set)
+pnpm art --only=gojo-satoru        # one character
 pnpm art                              # every character without art
-pnpm art -- --force --only=mahito     # regenerate an existing portrait
+pnpm art --force --only=mahito     # regenerate an existing portrait
 ```
 
 Optional: `ART_MODEL=<model>` overrides the model.
