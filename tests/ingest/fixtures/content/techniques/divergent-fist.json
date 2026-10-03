@@ -1,0 +1,18 @@
+{
+  "slug": "divergent-fist",
+  "name": {
+    "en": "Divergent Fist",
+    "ja": "逕庭拳"
+  },
+  "kind": "other",
+  "users": [
+    "itadori-yuji"
+  ],
+  "summary": [
+    {
+      "value": "A fighting style in which cursed energy lands a split second after the punch, striking twice.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

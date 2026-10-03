@@ -1,0 +1,27 @@
+{
+  "params": {
+    "action": "query",
+    "meta": "siteinfo",
+    "siprop": "general|rightsinfo"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "general": {
+        "mainpage": "Jujutsu Kaisen Wiki",
+        "base": "https://jujutsu-kaisen.fandom.com/wiki/Jujutsu_Kaisen_Wiki",
+        "sitename": "Jujutsu Kaisen Wiki",
+        "generator": "MediaWiki 1.39.7",
+        "server": "https://jujutsu-kaisen.fandom.com",
+        "servername": "jujutsu-kaisen.fandom.com",
+        "articlepath": "/wiki/$1",
+        "scriptpath": "",
+        "lang": "en"
+      },
+      "rightsinfo": {
+        "url": "https://www.fandom.com/licensing",
+        "text": "CC-BY-SA"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "params": {
+    "action": "query",
+    "list": "categorymembers",
+    "cmtitle": "Category:Locations",
+    "cmnamespace": "0",
+    "cmtype": "page",
+    "cmlimit": "500"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "categorymembers": [
+        {
+          "pageid": 1601,
+          "ns": 0,
+          "title": "Tokyo"
+        }
+      ]
+    }
+  }
+}

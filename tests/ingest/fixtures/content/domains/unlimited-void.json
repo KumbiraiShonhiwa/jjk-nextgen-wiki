@@ -1,0 +1,27 @@
+{
+  "slug": "unlimited-void",
+  "name": {
+    "en": "Unlimited Void",
+    "ja": "無量空処"
+  },
+  "user": "gojo-satoru",
+  "technique": "limitless",
+  "level": "anime-s1",
+  "palette": [
+    "#0b1030",
+    "#7cc4ff"
+  ],
+  "summary": [
+    {
+      "value": "Gojo's Domain Expansion, an endless interior of space.",
+      "level": "anime-s1"
+    }
+  ],
+  "sureHit": [
+    {
+      "value": "Floods the target with infinite information, leaving them unable to act.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "fearsome-womb",
+  "name": "Fearsome Womb",
+  "order": 1,
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "Yuji Itadori swallows a cursed finger, becomes Sukuna's vessel and joins Tokyo Jujutsu High.",
+      "level": "anime-s1"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "fushiguro-megumi",
+    "kugisaki-nobara",
+    "gojo-satoru",
+    "ryomen-sukuna"
+  ],
+  "fixture": true
+}

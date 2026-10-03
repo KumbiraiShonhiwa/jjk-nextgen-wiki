@@ -1,0 +1,34 @@
+{
+  "slug": "nanami-kento",
+  "name": {
+    "en": "Kento Nanami",
+    "ja": "七海 建人"
+  },
+  "species": [
+    {
+      "value": "human",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "1",
+      "level": "none"
+    }
+  ],
+  "affiliations": [
+    "tokyo-jujutsu-high"
+  ],
+  "techniques": [
+    "ratio-technique"
+  ],
+  "accent": "#d9b44a",
+  "summary": [
+    {
+      "value": "A grade 1 sorcerer and former salaryman who treats jujutsu as a job with fixed working hours.",
+      "level": "anime-s1"
+    }
+  ],
+  "level": "anime-s1",
+  "fixture": true
+}

@@ -1,0 +1,152 @@
+{
+  "params": {
+    "action": "query",
+    "prop": "revisions",
+    "rvprop": "content|ids|timestamp",
+    "rvslots": "main",
+    "titles": "List of Characters|Satoru Gojo|Yuji Itadori|Megumi Fushiguro|Mystery Person|Sukuna|Toji Fushiguro"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "pages": [
+        {
+          "pageid": 1101,
+          "ns": 0,
+          "title": "List of Characters",
+          "revisions": [
+            {
+              "revid": 410001,
+              "parentid": 409984,
+              "timestamp": "2026-08-01T10:00:00Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "This is a list of characters appearing in ''Jujutsu Kaisen''.\n\n{| class=\"wikitable\"\n! Name !! Affiliation\n|-\n| [[Satoru Gojo]] || [[Tokyo Prefectural Jujutsu High School]]\n|}\n\n[[Category:Characters]]\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1102,
+          "ns": 0,
+          "title": "Satoru Gojo",
+          "revisions": [
+            {
+              "revid": 412345,
+              "parentid": 412328,
+              "timestamp": "2026-09-28T14:03:11Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Spoiler}}\n{{Character Infobox\n|name = Satoru Gojo\n|image = <gallery>\nSatoru Gojo (Anime).png|Anime\nSatoru Gojo (Manga).png|Manga\n</gallery>\n|kanji = 五条 悟\n|romaji = Gojō Satoru\n|alias = The Strongest<br>Gojo-sensei\n|species = Human\n|gender = Male\n|age = 28\n|birthday = December 7, 1989\n|height = 190 cm<ref name=\"vol0\">Jujutsu Kaisen Volume 0, Character Profile</ref>\n|affiliation = [[Tokyo Prefectural Jujutsu High School|Tokyo Jujutsu High]]<br>[[Gojo Clan]]\n|occupation = Jujutsu Sorcerer<br>Teacher\n|grade = [[Jujutsu Sorcerer#Grades|Special Grade]]\n|status = Deceased<ref>Chapter 236</ref>\n|technique = [[Limitless]]<br>[[Six Eyes]]\n|domain = [[Unlimited Void]]\n|manga debut = [[Chapter 1]]\n|anime debut = [[Episode 1]]\n|japanese voice = [[Yuichi Nakamura]]\n|english voice = Kaiji Tang\n}}\n{{Nihongo|'''Satoru Gojo'''|五条 悟|Gojō Satoru}} is one of the main characters of the ''[[Jujutsu Kaisen (Manga)|Jujutsu Kaisen]]'' series. He is a [[Jujutsu Sorcerer#Grades|special grade]] [[jujutsu sorcerer]] and a teacher at [[Tokyo Prefectural Jujutsu High School|Tokyo Jujutsu High]].<ref>Jujutsu Kaisen Chapter 1, Page 30</ref> Widely recognized as the strongest jujutsu sorcerer in the world, he is the heir of the [[Gojo Clan]].<ref name=\"fanbook\">Official Fanbook</ref>\n\nGojo is the homeroom teacher of the first-year students, including [[Yuji Itadori]], [[Megumi Fushiguro]] and [[Nobara Kugisaki]].<!-- keep this short -->\n\n==Appearance==\nGojo is a tall man with spiky white hair and blue eyes, which he usually covers with a black blindfold or dark sunglasses.[[File:Gojo blindfold.png|thumb|right|Gojo wearing his blindfold, as seen in [[Episode 1]].]]\n\n==Personality==\nGojo is playful, childish and laid-back, which often annoys his colleagues, but he is fiercely protective of his students.\n\n==History==\n===Hidden Inventory Arc===\n{{Main|Hidden Inventory Arc}}\nAs a second-year student, Gojo and his best friend [[Suguru Geto]] were tasked with escorting the Star Plasma Vessel, [[Riko Amanai]], a mission that ended with Gojo awakening his [[Reverse Cursed Technique]].\n\n===Shibuya Incident Arc===\nOn October 31, Gojo was sent alone into [[Shibuya]] to rescue civilians trapped behind a curtain, where he was sealed inside the [[Prison Realm]].<ref>Chapter 91</ref>\n\n===Shinjuku Showdown Arc===\nAfter being unsealed, Gojo faced [[Sukuna]] in a decisive battle in [[Shinjuku]], which ended in his death.\n\n==Abilities and Powers==\nGojo is considered the strongest sorcerer of the modern era, able to fight several special grade curses at once.\n\n==Trivia==\n* Gojo's favourite food is sweets.\n\n==References==\n<references/>\n\n[[Category:Characters]]\n[[Category:Jujutsu Sorcerers]]\n[[es:Satoru Gojo]]\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1103,
+          "ns": 0,
+          "title": "Yuji Itadori",
+          "revisions": [
+            {
+              "revid": 412100,
+              "parentid": 412083,
+              "timestamp": "2026-09-20T08:15:42Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Character Infobox\n|name=Yuji Itadori\n|image=Yuji Itadori (Anime).png\n|kanji=虎杖 悠仁\n|romaji=Itadori Yūji\n|species=Human<br />[[Vessel]] of [[Sukuna]]\n|gender=Male\n|affiliation=[[Tokyo Prefectural Jujutsu High School|Tokyo Jujutsu High]]\n|status=Alive\n|technique=[[Divergent Fist]]<br>[[Black Flash]]\n|relatives=[[Jin Itadori]] (Father)<br>[[Choso]] (Half-brother)\n}}\n'''Yuji Itadori''' ({{lang|ja|虎杖 悠仁}}, ''Itadori Yūji'') is the main protagonist of ''Jujutsu Kaisen''. He is a first-year student at [[Tokyo Prefectural Jujutsu High School|Tokyo Jujutsu High]] who becomes the vessel of [[Sukuna|Ryomen Sukuna]] after eating one of his fingers.\n\n==History==\n===Introduction Arc===\nYuji was a high school student in [[Sendai]] with extraordinary physical abilities, who swallowed one of Sukuna's fingers to save his friends.\n\n===Vs. Mahito Arc===\nYuji teamed up with [[Kento Nanami]] to investigate a series of mysterious deaths, leading to his first clash with [[Mahito]].\n\n[[Category:Characters]]\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1104,
+          "ns": 0,
+          "title": "Megumi Fushiguro",
+          "revisions": [
+            {
+              "revid": 411876,
+              "parentid": 411859,
+              "timestamp": "2026-09-11T22:41:05Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Infobox character\n| name        = Megumi Fushiguro\n| jname       = 伏黒 恵\n| rname       = Fushiguro Megumi\n| species     = Human\n| affiliation = [[Tokyo Prefectural Jujutsu High School]]\n| grade       = {{ubl|Grade 2|Semi-Grade 1 (after the [[Shibuya Incident Arc|Shibuya Incident]])}}\n| status      = Alive\n| technique   = [[Ten Shadows Technique]]\n| domain      = [[Chimera Shadow Garden]]\n| relatives   = [[Toji Fushiguro]] (Father)<br>[[Tsumiki Fushiguro]] (Step-sister)\n| family      =\n}}\n'''Megumi Fushiguro''' is a first-year student at [[Tokyo Prefectural Jujutsu High School|Tokyo Jujutsu High]] and a user of the {{Nowrap|[[Ten Shadows Technique]]}}, an inherited technique of the [[Zenin Clan|Zen'in Clan]].{{Citation needed|date=May 2024}}\n\n==History==\n===Fearsome Womb Arc===\nMegumi was sent to retrieve a cursed finger from Sugisawa Third High, where he met Yuji Itadori.\n\n===Shibuya Incident Arc===\nDuring the incident, Megumi fought the curse user Haruta and was later saved by his own shikigami summoning gamble.\n\n[[Category:Characters]]\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1105,
+          "ns": 0,
+          "title": "Mystery Person",
+          "revisions": [
+            {
+              "revid": 409999,
+              "parentid": 409982,
+              "timestamp": "2026-07-30T12:00:00Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Character Infobox\n|name=Mystery Person\n|species=Human\n|status=Unknown\n}}\n{{Stub}}\n\n[[Category:Characters]]\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1106,
+          "ns": 0,
+          "title": "Sukuna",
+          "revisions": [
+            {
+              "revid": 412400,
+              "parentid": 412383,
+              "timestamp": "2026-09-29T19:20:00Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Character Infobox\n|name=Ryomen Sukuna\n|kanji=両面宿儺\n|romaji=Ryōmen Sukuna\n|epithet=King of Curses\n|species=[[Cursed Spirit]]<br>[[Incarnated Sorcerer]]\n|grade=[[Special Grade]]\n|status=Deceased\n|domain=[[Malevolent Shrine]]\n|technique=[[Shrine]]\n}}\n'''Ryomen Sukuna''' is the main antagonist of ''Jujutsu Kaisen''. Known as the King of Curses, he was the strongest sorcerer of the Heian era, whose fingers became cursed objects after his death.\n\n==History==\n===Fearsome Womb Arc===\nSukuna awakened inside Yuji Itadori after the boy swallowed one of his fingers at Sugisawa Third High.\n\n[[Category:Characters]]\n"
+                }
+              }
+            }
+          ],
+          "fixtureRedirects": [
+            "Ryomen Sukuna"
+          ]
+        },
+        {
+          "pageid": 1107,
+          "ns": 0,
+          "title": "Toji Fushiguro",
+          "revisions": [
+            {
+              "revid": 411500,
+              "parentid": 411483,
+              "timestamp": "2026-09-02T06:30:00Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Character Infobox\n|name=Toji Fushiguro\n|kanji=伏黒 甚爾\n|romaji=Fushiguro Tōji\n|species=Human\n|affiliation=[[Zenin Clan]] (formerly)\n|grade=Ungraded\n|status=Deceased\n|relatives=[[Megumi Fushiguro]] (Son)\n|occupation=Sorcerer Killer\n}}\n{{Nihongo|'''Toji Fushiguro'''|伏黒 甚爾|Fushiguro Tōji}} is a sorcerer killer born into the [[Zenin Clan]] without any cursed energy, granting him an extraordinary physique.\n\n==History==\n===Gojo's Past Arc===\nToji was hired to assassinate the Star Plasma Vessel and ambushed Satoru Gojo inside the Jujutsu High barrier.\n\n===Shibuya Incident Arc===\nToji was briefly reincarnated during the incident through a ritual performed by a curse user.\n\n[[Category:Characters]]\n"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
