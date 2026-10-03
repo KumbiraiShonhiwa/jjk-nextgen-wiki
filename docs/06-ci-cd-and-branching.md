@@ -55,7 +55,7 @@ The three job names are the required status checks. Do not rename them without u
 
 | Check | What it does | What it blocks |
 | --- | --- | --- |
-| `verify` | `pnpm install --frozen-lockfile`, `pnpm check` (Astro + TS), `pnpm test` (Vitest, `tests/unit` and `tests/ingest`), `pnpm build`, `pnpm budgets`; uploads `dist/` as an artifact | type errors, failing unit tests, a broken build, a lockfile that is out of sync, or a route over its bundle budget |
+| `verify` | `pnpm install --frozen-lockfile`, `pnpm check` (Astro + TS), `pnpm workflows` (workflow security lint), `pnpm test` (Vitest, `tests/unit` and `tests/ingest`), `pnpm build`, `pnpm budgets`; uploads `dist/` as an artifact | type errors, failing unit tests, a broken build, a lockfile that is out of sync, or a route over its bundle budget |
 | `e2e` | Downloads `dist/`, installs Chromium, runs Playwright (`tests/e2e`) against `pnpm preview`, in normal **and** reduced-motion modes | runtime page errors, broken internal links (a crawl from `/`), spoiler leaks (hidden text, titles, search results), broken interactions (search, graph, takeover, scroll timeline), motion running under `prefers-reduced-motion`, and **axe accessibility violations** on every page template in light and dark |
 | `merge-order` | On PRs: checks base/head against the branching model. On `merge_group` and `push` it passes immediately so the required check is always satisfied | `main` ← anything but `stable`; `stable` ← anything but `develop`; `develop` ← `stable`/`main`; any PR whose base is another feature branch (unmerged stack) |
 
@@ -69,7 +69,7 @@ Runs on the same PR cancel each other; pushes to long-lived branches never cance
 Run the same checks locally:
 
 ```sh
-pnpm check && pnpm test && pnpm build && pnpm budgets
+pnpm check && pnpm test && pnpm build && pnpm budgets && pnpm workflows
 pnpm test:e2e      # serves dist/ with `pnpm preview`; needs `pnpm exec playwright install chromium` once
 ```
 
@@ -122,6 +122,30 @@ A human reviews and squash-merges the PR like any other change into `develop`. C
 **Token.** The PR is created with `secrets.PROMOTE_TOKEN || secrets.GITHUB_TOKEN`. Because a PR opened or updated with `GITHUB_TOKEN` does not trigger `pull_request` workflows, **without `PROMOTE_TOKEN` the required checks (`verify`, `e2e`, `merge-order`) will not run on the sync PR automatically**. The job then logs a notice; to start CI, close and reopen the PR or push a commit to `content/sync` yourself. For this workflow, `PROMOTE_TOKEN` also needs *Contents: read and write*, since it pushes the `content/sync` branch (Promote only needs *Contents: read*).
 
 Run the same steps locally with `pnpm ingest --dry-run` (no writes to `content/`) or `pnpm ingest`, followed by `pnpm check && pnpm test && pnpm build`.
+
+## Security
+
+Workflow hardening and scanning added in `.github/workflows/security.yml`. **None of the scans below are required status checks yet**: the rulesets in `.github/rulesets/` are owned by the repository owner and still list only `verify`, `e2e` and `merge-order`.
+
+| Job (workflow `Security`) | What it does |
+| --- | --- |
+| `CodeQL analysis (javascript-typescript)` | CodeQL static analysis of the JS/TS code; results appear under *Security → Code scanning*. Also runs weekly. |
+| `Dependency review (fail on high severity)` | PRs only. Fails when the PR adds or upgrades a dependency with a high or critical advisory. Needs the dependency graph enabled (*Settings → Advanced Security*). |
+| `Dependency audit (pnpm audit, production, high+)` | `pnpm audit --prod --audit-level=high` against the lockfile. Can start failing without a code change when a new advisory is published. |
+| `Secret scan (gitleaks)` | gitleaks over the full history on PRs and pushes. |
+
+Hardening applied to every workflow:
+
+- Top-level `permissions: contents: read`; extra scopes (`pull-requests: write`, `contents: write`, `security-events: write`) are granted per job only where needed.
+- `persist-credentials: false` on every checkout (no job pushes through the checkout credentials).
+- Every third-party action is pinned to a full commit SHA with a `# vX.Y.Z` comment. Dependabot (`.github/dependabot.yml`, weekly, grouped) opens PRs to `develop` for GitHub Actions and npm updates, so pins stay current.
+- No `pull_request_target`. `deploy.yml` runs only on push to `main`, so Cloudflare secrets never reach PR-supplied code.
+- Dependencies install with `--frozen-lockfile --ignore-scripts` in CI, deploy and content sync. The build, tests and budgets do not need lifecycle scripts (the Playwright browser is installed by an explicit step).
+- `.github/CODEOWNERS` assigns `.github/**`, `scripts/**`, `package.json` and `pnpm-lock.yaml` to the owner; `SECURITY.md` describes private vulnerability reporting.
+
+**Guard.** `pnpm workflows` (`scripts/check-workflows.mjs`, logic in `scripts/workflow-lint.mjs`, tests in `tests/unit/workflows.test.ts`) runs in the `verify` job and fails when a workflow lacks top-level `permissions`, uses an action that is not pinned to a 40-character SHA (local `./` actions are ignored), or uses `pull_request_target`.
+
+**Optional follow-up (repository owner).** To make a scan blocking, add its job name as another entry in `required_status_checks` in the relevant `.github/rulesets/*.json` (for example `{ "context": "Secret scan (gitleaks)" }` next to `verify`) and re-import the ruleset, or add it in *Settings → Rules*. Do this only after the job has been green on `develop`; the Security workflow runs on `push` to `stable` and `main` as well, but a required check on a branch must also run on `merge_group` for `develop` (add that trigger first). Also enable private vulnerability reporting under *Settings → Advanced Security*.
 
 ## Branch rules
 

@@ -16,7 +16,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
   group: promote-${{ inputs.target }}
@@ -26,6 +25,9 @@ jobs:
   promote:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - name: Open or report the promotion PR
         env:
