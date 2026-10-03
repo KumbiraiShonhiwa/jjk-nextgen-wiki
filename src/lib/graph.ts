@@ -116,3 +116,37 @@ export function adjacentArcs(ix: Index, slug: string): { prev?: Arc; next?: Arc 
 export function maxLevel(a: SpoilerLevel, b: SpoilerLevel): SpoilerLevel {
   return isVisible(a, b) ? b : a;
 }
+
+export interface GraphNode {
+  slug: string;
+  label: string;
+  level: SpoilerLevel;
+  accent?: string;
+  affiliations: string[];
+}
+
+export interface GraphLink {
+  id: string;
+  from: string;
+  to: string;
+  kind: Edge['kind'];
+  label: string;
+  /** The stricter of the edge's own level and both endpoints': a link reveals both people. */
+  level: SpoilerLevel;
+}
+
+/** Character relationship graph: every character, and every edge between two characters. */
+export function relationshipGraph(ix: Index): { nodes: GraphNode[]; links: GraphLink[] } {
+  const nodes = [...ix.characters.values()].map((c) => ({ slug: c.slug, label: c.name.en, level: c.level, accent: c.accent, affiliations: c.affiliations }));
+  const links = ix.edges
+    .filter((e) => ix.characters.has(e.from) && ix.characters.has(e.to))
+    .map((e) => ({
+      id: e.id,
+      from: e.from,
+      to: e.to,
+      kind: e.kind,
+      label: e.label ?? e.kind.replace(/-/g, ' '),
+      level: [e.level, ix.characters.get(e.from)!.level, ix.characters.get(e.to)!.level].reduce(maxLevel),
+    }));
+  return { nodes, links };
+}

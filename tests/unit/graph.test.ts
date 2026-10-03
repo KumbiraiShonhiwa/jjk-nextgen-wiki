@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { adjacentArcs, buildIndex, findDanglingRefs, maxLevel, membersOf, neighbours, safeValue, visibleValues, type Dataset } from '../../src/lib/graph';
+import { adjacentArcs, buildIndex, findDanglingRefs, maxLevel, membersOf, neighbours, relationshipGraph, safeValue, visibleValues, type Dataset } from '../../src/lib/graph';
 
 const empty: Dataset = { characters: [], techniques: [], domains: [], arcs: [], organizations: [], locations: [], edges: [] };
 const person = (slug: string, extra = {}) =>
@@ -70,5 +70,33 @@ describe('maxLevel', () => {
     expect(maxLevel('none', 'manga')).toBe('manga');
     expect(maxLevel('anime-s3', 'anime-s1')).toBe('anime-s3');
     expect(maxLevel('anime-s2', 'anime-s2')).toBe('anime-s2');
+  });
+});
+
+describe('relationshipGraph', () => {
+  const ix = buildIndex({
+    ...empty,
+    characters: [person('a'), person('b', { level: 'anime-s2' }), person('c')],
+    organizations: [{ slug: 'org', level: 'none', name: { en: 'Org' }, kind: 'school', summary: [{ value: 'x', level: 'none' }], fixture: true, provenance: [] }],
+    edges: [
+      { id: 'a--ally--b', from: 'a', to: 'b', kind: 'ally', level: 'none', provenance: [] },
+      { id: 'a--rival--c', from: 'a', to: 'c', kind: 'rival', label: 'old rival', level: 'anime-s1', provenance: [] },
+      { id: 'a--member-of--org', from: 'a', to: 'org', kind: 'member-of', level: 'none', provenance: [] },
+    ],
+  });
+  const { nodes, links } = relationshipGraph(ix);
+
+  it('has a node per character and drops edges to non-characters', () => {
+    expect(nodes.map((n) => n.slug)).toEqual(['a', 'b', 'c']);
+    expect(links.map((l) => l.id)).toEqual(['a--ally--b', 'a--rival--c']);
+  });
+
+  it('gates a link at the stricter of its own level and its endpoints', () => {
+    expect(links.find((l) => l.id === 'a--ally--b')!.level).toBe('anime-s2');
+    expect(links.find((l) => l.id === 'a--rival--c')!.level).toBe('anime-s1');
+  });
+
+  it('labels links, falling back to the kind', () => {
+    expect(links.map((l) => l.label)).toEqual(['ally', 'old rival']);
   });
 });
