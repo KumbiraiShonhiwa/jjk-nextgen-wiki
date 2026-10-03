@@ -1,0 +1,23 @@
+# jjk-nextgen-wiki
+
+An unofficial, motion-first Jujutsu Kaisen encyclopedia built with Astro and Anime.js.
+
+> Unofficial fan project. Jujutsu Kaisen © Gege Akutami / Shueisha, MAPPA. Not affiliated with or endorsed by the rights holders.
+
+## Status
+
+Foundation phase. See [`docs/`](docs/):
+
+| # | Document |
+| --- | --- |
+| 01 | [Product Vision & Principles](docs/01-product-vision.md) |
+| 02 | [Content & Data Model](docs/02-content-data-model.md) |
+| 03 | [Data Acquisition & Licensing Plan](docs/03-data-acquisition-licensing.md) |
+| 04 | [Information Architecture](docs/04-information-architecture.md) |
+| 05 | [Tech Stack & ADRs](docs/05-tech-stack-adrs.md) |
+
+## Licences
+
+- **Code** is released under the [MIT licence](LICENSE).
+- **Content** in `content/` and text rendered on the site is adapted from English Wikipedia and the Jujutsu Kaisen Fandom wiki and released under [CC BY-SA 4.0](content/LICENSE). Each page credits its source article and authors.
+- No images from either wiki are used.
