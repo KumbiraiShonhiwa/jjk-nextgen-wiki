@@ -9,6 +9,7 @@
   import { tick, untrack } from 'svelte';
   import { readLevel, SPOILER_EVENT } from '../lib/spoiler';
   import { allowedLevels, canonicalUrl, rank, type Hit, type Pagefind } from '../lib/search';
+  import { hitHref, sitePath } from '../lib/site';
   import { durations, eases, staggers } from '../motion/tokens';
   import { prefersReducedMotion } from '../motion/reduced';
 
@@ -30,7 +31,8 @@
     status = 'loading';
     try {
       // Built by `pagefind --site dist` after `astro build`; absent in `astro dev`.
-      const url = '/pagefind/pagefind.js';
+      // import() resolves against this module, not the page, so hand it an absolute URL.
+      const url = new URL(sitePath('/pagefind/pagefind.js'), document.baseURI).href;
       pagefind = (await import(/* @vite-ignore */ url)) as Pagefind;
       await pagefind.options({ excerptLength: 16 });
       await pagefind.init();
@@ -94,7 +96,7 @@
   function go(hit: Hit | undefined) {
     if (!hit) return;
     close();
-    void navigate(hit.url);
+    void navigate(hitHref(hit.url));
   }
 
   function onInputKey(e: KeyboardEvent) {
