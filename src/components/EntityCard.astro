@@ -29,6 +29,7 @@ const { href, title, subtitle, meta, accent, level = 'none', redact = false } = 
       class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
       style="background: radial-gradient(240px circle at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%);"
       aria-hidden="true"></span>
+    <div class="relative mb-4 empty:hidden"><slot name="art" /></div>
     <span class="relative block font-display text-step-2 leading-tight">{title}</span>
     {subtitle && <span class="relative mt-1 block text-step--1 text-paper-dim" lang="ja">{subtitle}</span>}
     {meta && <span class="relative mt-4 block text-step--1 uppercase tracking-[0.14em] text-paper-dim">{meta}</span>}

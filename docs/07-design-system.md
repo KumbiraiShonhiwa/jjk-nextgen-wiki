@@ -56,3 +56,12 @@ Every level ships in the HTML. An inline head script sets `html[data-spoiler]` f
 - The spoiler control is a proper `radiogroup` with roving tabindex and arrow-key support.
 - Split text keeps an accessible copy (Anime.js `splitText` adds a visually hidden original and marks pieces `aria-hidden`).
 - Placeholders carry a `title` explaining how to reveal; hidden content is `display: none`, so screen readers never read spoilers either.
+
+## Character art
+
+Every character shows a 3:4 portrait (`CharacterArt.astro`).
+
+- **Placeholder:** until real art exists, a deterministic generative portrait is drawn from the slug (rings, crossing blade lines, monogram) in the character's accent colour. It is decorative (`aria-hidden`).
+- **AI-generated art:** `OPENAI_API_KEY=... pnpm art` (optionally `--only=slug,slug`, `--force`, `--dry-run`) generates `public/art/<slug>.webp` and writes an `art` record (`src`, `alt`, `model`, `prompt`, `generatedAt`) into the character JSON. Prompts are built only from our own records (`src/lib/art.ts`). Failures never touch `content/`.
+- **Labelling:** real art always carries an "AI-generated" caption, and the record keeps the model and prompt as provenance.
+- **Provider:** `OpenAIProvider` in `scripts/art/generate.ts` implements the small `ImageProvider` interface; swap it to change provider.

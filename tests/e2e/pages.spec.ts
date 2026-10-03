@@ -83,3 +83,12 @@ test('organization pages list members and inherited techniques', async ({ page }
   await expect(page.getByRole('region', { name: 'Members' }).getByRole('link', { name: /Satoru Gojo/ })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Inherited techniques' }).getByRole('link', { name: /Limitless/ })).toBeVisible();
 });
+
+test('every character card and page has a portrait', async ({ page }) => {
+  await page.goto('/characters');
+  const cards = await page.locator('[data-grid-item]').count();
+  expect(await page.locator('[data-grid-item] [data-portrait]:visible').count()).toBeGreaterThanOrEqual(1);
+  expect(cards).toBeGreaterThan(0);
+  await page.goto('/characters/fushiguro-megumi');
+  await expect(page.locator('[data-portrait]').first()).toBeVisible();
+});
