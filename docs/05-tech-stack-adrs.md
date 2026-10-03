@@ -63,7 +63,7 @@ Fully static output. No server, no database at runtime. All interactivity is cli
 
 ## ADR-009 · Language and tooling
 
-- TypeScript 7 in strict mode, pnpm, ESLint + Prettier, Vitest (unit), Playwright (e2e, visual), Lighthouse CI and a bundle-size check in GitHub Actions.
+- TypeScript 6 in strict mode (7 once `@astrojs/svelte` supports it), pnpm, ESLint + Prettier, Vitest (unit), Playwright (e2e, visual), Lighthouse CI and a bundle-size check in GitHub Actions.
 
 ## ADR-010 · Code and content licences
 

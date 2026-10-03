@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+import Badge from '../../components/Badge.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import EntityHeader from '../../components/EntityHeader.astro';
+import Gated from '../../components/Gated.astro';
+import GatedText from '../../components/GatedText.astro';
+import Section from '../../components/Section.astro';
+import Sources from '../../components/Sources.astro';
+import SpoilerWall from '../../components/SpoilerWall.astro';
+import { loadIndex } from '../../lib/content';
+import { characterMeta, titleCase } from '../../lib/format';
+import { maxLevel, safeValue } from '../../lib/graph';
+import { hrefFor, techniqueTitle } from '../../lib/routes';
+import type { Technique } from '../../content/schemas';
+
+export async function getStaticPaths() {
+  const ix = await loadIndex();
+  return [...ix.techniques.values()].map((technique) => ({ params: { slug: technique.slug }, props: { technique } }));
+}
+
+const { technique: t } = Astro.props as { technique: Technique };
+const ix = await loadIndex();
+const users = t.users.map((s) => ix.characters.get(s)!);
+const domain = t.domain ? ix.domains.get(t.domain) : undefined;
+const clan = t.clan ? ix.organizations.get(t.clan) : undefined;
+const accent = users[0]?.accent ?? 'var(--ce-blue)';
+const description = (t.level === 'none' && safeValue(t.summary)) || 'A cursed technique in the Jujutsu Kaisen encyclopedia.';
+---
+
+<Base title={techniqueTitle(t)} description={description}>
+  <article class="py-12" style={`--accent:${accent}`}>
+    <a href="/techniques" class="text-step--1 text-paper-dim hover:text-paper">← Techniques</a>
+    <SpoilerWall level={t.level} type="Technique">
+      <EntityHeader title={t.name.en} ja={t.name.ja}>
+        <Fragment slot="badges">
+          <Badge tone="violet">{titleCase(t.kind)}</Badge>
+          {clan && <Gated level={clan.level}><Badge>{clan.name.en}</Badge></Gated>}
+        </Fragment>
+      </EntityHeader>
+
+      <div class="mt-10 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div>
+          <GatedText values={t.summary} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
+
+          {
+            t.mechanics.length > 0 && (
+              <Section id="mechanics" title="How it works">
+                <ol class="max-w-prose space-y-4">
+                  {t.mechanics.map((m, i) => (
+                    <Gated level={m.level} as="li" class="grid grid-cols-[2rem_1fr] gap-3">
+                      <span class="font-display text-step-1 text-[var(--accent)]">{i + 1}</span>
+                      <span class="leading-relaxed">{m.value}</span>
+                    </Gated>
+                  ))}
+                </ol>
+              </Section>
+            )
+          }
+
+          {
+            domain && (
+              <Section id="domain" title="Related Domain Expansion">
+                <Gated level={domain.level} as="div" scramble>
+                  <a href={hrefFor('domains', domain.slug)} class="font-display text-step-2 underline decoration-[var(--accent)] underline-offset-4">
+                    {domain.name.en}
+                  </a>
+                </Gated>
+              </Section>
+            )
+          }
+        </div>
+
+        <aside>
+          {
+            users.length > 0 && (
+              <Section id="users" title="Users" class="">
+                <div data-cascade class="grid gap-3">
+                  {users.map((c) => (
+                    <EntityCard href={hrefFor('characters', c.slug)} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={maxLevel(c.level, t.level)} />
+                  ))}
+                </div>
+              </Section>
+            )
+          }
+          {
+            clan && (
+              <Section id="clan" title="Inherited by">
+                <Gated level={clan.level} as="div">
+                  <a href={hrefFor('organizations', clan.slug)} class="underline decoration-[var(--accent)] underline-offset-4">
+                    {clan.name.en}
+                  </a>
+                </Gated>
+              </Section>
+            )
+          }
+        </aside>
+      </div>
+
+      <Sources provenance={t.provenance} fixture={t.fixture} />
+    </SpoilerWall>
+  </article>
+</Base>

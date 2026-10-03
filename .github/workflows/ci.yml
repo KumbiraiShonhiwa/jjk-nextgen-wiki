@@ -1,0 +1,115 @@
+# Pipeline-as-code for every change. The job names below (verify, e2e, merge-order)
+# are required status checks in the branch rulesets: do not rename them.
+name: CI
+
+on:
+  pull_request:
+    # `edited` re-runs merge-order when a PR is retargeted (e.g. a stacked PR moving to develop).
+    types: [opened, edited, synchronize, reopened]
+  merge_group:
+  push:
+    branches: [develop, stable, main]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Type and Astro diagnostics
+        run: pnpm check
+      - name: Unit tests (Vitest)
+        run: pnpm test
+      - name: Build static site
+        run: pnpm build
+      - name: Bundle budgets
+        run: pnpm budgets
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  e2e:
+    name: e2e
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Smoke tests (normal and reduced motion)
+        run: pnpm test:e2e
+      - name: Upload Playwright traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: test-results/
+          retention-days: 7
+
+  merge-order:
+    name: merge-order
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Enforce develop -> stable -> main and stacked-PR order
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          if [ "$EVENT" != "pull_request" ]; then
+            echo "merge-order only applies to pull requests ($EVENT): passing."
+            exit 0
+          fi
+          echo "PR: $HEAD -> $BASE"
+          case "$BASE" in
+            main)
+              if [ "$HEAD" != "stable" ]; then
+                echo "::error title=merge-order::Only 'stable' may be merged into 'main' (head is '$HEAD'). Promote develop -> stable first."
+                exit 1
+              fi ;;
+            stable)
+              if [ "$HEAD" != "develop" ]; then
+                echo "::error title=merge-order::Only 'develop' may be merged into 'stable' (head is '$HEAD'). Merge your branch into develop first."
+                exit 1
+              fi ;;
+            develop)
+              if [ "$HEAD" = "stable" ] || [ "$HEAD" = "main" ]; then
+                echo "::error title=merge-order::'$HEAD' must not be merged back into 'develop'."
+                exit 1
+              fi ;;
+            *)
+              echo "::error title=merge-order::Stacked on $BASE; merge that PR first. This PR is retargeted to develop automatically when it lands."
+              exit 1 ;;
+          esac
+          echo "Merge order OK."

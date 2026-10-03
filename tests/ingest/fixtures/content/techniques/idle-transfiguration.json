@@ -1,0 +1,20 @@
+{
+  "slug": "idle-transfiguration",
+  "name": {
+    "en": "Idle Transfiguration",
+    "ja": "無為転変"
+  },
+  "kind": "innate",
+  "users": [
+    "mahito"
+  ],
+  "domain": "self-embodiment-of-perfection",
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "A technique that reshapes the soul, and with it the body, of anything its user touches.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}

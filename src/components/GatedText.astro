@@ -1,0 +1,20 @@
+---
+import type { SpoilerLevel } from '../content/schemas';
+import Gated from './Gated.astro';
+
+interface Props {
+  values: { value: string; level: SpoilerLevel }[];
+  class?: string;
+}
+const { values, class: className = 'space-y-4' } = Astro.props;
+---
+
+<div class={className}>
+  {
+    values.map((v) => (
+      <Gated level={v.level} as="p">
+        {v.value}
+      </Gated>
+    ))
+  }
+</div>

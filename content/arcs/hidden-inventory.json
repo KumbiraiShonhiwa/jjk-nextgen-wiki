@@ -1,0 +1,17 @@
+{
+  "slug": "hidden-inventory",
+  "name": "Hidden Inventory",
+  "order": 5,
+  "level": "anime-s2",
+  "summary": [
+    {
+      "value": "A look back at Satoru Gojo and Suguru Geto during their student days.",
+      "level": "anime-s2"
+    }
+  ],
+  "characters": [
+    "gojo-satoru",
+    "geto-suguru"
+  ],
+  "fixture": true
+}

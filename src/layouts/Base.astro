@@ -1,0 +1,99 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import SiteHeader from '../components/SiteHeader.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'An unofficial, motion-first Jujutsu Kaisen encyclopedia.' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · JJK NextGen Wiki</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={`${title} · JJK NextGen Wiki`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0b0b10" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Runs before first paint so gated content never flashes; re-applied after each client-side navigation. -->
+    <script is:inline>
+      (function () {
+        var levels = ['anime-s1', 'anime-s2', 'anime-s3', 'manga'];
+        function apply() {
+          var level = 'anime-s1';
+          try {
+            var saved = localStorage.getItem('jjk:spoiler-level');
+            if (levels.indexOf(saved) !== -1) level = saved;
+          } catch (e) {}
+          document.documentElement.dataset.spoiler = level;
+          document.documentElement.classList.add('js-motion');
+        }
+        apply();
+        document.addEventListener('astro:after-swap', apply);
+      })();
+    </script>
+    <ClientRouter />
+  </head>
+  <body class="grain min-h-dvh bg-ink text-paper antialiased">
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-ink-2 focus:px-3 focus:py-2">
+      Skip to content
+    </a>
+    <SiteHeader />
+    <main id="main" class="mx-auto max-w-6xl px-4">
+      <slot />
+    </main>
+    <footer class="mx-auto mt-24 max-w-6xl border-t border-line px-4 py-8 text-step--1 text-paper-dim">
+      <p>
+        Unofficial fan project. Jujutsu Kaisen © Gege Akutami / Shueisha, MAPPA. Text adapted from Wikipedia and the
+        Jujutsu Kaisen Wiki under <a class="underline" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
+      </p>
+      <p class="mt-3 flex gap-4">
+        <a class="underline hover:text-paper" href="/about">About and sources</a>
+        <a class="underline hover:text-paper" href="https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/new">Report a problem</a>
+      </p>
+    </footer>
+  </body>
+</html>
+
+<script>
+  import { SPOILER_EVENT, newlyVisible } from '../lib/spoiler';
+  import { kineticHeading, motionScope, prefersReducedMotion, revealCascade, revealSpoilers, showAll, tiltCard } from '../motion';
+  import type { SpoilerLevel } from '../content/schemas';
+
+  let cleanups: (() => void)[] = [];
+
+  // Page-agnostic motion: any page opts in with data-kinetic (h1) or data-cascade (grid/list of [data-reveal]).
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('[data-kinetic]').forEach((h) => {
+      motionScope(h, ({ reduced }) => void (!reduced && kineticHeading(h)));
+    });
+    document.querySelectorAll<HTMLElement>('[data-cascade]').forEach((el) => {
+      motionScope(el, ({ reduced }) => (reduced ? showAll(el) : void revealCascade(el)));
+    });
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    cleanups.forEach((fn) => fn());
+    cleanups = [];
+    if (prefersReducedMotion() || !matchMedia('(pointer: fine)').matches) return;
+    document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => cleanups.push(tiltCard(card)));
+  });
+
+  document.addEventListener(SPOILER_EVENT, (e) => {
+    if (prefersReducedMotion()) return;
+    const { level, previous } = (e as CustomEvent<{ level: SpoilerLevel; previous: SpoilerLevel }>).detail;
+    const unlocked = newlyVisible(previous, level);
+    if (!unlocked.length) return;
+    const selector = unlocked.map((l) => `[data-level='${l}']`).join(',');
+    revealSpoilers([...document.querySelectorAll<HTMLElement>(selector)]);
+  });
+</script>

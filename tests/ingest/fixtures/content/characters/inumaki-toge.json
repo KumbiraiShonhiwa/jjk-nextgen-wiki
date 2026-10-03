@@ -1,0 +1,33 @@
+{
+  "slug": "inumaki-toge",
+  "name": {
+    "en": "Toge Inumaki",
+    "ja": "狗巻 棘"
+  },
+  "species": [
+    {
+      "value": "human",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "semi-1",
+      "level": "none"
+    }
+  ],
+  "affiliations": [
+    "tokyo-jujutsu-high"
+  ],
+  "techniques": [
+    "cursed-speech"
+  ],
+  "accent": "#b9c2d0",
+  "summary": [
+    {
+      "value": "A second-year student at Tokyo Jujutsu High who speaks only in rice ball ingredients to keep his cursed speech in check.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

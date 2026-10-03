@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+import Badge from '../../components/Badge.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import EntityHeader from '../../components/EntityHeader.astro';
+import Gated from '../../components/Gated.astro';
+import GatedText from '../../components/GatedText.astro';
+import Section from '../../components/Section.astro';
+import Sources from '../../components/Sources.astro';
+import SpoilerWall from '../../components/SpoilerWall.astro';
+import { loadIndex } from '../../lib/content';
+import { characterMeta, titleCase } from '../../lib/format';
+import { maxLevel, membersOf, safeValue } from '../../lib/graph';
+import { hrefFor, organizationTitle } from '../../lib/routes';
+import type { Organization } from '../../content/schemas';
+
+export async function getStaticPaths() {
+  const ix = await loadIndex();
+  return [...ix.organizations.values()].map((organization) => ({ params: { slug: organization.slug }, props: { organization } }));
+}
+
+const { organization: o } = Astro.props as { organization: Organization };
+const ix = await loadIndex();
+const members = membersOf(ix, o.slug);
+const techniques = [...ix.techniques.values()].filter((t) => t.clan === o.slug);
+const location = o.location ? ix.locations.get(o.location) : undefined;
+const description = (o.level === 'none' && safeValue(o.summary)) || 'An organization in the Jujutsu Kaisen encyclopedia.';
+---
+
+<Base title={organizationTitle(o)} description={description}>
+  <article class="py-12" style="--accent: var(--ce-violet)">
+    <a href="/organizations" class="text-step--1 text-paper-dim hover:text-paper">← Organizations</a>
+    <SpoilerWall level={o.level} type="Organization">
+      <EntityHeader title={o.name.en} ja={o.name.ja}>
+        <Fragment slot="badges">
+          <Badge tone="violet">{titleCase(o.kind)}</Badge>
+          {location && <Gated level={location.level}><Badge>{location.name.en}</Badge></Gated>}
+        </Fragment>
+      </EntityHeader>
+
+      <div class="mt-10">
+        <GatedText values={o.summary} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
+
+        {
+          members.length > 0 && (
+            <Section id="members" title="Members">
+              <div data-cascade class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                {members.map((c) => (
+                  <EntityCard href={hrefFor('characters', c.slug)} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={maxLevel(c.level, o.level)} />
+                ))}
+              </div>
+            </Section>
+          )
+        }
+
+        {
+          techniques.length > 0 && (
+            <Section id="techniques" title="Inherited techniques">
+              <div data-cascade class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {techniques.map((t) => (
+                  <EntityCard href={hrefFor('techniques', t.slug)} title={t.name.en} subtitle={t.name.ja} level={maxLevel(t.level, o.level)} />
+                ))}
+              </div>
+            </Section>
+          )
+        }
+      </div>
+
+      <Sources provenance={o.provenance} fixture={o.fixture} />
+    </SpoilerWall>
+  </article>
+</Base>

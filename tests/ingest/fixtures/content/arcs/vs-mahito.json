@@ -1,0 +1,18 @@
+{
+  "slug": "vs-mahito",
+  "name": "Vs. Mahito",
+  "order": 2,
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "Itadori teams up with Kento Nanami to investigate a series of deaths caused by a new kind of curse.",
+      "level": "anime-s1"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "nanami-kento",
+    "mahito"
+  ],
+  "fixture": true
+}
