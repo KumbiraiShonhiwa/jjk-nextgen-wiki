@@ -31,24 +31,10 @@ const characters = [...ix.characters.values()].filter((c) => c.level === 'none')
 </Base>
 
 <script>
-  import { motionScope, kineticHeading, drawSigil, revealCascade, showAll } from '../motion';
+  import { motionScope, drawSigil } from '../motion';
 
-  function init() {
-    const hero = document.querySelector<HTMLElement>('[data-hero]');
-    const cascade = document.querySelector<HTMLElement>('[data-cascade]');
-    if (hero) {
-      motionScope(hero, ({ reduced }) => {
-        if (reduced) return;
-        const heading = hero.querySelector<HTMLElement>('[data-kinetic]');
-        const sigil = hero.querySelector<SVGSVGElement>('[data-sigil]');
-        if (heading) kineticHeading(heading);
-        if (sigil) drawSigil(sigil);
-      });
-    }
-    if (cascade) {
-      motionScope(cascade, ({ reduced }) => (reduced ? showAll(cascade) : void revealCascade(cascade)));
-    }
-  }
-
-  document.addEventListener('astro:page-load', init);
+  document.addEventListener('astro:page-load', () => {
+    const sigil = document.querySelector<SVGSVGElement>('[data-hero] [data-sigil]');
+    if (sigil) motionScope(sigil, ({ reduced }) => void (!reduced && drawSigil(sigil)));
+  });
 </script>

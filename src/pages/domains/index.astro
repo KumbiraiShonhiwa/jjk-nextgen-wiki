@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import { loadIndex } from '../../lib/content';
+import { hrefFor } from '../../lib/routes';
+
+const ix = await loadIndex();
+const domains = [...ix.domains.values()].sort((a, b) => a.name.en.localeCompare(b.name.en));
+---
+
+<Base title="Domain Expansions" description="The Domain Expansions of the Jujutsu Kaisen encyclopedia, each behind its spoiler level.">
+  <section data-cascade class="py-12">
+    <h1 data-kinetic class="font-display text-step-5 leading-none">Domain Expansions</h1>
+    <p class="mt-3 max-w-prose text-paper-dim">
+      A domain is a barrier that turns the user's innate technique into a place. Each one below unlocks at the point in the story where it first appears.
+    </p>
+    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      {
+        domains.map((d) => {
+          const user = ix.characters.get(d.user)!;
+          return (
+            <EntityCard
+              href={hrefFor('domains', d.slug)}
+              title={d.name.en}
+              subtitle={d.name.ja}
+              meta={user.name.en}
+              accent={d.palette?.[1] ?? user.accent}
+              level={d.level}
+              redact
+            />
+          );
+        })
+      }
+    </div>
+  </section>
+</Base>

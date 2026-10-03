@@ -98,3 +98,21 @@ export function visibleValues<T>(values: { value: T; level: SpoilerLevel }[], se
 export function safeValue<T>(values: { value: T; level: SpoilerLevel }[]): T | undefined {
   return values.find((v) => v.level === 'none')?.value;
 }
+
+/** Characters affiliated with an organization, in name order. */
+export function membersOf(ix: Index, org: string): Character[] {
+  return [...ix.characters.values()].filter((c) => c.affiliations.includes(org)).sort((a, b) => a.name.en.localeCompare(b.name.en));
+}
+
+/** The arcs either side of `slug` in story order. */
+export function adjacentArcs(ix: Index, slug: string): { prev?: Arc; next?: Arc } {
+  const arcs = [...ix.arcs.values()];
+  const i = arcs.findIndex((a) => a.slug === slug);
+  if (i === -1) return {};
+  return { prev: arcs[i - 1], next: arcs[i + 1] };
+}
+
+/** The stricter of two levels: content about A in context B is only safe once both are. */
+export function maxLevel(a: SpoilerLevel, b: SpoilerLevel): SpoilerLevel {
+  return isVisible(a, b) ? b : a;
+}

@@ -1,0 +1,123 @@
+---
+import Base from '../../layouts/Base.astro';
+import Badge from '../../components/Badge.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import EntityHeader from '../../components/EntityHeader.astro';
+import Gated from '../../components/Gated.astro';
+import GatedText from '../../components/GatedText.astro';
+import Section from '../../components/Section.astro';
+import Sources from '../../components/Sources.astro';
+import SpoilerWall from '../../components/SpoilerWall.astro';
+import { loadIndex } from '../../lib/content';
+import { chapterRange, characterMeta, episodeRange } from '../../lib/format';
+import { adjacentArcs, maxLevel } from '../../lib/graph';
+import { arcTitle, hrefFor } from '../../lib/routes';
+import type { Arc } from '../../content/schemas';
+
+export async function getStaticPaths() {
+  const ix = await loadIndex();
+  return [...ix.arcs.values()].map((arc) => ({ params: { slug: arc.slug }, props: { arc } }));
+}
+
+const { arc: a } = Astro.props as { arc: Arc };
+const ix = await loadIndex();
+const cast = a.characters.map((s) => ix.characters.get(s)!);
+const locations = a.locations.map((s) => ix.locations.get(s)!);
+const { prev, next } = adjacentArcs(ix, a.slug);
+const chapters = chapterRange(a.chapters);
+const episodes = episodeRange(a.episodes);
+---
+
+<Base title={arcTitle(a)} description={`Story arc ${a.order} of Jujutsu Kaisen.`}>
+  <article class="py-12" style="--accent: var(--ce-blue)">
+    <a href="/arcs" class="text-step--1 text-paper-dim hover:text-paper">← Arcs</a>
+    <SpoilerWall level={a.level}>
+      <EntityHeader title={a.name} eyebrow={`Arc ${a.order}`}>
+        <Fragment slot="badges">
+          {chapters && <Badge tone="blue">{chapters}</Badge>}
+          {episodes && <Badge>{episodes}</Badge>}
+        </Fragment>
+      </EntityHeader>
+
+      <div class="mt-10 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div>
+          <GatedText values={a.summary} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
+
+          {
+            a.events.length > 0 && (
+              <Section id="events" title="Key events">
+                <ol data-cascade class="relative space-y-5 border-l border-line pl-6">
+                  {a.events.map((e) => (
+                    <Gated level={e.level} as="li">
+                      <div data-reveal>
+                        <p class="font-semibold">{e.title}</p>
+                        {e.detail && <p class="mt-1 text-paper-dim">{e.detail}</p>}
+                      </div>
+                    </Gated>
+                  ))}
+                </ol>
+              </Section>
+            )
+          }
+
+          {
+            cast.length > 0 && (
+              <Section id="cast" title="Cast">
+                <div data-cascade class="grid gap-3 sm:grid-cols-2">
+                  {cast.map((c) => (
+                    <EntityCard href={hrefFor('characters', c.slug)} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={maxLevel(c.level, a.level)} />
+                  ))}
+                </div>
+              </Section>
+            )
+          }
+        </div>
+
+        <aside>
+          {
+            locations.length > 0 && (
+              <Section id="locations" title="Locations" class="">
+                <ul class="space-y-1 text-paper-dim">
+                  {locations.map((l) => (
+                    <Gated level={l.level} as="li">
+                      {l.name.en}
+                    </Gated>
+                  ))}
+                </ul>
+              </Section>
+            )
+          }
+        </aside>
+      </div>
+
+      <Sources provenance={a.provenance} fixture={a.fixture} />
+    </SpoilerWall>
+
+    <nav class="mt-12 grid gap-4 border-t border-line pt-6 sm:grid-cols-2" aria-label="Adjacent arcs">
+      {
+        prev && (
+          <div>
+            <p class="text-step--1 text-paper-dim">← Previous arc</p>
+            <Gated level={prev.level} as="div">
+              <a href={hrefFor('arcs', prev.slug)} rel="prev" class="font-display text-step-2 hover:text-ce-blue">
+                {prev.name}
+              </a>
+            </Gated>
+          </div>
+        )
+      }
+      {
+        next && (
+          <div class="sm:col-start-2 sm:text-right">
+            <p class="text-step--1 text-paper-dim">Next arc →</p>
+            <Gated level={next.level} as="div">
+              <a href={hrefFor('arcs', next.slug)} rel="next" class="font-display text-step-2 hover:text-ce-blue">
+                {next.name}
+              </a>
+            </Gated>
+          </div>
+        )
+      }
+    </nav>
+  </article>
+</Base>

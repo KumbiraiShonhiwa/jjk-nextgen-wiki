@@ -14,18 +14,9 @@ const characters = [...(await loadIndex()).characters.values()].sort((a, b) => a
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
         characters.map((c) => (
-          <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={c.level} />
+          <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={c.level} redact />
         ))
       }
     </div>
   </section>
 </Base>
-
-<script>
-  import { motionScope, revealCascade, showAll } from '../../motion';
-
-  document.addEventListener('astro:page-load', () => {
-    const el = document.querySelector<HTMLElement>('[data-cascade]');
-    if (el) motionScope(el, ({ reduced }) => (reduced ? showAll(el) : void revealCascade(el)));
-  });
-</script>
