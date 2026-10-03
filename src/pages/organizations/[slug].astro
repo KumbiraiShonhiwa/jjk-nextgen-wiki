@@ -30,7 +30,7 @@ const description = (o.level === 'none' && safeValue(o.summary)) || 'An organiza
 <Base title={organizationTitle(o)} description={description}>
   <article class="py-12" style="--accent: var(--ce-violet)">
     <a href="/organizations" class="text-step--1 text-paper-dim hover:text-paper">← Organizations</a>
-    <SpoilerWall level={o.level}>
+    <SpoilerWall level={o.level} type="Organization">
       <EntityHeader title={o.name.en} ja={o.name.ja}>
         <Fragment slot="badges">
           <Badge tone="violet">{titleCase(o.kind)}</Badge>

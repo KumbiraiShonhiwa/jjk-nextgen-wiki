@@ -5,6 +5,7 @@
  */
 import type { SpoilerLevel } from '../content/schemas';
 import { LEVEL_LABELS } from '../lib/spoiler';
+import { isVisible } from '../content/schemas/common';
 
 interface Props {
   level: SpoilerLevel;
@@ -17,6 +18,8 @@ interface Props {
 }
 const { level, as: Tag = 'span', scramble = false, silent = false, class: className } = Astro.props;
 const label = LEVEL_LABELS[level].short;
+// Search indexes a page at its own level, so text gated above it must stay out of the index.
+const unindexed = !isVisible(level, Astro.locals.pageLevel ?? 'none') ? 'all' : undefined;
 ---
 
 {
@@ -26,12 +29,13 @@ const label = LEVEL_LABELS[level].short;
     </Tag>
   ) : (
     <>
-      <Tag class={className} data-level={level} data-scramble={scramble ? '' : undefined}>
+      <Tag class={className} data-level={level} data-scramble={scramble ? '' : undefined} data-pagefind-ignore={unindexed}>
         <slot />
       </Tag>
       {!silent && (
         <span
           data-redacted={level}
+          data-pagefind-ignore="all"
           class="items-center gap-1.5 rounded-sm border border-dashed border-line px-2 py-0.5 align-middle text-step--1 text-paper-dim"
           title={`Hidden: ${LEVEL_LABELS[level].long} spoiler. Raise your spoiler level to see it.`}
         >

@@ -32,7 +32,7 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
   <article class="py-12" style={`--accent:${c.accent ?? 'var(--ce-blue)'}`}>
     <a href="/characters" class="text-step--1 text-paper-dim hover:text-paper">← Characters</a>
 
-    <SpoilerWall level={c.level}>
+    <SpoilerWall level={c.level} type="Character">
       <EntityHeader title={c.name.en} ja={c.name.ja}>
         <Fragment slot="badges">
           {c.grade.map((g) => <Gated level={g.level}><Badge tone="blue">{gradeLabel(g.value)}</Badge></Gated>)}

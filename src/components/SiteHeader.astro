@@ -1,5 +1,6 @@
 ---
 import { NAV } from '../lib/nav';
+import SearchPalette from './SearchPalette.svelte';
 import SpoilerControl from './SpoilerControl.svelte';
 
 const path = Astro.url.pathname;
@@ -26,7 +27,10 @@ const active = (href: string) => path === href || path.startsWith(`${href}/`);
         ))
       }
     </ul>
-    <div class="ml-auto"><SpoilerControl client:load /></div>
+    <div class="ml-auto flex items-center gap-3">
+      <SearchPalette client:load />
+      <SpoilerControl client:load />
+    </div>
     <details class="relative md:hidden">
       <summary class="cursor-pointer list-none rounded-sm border border-line px-2.5 py-1 text-step--1" aria-label="Menu">Menu</summary>
       <ul class="absolute right-0 mt-2 w-48 rounded-md border border-line bg-ink-2 p-2 shadow-[var(--shadow-1)]">
