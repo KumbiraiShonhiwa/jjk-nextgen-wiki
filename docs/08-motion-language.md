@@ -43,7 +43,7 @@ Status: v1 · 2026-10-03 · Code: `src/motion/` · Engine: Anime.js 4.5.0 (only 
 | `card-tilt` | Every `EntityCard` (fine pointers) | Pointer move | `createAnimatable` (rotateX/Y, `--glow-x/y`) | Off |
 | `spoiler-indicator` | Spoiler control | Level change | `animate` (x, width) | Jumps |
 | `spoiler-reveal` | Newly visible gated content | Level raised | `scrambleText` on text leaves; blur/opacity/y with `stagger` for blocks | Appears instantly |
-| `arc-timeline` (planned) | Arcs page | Scroll | `onScroll` sync, `createTimeline`, `svg.createDrawable` | Static timeline |
+| `arc-timeline` | Arcs page | Scroll | `onScroll` with `sync` (scrubbed rail and per-arc markers), `animate` | Full rail, lit markers |
 | `graph-physics` (planned) | Relationship graph | Drag | `createDraggable`, `createSpring`, `svg.createMotionPath` | Static layout, keyboard list |
 | `domain-takeover` | Domain pages | Click "Expand the domain" | `createTimeline` (clip-path iris from the click point, ring collapse, letter rise, `scrambleText`), looping `animate` breathing, `splitText` | Overlay appears without animation |
 | `grid-reflow` (planned) | Filtering grids | Filter change | `createLayout` | Instant |
