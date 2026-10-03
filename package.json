@@ -18,7 +18,8 @@
     "workflows": "node scripts/check-workflows.mjs",
     "ingest": "tsx scripts/ingest/cli.ts",
     "ingest:offline": "tsx scripts/ingest/cli.ts --offline",
-    "art": "tsx scripts/art/cli.ts"
+    "art": "tsx scripts/art/cli.ts",
+    "preview:static": "node scripts/preview/build.mjs"
   },
   "dependencies": {
     "@astrojs/svelte": "^9.0.1",
