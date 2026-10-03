@@ -1,0 +1,9 @@
+{
+  "slug": "fushiguro-megumi",
+  "name": { "en": "Megumi Fushiguro", "ja": "伏黒 恵" },
+  "summary": [{ "value": "A first-year student at Tokyo Jujutsu High who fights with shikigami.", "level": "none" }],
+  "grade": [{ "value": "2", "level": "none" }],
+  "affiliations": ["tokyo-jujutsu-high"],
+  "accent": "#5b8cff",
+  "fixture": true
+}

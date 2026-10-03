@@ -1,0 +1,9 @@
+{
+  "slug": "itadori-yuji",
+  "name": { "en": "Yuji Itadori", "ja": "虎杖 悠仁" },
+  "summary": [{ "value": "A first-year student at Tokyo Jujutsu High with extraordinary physical ability.", "level": "none" }],
+  "grade": [],
+  "affiliations": ["tokyo-jujutsu-high"],
+  "accent": "#e5484d",
+  "fixture": true
+}

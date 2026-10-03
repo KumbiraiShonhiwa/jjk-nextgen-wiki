@@ -1,0 +1,9 @@
+{
+  "slug": "gojo-satoru",
+  "name": { "en": "Satoru Gojo", "ja": "五条 悟" },
+  "summary": [{ "value": "A special grade sorcerer and teacher at Tokyo Jujutsu High.", "level": "none" }],
+  "grade": [{ "value": "special", "level": "none" }],
+  "affiliations": ["tokyo-jujutsu-high"],
+  "accent": "#7cc4ff",
+  "fixture": true
+}
