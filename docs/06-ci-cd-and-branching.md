@@ -130,7 +130,7 @@ Workflow hardening and scanning added in `.github/workflows/security.yml`. **Non
 | Job (workflow `Security`) | What it does |
 | --- | --- |
 | `CodeQL analysis (javascript-typescript)` | CodeQL static analysis of the JS/TS code; results appear under *Security → Code scanning*. Also runs weekly. |
-| `Dependency review (fail on high severity)` | PRs only. Fails when the PR adds or upgrades a dependency with a high or critical advisory. Needs the dependency graph enabled (*Settings → Advanced Security*). |
+| `Dependency review (fail on high severity)` | PRs only. Fails when the PR adds or upgrades a dependency with a high or critical advisory. Needs the dependency graph enabled (*Settings → Advanced Security*); until then the job logs a warning and skips instead of failing, and starts enforcing once the graph is on. |
 | `Dependency audit (pnpm audit, production, high+)` | `pnpm audit --prod --audit-level=high` against the lockfile. Can start failing without a code change when a new advisory is published. |
 | `Secret scan (gitleaks)` | gitleaks over the full history on PRs and pushes. |
 
