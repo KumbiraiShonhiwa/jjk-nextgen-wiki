@@ -21,3 +21,17 @@ export function characterMeta(c: Character): string | undefined {
 }
 
 export const titleCase = (s: string) => s.replace(/(^|-)([a-z])/g, (_, sep: string, ch: string) => (sep ? ' ' : '') + ch.toUpperCase());
+
+/** "Chapters 1–7", "Chapter 9" */
+export function chapterRange(range?: [number, number]): string | undefined {
+  if (!range) return undefined;
+  const [a, b] = range;
+  return a === b ? `Chapter ${a}` : `Chapters ${a}–${b}`;
+}
+
+/** "Season 1 · Episodes 1–5" */
+export function episodeRange(eps?: [number, number, number]): string | undefined {
+  if (!eps) return undefined;
+  const [season, a, b] = eps;
+  return `Season ${season} · ${a === b ? `Episode ${a}` : `Episodes ${a}–${b}`}`;
+}

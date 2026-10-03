@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import Section from '../components/Section.astro';
+import { LEVEL_LABELS } from '../lib/spoiler';
+import { SPOILER_LEVELS } from '../content/schemas';
+
+const levels = SPOILER_LEVELS.filter((l) => l !== 'none');
+---
+
+<Base title="About" description="About the JJK NextGen Wiki: sources, licences, spoiler levels and how to report a problem.">
+  <article class="max-w-prose py-12" style="--accent: var(--ce-blue)">
+    <h1 data-kinetic class="font-display text-step-5 leading-none">About</h1>
+    <p class="mt-6 text-step-1 leading-relaxed">
+      The JJK NextGen Wiki is an unofficial, motion-first encyclopedia of Jujutsu Kaisen. It is a fan project with no connection to Gege Akutami,
+      Shueisha or MAPPA.
+    </p>
+
+    <Section id="spoilers" title="Spoiler levels">
+      <p class="leading-relaxed">
+        Every fact carries the point in the story where it stops being a spoiler. Choose how far you have watched or read in the header. Anything past
+        that point is replaced by a placeholder, and raising the level reveals it in place. Your choice is stored only in this browser.
+      </p>
+      <ol class="mt-4 space-y-1 text-paper-dim">
+        {levels.map((l) => <li><strong class="text-paper">{LEVEL_LABELS[l].short}</strong>: {LEVEL_LABELS[l].long}</li>)}
+      </ol>
+      <p class="mt-4 text-step--1 text-paper-dim">Page titles and link previews never include gated names, so sharing a link does not spoil anyone.</p>
+    </Section>
+
+    <Section id="sources" title="Sources and licences">
+      <p class="leading-relaxed">
+        Text is adapted and restructured from <a class="underline" href="https://en.wikipedia.org/wiki/Jujutsu_Kaisen">Wikipedia</a> and the
+        <a class="underline" href="https://jujutsu-kaisen.fandom.com/">Jujutsu Kaisen Wiki</a>, collected through their public APIs. Each page lists
+        the articles it draws on and links to their edit histories, which credit the authors.
+      </p>
+      <ul class="mt-4 list-disc space-y-1 pl-5 text-paper-dim">
+        <li>Text: <a class="underline" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</li>
+        <li>Code: MIT licence.</li>
+        <li>No images are copied from either wiki. Artwork on this site is original.</li>
+      </ul>
+    </Section>
+
+    <Section id="report" title="Report a problem">
+      <p class="leading-relaxed">
+        Found a mistake, a mislabelled spoiler or content that should be removed?
+        <a class="underline" href="https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/new">Open an issue</a>. Takedown requests are handled within
+        seven days.
+      </p>
+    </Section>
+  </article>
+</Base>

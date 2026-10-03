@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildIndex, findDanglingRefs, neighbours, safeValue, visibleValues, type Dataset } from '../../src/lib/graph';
+import { adjacentArcs, buildIndex, findDanglingRefs, maxLevel, membersOf, neighbours, safeValue, visibleValues, type Dataset } from '../../src/lib/graph';
 
 const empty: Dataset = { characters: [], techniques: [], domains: [], arcs: [], organizations: [], locations: [], edges: [] };
 const person = (slug: string, extra = {}) =>
@@ -39,5 +39,36 @@ describe('spoiler helpers', () => {
   it('picks the spoiler-free value for metadata', () => {
     expect(safeValue(values)).toBe('safe');
     expect(safeValue([values[1]!])).toBeUndefined();
+  });
+});
+
+describe('membersOf', () => {
+  it('lists affiliated characters in name order', () => {
+    const ix = buildIndex({ ...empty, characters: [person('zed', { affiliations: ['school'] }), person('amy', { affiliations: ['school'] }), person('out')] });
+    expect(membersOf(ix, 'school').map((c) => c.slug)).toEqual(['amy', 'zed']);
+  });
+});
+
+describe('adjacentArcs', () => {
+  const arcOf = (slug: string, order: number) => ({ slug, order, level: 'none', name: slug, summary: [{ value: 'x', level: 'none' }], events: [], characters: [], locations: [], fixture: true, provenance: [] }) as Dataset['arcs'][number];
+  // Deliberately out of order: buildIndex sorts arcs by `order`.
+  const ix = buildIndex({ ...empty, arcs: [arcOf('c', 3), arcOf('a', 1), arcOf('b', 2)] });
+
+  it('finds both neighbours in story order', () => {
+    const { prev, next } = adjacentArcs(ix, 'b');
+    expect([prev?.slug, next?.slug]).toEqual(['a', 'c']);
+  });
+  it('has no previous arc at the start and no next arc at the end', () => {
+    expect(adjacentArcs(ix, 'a').prev).toBeUndefined();
+    expect(adjacentArcs(ix, 'c').next).toBeUndefined();
+  });
+  it('returns nothing for an unknown arc', () => expect(adjacentArcs(ix, 'zz')).toEqual({}));
+});
+
+describe('maxLevel', () => {
+  it('returns the stricter level in either order', () => {
+    expect(maxLevel('none', 'manga')).toBe('manga');
+    expect(maxLevel('anime-s3', 'anime-s1')).toBe('anime-s3');
+    expect(maxLevel('anime-s2', 'anime-s2')).toBe('anime-s2');
   });
 });
