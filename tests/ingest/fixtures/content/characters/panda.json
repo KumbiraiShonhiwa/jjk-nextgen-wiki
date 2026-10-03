@@ -1,0 +1,30 @@
+{
+  "slug": "panda",
+  "name": {
+    "en": "Panda",
+    "ja": "パンダ"
+  },
+  "species": [
+    {
+      "value": "other",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "2",
+      "level": "none"
+    }
+  ],
+  "affiliations": [
+    "tokyo-jujutsu-high"
+  ],
+  "accent": "#e8e4dc",
+  "summary": [
+    {
+      "value": "A second-year student at Tokyo Jujutsu High who looks like a panda and is not one.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

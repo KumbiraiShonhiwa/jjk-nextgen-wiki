@@ -1,0 +1,27 @@
+{
+  "params": {
+    "action": "query",
+    "list": "categorymembers",
+    "cmtitle": "Category:Domain Expansions",
+    "cmnamespace": "0",
+    "cmtype": "page",
+    "cmlimit": "500"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "categorymembers": [
+        {
+          "pageid": 1301,
+          "ns": 0,
+          "title": "Coffin of the Iron Mountain"
+        },
+        {
+          "pageid": 1302,
+          "ns": 0,
+          "title": "Unlimited Void"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "tokyo",
+  "name": {
+    "en": "Tokyo",
+    "ja": "東京"
+  },
+  "summary": [
+    {
+      "value": "The capital, home to Tokyo Jujutsu High.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

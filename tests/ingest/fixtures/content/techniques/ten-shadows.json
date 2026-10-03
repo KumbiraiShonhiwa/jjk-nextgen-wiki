@@ -1,0 +1,20 @@
+{
+  "slug": "ten-shadows",
+  "name": {
+    "en": "Ten Shadows Technique",
+    "ja": "十種影法術"
+  },
+  "kind": "inherited",
+  "users": [
+    "fushiguro-megumi"
+  ],
+  "domain": "chimera-shadow-garden",
+  "clan": "zenin-clan",
+  "summary": [
+    {
+      "value": "An inherited technique of the Zenin clan that summons ten kinds of shikigami through shadows formed by hand signs.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

@@ -1,0 +1,19 @@
+{
+  "slug": "ratio-technique",
+  "name": {
+    "en": "Ratio Technique",
+    "ja": "十劃呪法"
+  },
+  "kind": "innate",
+  "users": [
+    "nanami-kento"
+  ],
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "A technique that forces a weak point onto a target at the 7:3 ratio of its length.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}

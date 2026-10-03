@@ -1,0 +1,19 @@
+{
+  "slug": "cursed-spirit-manipulation",
+  "name": {
+    "en": "Cursed Spirit Manipulation",
+    "ja": "呪霊操術"
+  },
+  "kind": "innate",
+  "users": [
+    "geto-suguru"
+  ],
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "A technique that absorbs defeated cursed spirits and commands them at will.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}
