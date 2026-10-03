@@ -7,6 +7,7 @@ Pipeline-as-code in the Jenkins style, implemented with GitHub Actions (there is
 | CI | `ci.yml` | every PR (opened, edited, synchronize, reopened), the merge queue (`merge_group`), pushes to `develop`/`stable`/`main` |
 | Promote | `promote.yml` | manual (`workflow_dispatch`) |
 | Deploy | `deploy.yml` | pushes to `main` |
+| Content sync | `content-sync.yml` | weekly cron (Monday 03:00 UTC) and manual (`workflow_dispatch`) |
 
 ## Branching model
 
@@ -54,7 +55,7 @@ The three job names are the required status checks. Do not rename them without u
 
 | Check | What it does | What it blocks |
 | --- | --- | --- |
-| `verify` | `pnpm install --frozen-lockfile`, `pnpm check` (Astro + TS), `pnpm test` (Vitest, `tests/unit`), `pnpm build`; uploads `dist/` as an artifact | type errors, failing unit tests, a broken build, or a lockfile that is out of sync |
+| `verify` | `pnpm install --frozen-lockfile`, `pnpm check` (Astro + TS), `pnpm test` (Vitest, `tests/unit` and `tests/ingest`), `pnpm build`; uploads `dist/` as an artifact | type errors, failing unit tests, a broken build, or a lockfile that is out of sync |
 | `e2e` | Downloads `dist/`, installs Chromium, runs Playwright (`tests/e2e`) against `pnpm preview`, in normal **and** reduced-motion modes | runtime page errors, an empty character grid, broken card → character page navigation, a spoiler switch that does not persist, and motion running under `prefers-reduced-motion` (the heading must not be split into letters) |
 | `merge-order` | On PRs: checks base/head against the branching model. On `merge_group` and `push` it passes immediately so the required check is always satisfied | `main` ← anything but `stable`; `stable` ← anything but `develop`; `develop` ← `stable`/`main`; any PR whose base is another feature branch (unmerged stack) |
 
@@ -97,6 +98,26 @@ Every push to `main` (that is, every merged `stable → main` PR) builds the sit
 
 Required repository secrets: `CLOUDFLARE_API_TOKEN` (Pages: Edit) and `CLOUDFLARE_ACCOUNT_ID`. If either is missing, a first step sets an output and the remaining steps are skipped. The job logs a notice and still succeeds.
 
+## Content sync (`content-sync.yml`)
+
+Runs the ingest pipeline from doc 03 against the live Fandom API and proposes the result as a PR. Triggers:
+
+- **Schedule**: Mondays 03:00 UTC.
+- **Manual**: *Actions → Content sync → Run workflow*. Optional inputs are `only` (comma-separated entity types, e.g. `characters,techniques`) and `limit` (at most N pages per type). Both are validated before use. The job always checks out `develop`, so a manual run uses `develop`'s ingest code, whichever branch is selected in the dialog.
+
+Steps:
+
+1. Install, restore `.cache/raw` from the Actions cache (revision content is immutable, so a warm cache saves requests), then `pnpm ingest` with the inputs.
+2. Print `reports/ingest-<date>.md` to the job summary and upload it as the `ingest-report` artifact (kept 30 days). Both happen even when the ingest fails.
+3. `pnpm check`, `pnpm test` and `pnpm build`. Any failure stops the job before a PR is opened.
+4. If anything under `content/` changed, `peter-evans/create-pull-request` opens or updates the PR **"Content sync <date>"** from branch `content/sync` into `develop`. The PR body carries the report, trimmed to GitHub's size limit. If `content/` is unchanged, nothing is opened.
+
+A human reviews and squash-merges the PR like any other change into `develop`. Check the spoiler levels of new text and add entries to `content/meta/spoiler-overrides.json` where needed.
+
+**Token.** The PR is created with `secrets.PROMOTE_TOKEN || secrets.GITHUB_TOKEN`. Because a PR opened or updated with `GITHUB_TOKEN` does not trigger `pull_request` workflows, **without `PROMOTE_TOKEN` the required checks (`verify`, `e2e`, `merge-order`) will not run on the sync PR automatically**. The job then logs a notice; to start CI, close and reopen the PR or push a commit to `content/sync` yourself. For this workflow, `PROMOTE_TOKEN` also needs *Contents: read and write*, since it pushes the `content/sync` branch (Promote only needs *Contents: read*).
+
+Run the same steps locally with `pnpm ingest --dry-run` (no writes to `content/`) or `pnpm ingest`, followed by `pnpm check && pnpm test && pnpm build`.
+
 ## Branch rules
 
 Rulesets are kept as JSON, one per branch, in `.github/rulesets/`, so they can be reviewed and re-imported (*Settings → Rules → Rulesets → Import*).
@@ -127,4 +148,5 @@ Import the rulesets only after this pipeline is on `develop`; until then the req
 
 1. *Settings → General*: default branch `develop`; tick **Automatically delete head branches** and **Allow auto-merge**; untick **Allow rebase merging**.
 2. *Settings → Rules → Rulesets → New ruleset → Import a ruleset*: import `develop.json`, `stable.json` and `main.json` from `.github/rulesets/`.
-3. Optional: add `PROMOTE_TOKEN`, `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` under *Settings → Secrets and variables → Actions*.
+3. Optional: add `PROMOTE_TOKEN` (*Pull requests: read and write*, *Contents: read and write* so it can serve both Promote and Content sync), `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` under *Settings → Secrets and variables → Actions*.
+4. For Content sync: *Settings → Actions → General → Workflow permissions*, tick **Allow GitHub Actions to create and approve pull requests** (needed when `PROMOTE_TOKEN` is not set). Create the `content` label, or the action creates it on first use.

@@ -1,0 +1,154 @@
+# Weekly content sync (docs/03, docs/06): ingest from the Fandom wiki through the MediaWiki
+# Action API, validate (schemas, references, check, tests, build), and propose the diff as a
+# PR from `content/sync` into `develop`. A human reviews and merges it; nothing deploys
+# automatically.
+#
+# PRs opened with GITHUB_TOKEN do not trigger the CI workflow, so the required checks would
+# never run on them. Set the PROMOTE_TOKEN secret (fine-grained PAT: Contents read/write,
+# Pull requests read/write) so CI runs on the sync PR; without it the PR is still opened.
+name: Content sync
+
+on:
+  schedule:
+    - cron: '0 3 * * 1' # Mondays 03:00 UTC
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Entity types, comma-separated (characters,techniques,domains,arcs,organizations,locations). Empty = all.'
+        required: false
+        default: ''
+        type: string
+      limit:
+        description: 'At most N pages per entity type. Empty = no limit.'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: content-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # Raw API responses. Revision content is immutable, so a warm cache saves requests.
+      - name: Restore API cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/raw
+          key: ingest-raw-${{ github.run_id }}
+          restore-keys: ingest-raw-
+
+      - name: Ingest
+        id: ingest
+        env:
+          ONLY: ${{ inputs.only }}
+          LIMIT: ${{ inputs.limit }}
+        run: |
+          set -euo pipefail
+          args=()
+          if [ -n "${ONLY:-}" ]; then
+            if ! printf '%s' "$ONLY" | grep -Eq '^[a-z,]+$'; then echo "::error::only must be a comma-separated list of entity types"; exit 1; fi
+            args+=("--only=$ONLY")
+          fi
+          if [ -n "${LIMIT:-}" ]; then
+            if ! printf '%s' "$LIMIT" | grep -Eq '^[1-9][0-9]*$'; then echo "::error::limit must be a positive integer"; exit 1; fi
+            args+=("--limit=$LIMIT")
+          fi
+          pnpm ingest "${args[@]}"
+
+      - name: Locate report
+        id: report
+        if: always()
+        run: |
+          # A fresh checkout holds at most this run's report.
+          report=$(find reports -maxdepth 1 -name 'ingest-*.md' -print -quit 2>/dev/null || true)
+          echo "path=$report" >> "$GITHUB_OUTPUT"
+          if [ -n "$report" ]; then cat "$report" >> "$GITHUB_STEP_SUMMARY"; else echo "No ingest report was written." >> "$GITHUB_STEP_SUMMARY"; fi
+
+      - name: Upload report
+        if: always() && steps.report.outputs.path != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: ingest-report
+          path: ${{ steps.report.outputs.path }}
+          retention-days: 30
+
+      - name: Type and Astro diagnostics
+        run: pnpm check
+      - name: Unit tests (Vitest)
+        run: pnpm test
+      - name: Build static site
+        run: pnpm build
+
+      - name: Detect content changes
+        id: diff
+        run: |
+          echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+          if [ -n "$(git status --porcelain -- content)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git status --short -- content
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No content changes." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Prepare PR body
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          REPORT: ${{ steps.report.outputs.path }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "Automated content sync from the Jujutsu Kaisen Fandom wiki (MediaWiki Action API)."
+            echo
+            echo "- Run: $RUN_URL (full report in the \`ingest-report\` artifact)"
+            echo "- Review the spoiler levels of new text; adjust them in \`content/meta/spoiler-overrides.json\`."
+            echo "- Text is CC BY-SA; provenance is recorded per record."
+            echo
+            # GitHub caps PR bodies at 65536 characters.
+            head -c 60000 "$REPORT"
+          } > "$RUNNER_TEMP/pr-body.md"
+
+      - name: Open or update the sync PR
+        if: steps.diff.outputs.changed == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.PROMOTE_TOKEN || secrets.GITHUB_TOKEN }}
+          base: develop
+          branch: content/sync
+          add-paths: content/**
+          commit-message: 'content: sync from Fandom wiki'
+          title: Content sync ${{ steps.diff.outputs.date }}
+          body-path: ${{ runner.temp }}/pr-body.md
+          labels: content
+          delete-branch: true
+
+      - name: Summarize PR
+        if: steps.cpr.outputs.pull-request-url != ''
+        env:
+          URL: ${{ steps.cpr.outputs.pull-request-url }}
+          OP: ${{ steps.cpr.outputs.pull-request-operation }}
+          HAS_PAT: ${{ secrets.PROMOTE_TOKEN != '' }}
+        run: |
+          echo "Sync PR ($OP): $URL" | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ "$HAS_PAT" != "true" ]; then
+            echo "::notice title=content-sync::PROMOTE_TOKEN is not set, so the PR was opened with GITHUB_TOKEN and CI will not run on it automatically. Push an empty commit to content/sync or close and reopen the PR to trigger it."
+          fi

@@ -1,0 +1,14 @@
+{
+  "slug": "shibuya",
+  "name": {
+    "en": "Shibuya",
+    "ja": "渋谷"
+  },
+  "summary": [
+    {
+      "value": "A Tokyo district and the site of the Shibuya Incident.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

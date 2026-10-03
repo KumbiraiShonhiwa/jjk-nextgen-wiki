@@ -1,0 +1,25 @@
+{
+  "slug": "shibuya-incident",
+  "name": "Shibuya Incident",
+  "order": 6,
+  "level": "anime-s2",
+  "summary": [
+    {
+      "value": "A large-scale attack in Shibuya on Halloween pulls every sorcerer into the city.",
+      "level": "anime-s2"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "fushiguro-megumi",
+    "kugisaki-nobara",
+    "gojo-satoru",
+    "nanami-kento",
+    "mahito",
+    "ryomen-sukuna"
+  ],
+  "locations": [
+    "shibuya"
+  ],
+  "fixture": true
+}

@@ -1,0 +1,28 @@
+{
+  "slug": "ryomen-sukuna",
+  "name": {
+    "en": "Ryomen Sukuna",
+    "ja": "両面 宿儺"
+  },
+  "species": [
+    {
+      "value": "other",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "special",
+      "level": "none"
+    }
+  ],
+  "domain": "malevolent-shrine",
+  "accent": "#c2272d",
+  "summary": [
+    {
+      "value": "The King of Curses, a legendary cursed being whose fingers survive as special grade cursed objects.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

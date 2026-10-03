@@ -1,0 +1,20 @@
+{
+  "slug": "malevolent-shrine",
+  "name": {
+    "en": "Malevolent Shrine",
+    "ja": "伏魔御廚子"
+  },
+  "user": "ryomen-sukuna",
+  "level": "anime-s2",
+  "palette": [
+    "#1a0405",
+    "#c2272d"
+  ],
+  "summary": [
+    {
+      "value": "Sukuna's Domain Expansion, which manifests a shrine without enclosing the space around it.",
+      "level": "anime-s2"
+    }
+  ],
+  "fixture": true
+}

@@ -1,0 +1,38 @@
+{
+  "params": {
+    "action": "query",
+    "list": "categorymembers",
+    "cmtitle": "Category:Characters",
+    "cmnamespace": "0",
+    "cmtype": "page",
+    "cmlimit": "500",
+    "cmcontinue": "page|4d4547554d49204655534849475552|2731"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "categorymembers": [
+        {
+          "pageid": 1104,
+          "ns": 0,
+          "title": "Megumi Fushiguro"
+        },
+        {
+          "pageid": 1105,
+          "ns": 0,
+          "title": "Mystery Person"
+        },
+        {
+          "pageid": 1106,
+          "ns": 0,
+          "title": "Sukuna"
+        },
+        {
+          "pageid": 1107,
+          "ns": 0,
+          "title": "Toji Fushiguro"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "kyoto",
+  "name": {
+    "en": "Kyoto",
+    "ja": "京都"
+  },
+  "summary": [
+    {
+      "value": "Home to Kyoto Jujutsu High.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

@@ -1,0 +1,168 @@
+{
+  "params": {
+    "action": "query",
+    "prop": "revisions",
+    "rvprop": "content|ids|timestamp",
+    "rvslots": "main",
+    "titles": "Blood Manipulation|Limitless|Coffin of the Iron Mountain|Unlimited Void|Perfect Preparation Arc|Shibuya Incident Arc|Tokyo Prefectural Jujutsu High School|Tokyo"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "pages": [
+        {
+          "pageid": 1201,
+          "ns": 0,
+          "title": "Blood Manipulation",
+          "revisions": [
+            {
+              "revid": 408800,
+              "parentid": 408783,
+              "timestamp": "2026-06-14T09:00:00Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Technique Infobox\n|name=Blood Manipulation\n|kanji=赤血操術\n|romaji=Sekketsu Sōjutsu\n|type=Inherited Technique\n|user=[[Choso]]<br>[[Noritoshi Kamo]]\n|clan=[[Kamo Clan]]\n}}\n'''Blood Manipulation''' is an inherited cursed technique of the [[Kamo Clan]] that lets its user control their own blood and anything it touches.\n\n==Abilities==\nUsers can harden, accelerate and shape their blood into projectiles, the strongest of which is called Piercing Blood.\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1202,
+          "ns": 0,
+          "title": "Limitless",
+          "revisions": [
+            {
+              "revid": 412010,
+              "parentid": 411993,
+              "timestamp": "2026-09-18T17:45:00Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Technique Infobox\n|name=Limitless\n|kanji=無下限呪術\n|romaji=Mukagen Jujutsu\n|type=[[Cursed Technique#Inherited Techniques|Inherited Technique]]\n|user=[[Satoru Gojo]]\n|clan=[[Gojo Clan]]\n|domain=[[Unlimited Void]]\n|range=Short to long\n}}\n'''Limitless''' ({{nihongo||無下限呪術|Mukagen Jujutsu}}) is an inherited [[cursed technique]] of the [[Gojo Clan]], wielded in the present day by [[Satoru Gojo]].<ref>Chapter 15</ref>\n\n==Overview==\nLimitless allows the user to bring the concept of infinity, taken from mathematics, into reality, slowing down anything that approaches them.\n\n===Infinity===\nInfinity is a neutral application of the technique that places an endless series of points between the user and an attacker.\n\n===Cursed Technique Lapse: Blue===\nBlue amplifies the technique to create a point of attraction that pulls everything nearby towards it.\n\n==Trivia==\n* The technique's name is often shortened to \"Mukagen\".\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1301,
+          "ns": 0,
+          "title": "Coffin of the Iron Mountain",
+          "revisions": [
+            {
+              "revid": 407700,
+              "parentid": 407683,
+              "timestamp": "2026-05-01T11:11:11Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Domain Infobox\n|name=Coffin of the Iron Mountain\n|kanji=蓋棺鉄囲山\n|user=[[Jogo]]\n}}\n'''Coffin of the Iron Mountain''' is the Domain Expansion of [[Jogo]], the interior of a volcano that burns anyone inside it.\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1302,
+          "ns": 0,
+          "title": "Unlimited Void",
+          "revisions": [
+            {
+              "revid": 411950,
+              "parentid": 411933,
+              "timestamp": "2026-09-15T13:13:13Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Domain Infobox\n|name=Unlimited Void\n|kanji=無量空処\n|romaji=Muryōkūsho\n|user=[[Satoru Gojo]]\n|technique=[[Limitless]]\n|sure-hit=Overloads the target with infinite information.\n|hand sign=Taishakuten\n}}\n'''Unlimited Void''' ({{nihongo|Unlimited Void|無量空処|Muryōkūsho}}) is the [[Domain Expansion]] of [[Satoru Gojo]], an endless interior of outer space.\n\n==Sure-hit Effect==\nAnyone trapped inside the domain is bombarded with an endless amount of information, leaving them unable to act.\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1401,
+          "ns": 0,
+          "title": "Perfect Preparation Arc",
+          "revisions": [
+            {
+              "revid": 406600,
+              "parentid": 406583,
+              "timestamp": "2026-04-04T04:04:04Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Arc Infobox\n|name=Perfect Preparation Arc\n|chapters=137–158\n}}\nThe '''Perfect Preparation Arc''' is the ninth story arc of ''Jujutsu Kaisen'', set in the aftermath of the Shibuya Incident.\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1402,
+          "ns": 0,
+          "title": "Shibuya Incident Arc",
+          "revisions": [
+            {
+              "revid": 412222,
+              "parentid": 412205,
+              "timestamp": "2026-09-25T10:10:10Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Arc Infobox\n|name=Shibuya Incident Arc\n|chapters=79–136\n|volumes=10–16\n|previous=[[Gojo's Past Arc]]\n|next=[[Perfect Preparation Arc]]\n}}\nThe '''Shibuya Incident Arc''' is the eighth story arc of ''Jujutsu Kaisen''. On Halloween, a curtain falls over [[Shibuya]] and the city becomes the battlefield between sorcerers and a coalition of curses.\n\n==Summary==\nThe arc begins when a curtain is lowered around Shibuya Station, trapping civilians inside.\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1501,
+          "ns": 0,
+          "title": "Tokyo Prefectural Jujutsu High School",
+          "revisions": [
+            {
+              "revid": 410500,
+              "parentid": 410483,
+              "timestamp": "2026-08-08T08:08:08Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "{{Organization Infobox\n|name=Tokyo Prefectural Jujutsu High School\n|kanji=東京都立呪術高等専門学校\n|type=School\n|location=[[Tokyo]]\n|leader=[[Masamichi Yaga]]\n}}\n'''Tokyo Prefectural Jujutsu High School''', commonly called Tokyo Jujutsu High, is one of the two jujutsu schools in Japan, training young sorcerers while posing as a religious school.\n"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "pageid": 1601,
+          "ns": 0,
+          "title": "Tokyo",
+          "revisions": [
+            {
+              "revid": 405500,
+              "parentid": 405483,
+              "timestamp": "2026-03-03T03:03:03Z",
+              "slots": {
+                "main": {
+                  "contentmodel": "wikitext",
+                  "contentformat": "text/x-wiki",
+                  "content": "'''Tokyo''' ({{lang-ja|東京}}) is the capital of Japan and the home of [[Tokyo Prefectural Jujutsu High School|Tokyo Jujutsu High]].\n\n[[Category:Locations]]\n"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

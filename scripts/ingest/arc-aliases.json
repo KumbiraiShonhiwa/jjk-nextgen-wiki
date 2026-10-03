@@ -1,0 +1,16 @@
+{
+  "arcs": {
+    "fearsome-womb": ["Fearsome Womb Arc", "Introduction Arc", "Cursed Womb Arc", "Cursed Womb Must Die Arc"],
+    "vs-mahito": ["Vs. Mahito Arc", "Versus Mahito"],
+    "kyoto-goodwill-event": ["Kyoto Goodwill Event Arc", "Kyoto Sister School Goodwill Event", "Goodwill Event"],
+    "death-painting": ["Death Painting Arc", "Origin of Obedience Arc", "Death Painting Wombs"],
+    "hidden-inventory": ["Hidden Inventory Arc", "Gojo's Past Arc", "Premature Death Arc"],
+    "shibuya-incident": ["Shibuya Incident Arc"],
+    "culling-game": ["Culling Game Arc", "Culling Games"],
+    "shinjuku-showdown": ["Shinjuku Showdown Arc"]
+  },
+  "extra": [
+    { "aliases": ["Jujutsu Kaisen 0", "Cursed Children"], "level": "anime-s1" },
+    { "aliases": ["Itadori's Extermination Arc", "Perfect Preparation Arc", "Execution Arc"], "level": "manga" }
+  ]
+}

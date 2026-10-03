@@ -1,0 +1,17 @@
+{
+  "slug": "death-painting",
+  "name": "Death Painting",
+  "order": 4,
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "The first-years are sent to investigate cursed objects connected to the Death Paintings.",
+      "level": "anime-s1"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "kugisaki-nobara"
+  ],
+  "fixture": true
+}

@@ -1,0 +1,18 @@
+{
+  "slug": "straw-doll-technique",
+  "name": {
+    "en": "Straw Doll Technique",
+    "ja": "芻霊呪法"
+  },
+  "kind": "innate",
+  "users": [
+    "kugisaki-nobara"
+  ],
+  "summary": [
+    {
+      "value": "A technique that channels cursed energy through nails and a straw doll to strike a target from a distance.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

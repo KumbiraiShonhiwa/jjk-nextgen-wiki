@@ -1,0 +1,31 @@
+{
+  "slug": "itadori-yuji",
+  "name": {
+    "en": "Yuji Itadori",
+    "ja": "虎杖 悠仁"
+  },
+  "species": [
+    {
+      "value": "human",
+      "level": "none"
+    },
+    {
+      "value": "vessel",
+      "level": "none"
+    }
+  ],
+  "affiliations": [
+    "tokyo-jujutsu-high"
+  ],
+  "techniques": [
+    "divergent-fist"
+  ],
+  "accent": "#e5484d",
+  "summary": [
+    {
+      "value": "A high school student with extraordinary physical ability who becomes the vessel of Ryomen Sukuna and enrols at Tokyo Jujutsu High.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

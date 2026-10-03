@@ -1,0 +1,27 @@
+{
+  "params": {
+    "action": "query",
+    "list": "categorymembers",
+    "cmtitle": "Category:Story Arcs",
+    "cmnamespace": "0",
+    "cmtype": "page",
+    "cmlimit": "500"
+  },
+  "response": {
+    "batchcomplete": true,
+    "query": {
+      "categorymembers": [
+        {
+          "pageid": 1401,
+          "ns": 0,
+          "title": "Perfect Preparation Arc"
+        },
+        {
+          "pageid": 1402,
+          "ns": 0,
+          "title": "Shibuya Incident Arc"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "limitless",
+  "name": {
+    "en": "Limitless",
+    "ja": "無下限呪術"
+  },
+  "kind": "inherited",
+  "users": [
+    "gojo-satoru"
+  ],
+  "domain": "unlimited-void",
+  "clan": "gojo-clan",
+  "summary": [
+    {
+      "value": "An inherited technique of the Gojo clan that brings the concept of infinity into reality around its user.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

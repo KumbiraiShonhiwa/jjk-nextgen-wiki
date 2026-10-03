@@ -1,0 +1,21 @@
+{
+  "slug": "kyoto-goodwill-event",
+  "name": "Kyoto Goodwill Event",
+  "order": 3,
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "The Tokyo and Kyoto schools face each other in an annual exchange event.",
+      "level": "anime-s1"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "fushiguro-megumi",
+    "kugisaki-nobara",
+    "zenin-maki",
+    "inumaki-toge",
+    "panda"
+  ],
+  "fixture": true
+}
