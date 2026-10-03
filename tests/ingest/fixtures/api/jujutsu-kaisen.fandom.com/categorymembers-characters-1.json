@@ -1,0 +1,35 @@
+{
+  "params": {
+    "action": "query",
+    "list": "categorymembers",
+    "cmtitle": "Category:Characters",
+    "cmnamespace": "0",
+    "cmtype": "page",
+    "cmlimit": "500"
+  },
+  "response": {
+    "continue": {
+      "cmcontinue": "page|4d4547554d49204655534849475552|2731",
+      "continue": "-||"
+    },
+    "query": {
+      "categorymembers": [
+        {
+          "pageid": 1101,
+          "ns": 0,
+          "title": "List of Characters"
+        },
+        {
+          "pageid": 1102,
+          "ns": 0,
+          "title": "Satoru Gojo"
+        },
+        {
+          "pageid": 1103,
+          "ns": 0,
+          "title": "Yuji Itadori"
+        }
+      ]
+    }
+  }
+}

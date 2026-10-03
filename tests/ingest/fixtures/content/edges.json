@@ -1,0 +1,99 @@
+[
+  {
+    "id": "gojo-satoru--teacher-student--itadori-yuji",
+    "from": "gojo-satoru",
+    "to": "itadori-yuji",
+    "kind": "teacher-student",
+    "level": "none",
+    "label": "teacher"
+  },
+  {
+    "id": "gojo-satoru--teacher-student--fushiguro-megumi",
+    "from": "gojo-satoru",
+    "to": "fushiguro-megumi",
+    "kind": "teacher-student",
+    "level": "none",
+    "label": "teacher"
+  },
+  {
+    "id": "gojo-satoru--teacher-student--kugisaki-nobara",
+    "from": "gojo-satoru",
+    "to": "kugisaki-nobara",
+    "kind": "teacher-student",
+    "level": "none",
+    "label": "teacher"
+  },
+  {
+    "id": "itadori-yuji--classmate--fushiguro-megumi",
+    "from": "itadori-yuji",
+    "to": "fushiguro-megumi",
+    "kind": "classmate",
+    "level": "none"
+  },
+  {
+    "id": "itadori-yuji--classmate--kugisaki-nobara",
+    "from": "itadori-yuji",
+    "to": "kugisaki-nobara",
+    "kind": "classmate",
+    "level": "none"
+  },
+  {
+    "id": "fushiguro-megumi--classmate--kugisaki-nobara",
+    "from": "fushiguro-megumi",
+    "to": "kugisaki-nobara",
+    "kind": "classmate",
+    "level": "none"
+  },
+  {
+    "id": "itadori-yuji--vessel-of--ryomen-sukuna",
+    "from": "itadori-yuji",
+    "to": "ryomen-sukuna",
+    "kind": "vessel-of",
+    "level": "none",
+    "label": "vessel"
+  },
+  {
+    "id": "zenin-maki--classmate--inumaki-toge",
+    "from": "zenin-maki",
+    "to": "inumaki-toge",
+    "kind": "classmate",
+    "level": "none"
+  },
+  {
+    "id": "zenin-maki--classmate--panda",
+    "from": "zenin-maki",
+    "to": "panda",
+    "kind": "classmate",
+    "level": "none"
+  },
+  {
+    "id": "inumaki-toge--classmate--panda",
+    "from": "inumaki-toge",
+    "to": "panda",
+    "kind": "classmate",
+    "level": "none"
+  },
+  {
+    "id": "nanami-kento--ally--itadori-yuji",
+    "from": "nanami-kento",
+    "to": "itadori-yuji",
+    "kind": "ally",
+    "level": "anime-s1",
+    "label": "mentor"
+  },
+  {
+    "id": "itadori-yuji--enemy--mahito",
+    "from": "itadori-yuji",
+    "to": "mahito",
+    "kind": "enemy",
+    "level": "anime-s1"
+  },
+  {
+    "id": "gojo-satoru--ally--geto-suguru",
+    "from": "gojo-satoru",
+    "to": "geto-suguru",
+    "kind": "ally",
+    "level": "anime-s1",
+    "label": "former best friend"
+  }
+]

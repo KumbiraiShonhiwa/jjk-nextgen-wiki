@@ -1,0 +1,32 @@
+{
+  "slug": "mahito",
+  "name": {
+    "en": "Mahito",
+    "ja": "真人"
+  },
+  "species": [
+    {
+      "value": "cursed-spirit",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "special",
+      "level": "none"
+    }
+  ],
+  "techniques": [
+    "idle-transfiguration"
+  ],
+  "domain": "self-embodiment-of-perfection",
+  "accent": "#6fd3c7",
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "A special grade cursed spirit born from human hatred of one another, able to reshape souls by touch.",
+      "level": "anime-s1"
+    }
+  ],
+  "fixture": true
+}

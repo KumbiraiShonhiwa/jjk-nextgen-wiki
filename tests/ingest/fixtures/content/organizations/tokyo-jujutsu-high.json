@@ -1,0 +1,16 @@
+{
+  "slug": "tokyo-jujutsu-high",
+  "name": {
+    "en": "Tokyo Jujutsu High",
+    "ja": "東京都立呪術高等専門学校"
+  },
+  "kind": "school",
+  "location": "tokyo",
+  "summary": [
+    {
+      "value": "One of the two jujutsu schools in Japan, disguised as a religious school in Tokyo.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

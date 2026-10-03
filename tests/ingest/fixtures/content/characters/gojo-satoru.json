@@ -1,0 +1,35 @@
+{
+  "slug": "gojo-satoru",
+  "name": {
+    "en": "Satoru Gojo",
+    "ja": "五条 悟"
+  },
+  "species": [
+    {
+      "value": "human",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "special",
+      "level": "none"
+    }
+  ],
+  "affiliations": [
+    "tokyo-jujutsu-high",
+    "gojo-clan"
+  ],
+  "techniques": [
+    "limitless"
+  ],
+  "domain": "unlimited-void",
+  "accent": "#7cc4ff",
+  "summary": [
+    {
+      "value": "A special grade sorcerer and the first-year teacher at Tokyo Jujutsu High, widely regarded as the strongest sorcerer alive.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

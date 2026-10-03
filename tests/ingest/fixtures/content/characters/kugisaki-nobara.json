@@ -1,0 +1,33 @@
+{
+  "slug": "kugisaki-nobara",
+  "name": {
+    "en": "Nobara Kugisaki",
+    "ja": "釘崎 野薔薇"
+  },
+  "species": [
+    {
+      "value": "human",
+      "level": "none"
+    }
+  ],
+  "grade": [
+    {
+      "value": "3",
+      "level": "none"
+    }
+  ],
+  "affiliations": [
+    "tokyo-jujutsu-high"
+  ],
+  "techniques": [
+    "straw-doll-technique"
+  ],
+  "accent": "#ff7ab6",
+  "summary": [
+    {
+      "value": "A first-year student at Tokyo Jujutsu High from the countryside who fights with a hammer, nails and a straw doll.",
+      "level": "none"
+    }
+  ],
+  "fixture": true
+}

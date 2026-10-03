@@ -1,0 +1,18 @@
+{
+  "slug": "shinjuku-showdown",
+  "name": "Shinjuku Showdown",
+  "order": 8,
+  "level": "manga",
+  "summary": [
+    {
+      "value": "The final confrontation of the series.",
+      "level": "manga"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "gojo-satoru",
+    "ryomen-sukuna"
+  ],
+  "fixture": true
+}
