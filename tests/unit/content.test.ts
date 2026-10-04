@@ -56,3 +56,15 @@ describe('content graph', () => {
     }
   });
 });
+
+describe('spoiler depth', () => {
+  const levels = ['anime-s2', 'anime-s3', 'manga'] as const;
+  const texts = (r: { summary: { level: string }[]; events?: { level: string }[] }) => [...r.summary, ...(r.events ?? [])];
+
+  it.each(levels)('characters and arcs both carry content at %s', (level) => {
+    const hasLevel = (rs: { summary: { level: string }[]; events?: { level: string }[] }[]) =>
+      rs.some((r) => texts(r).some((t) => t.level === level));
+    expect(hasLevel(loadDir('characters').map((r) => r.data))).toBe(true);
+    expect(hasLevel(loadDir('arcs').map((r) => r.data))).toBe(true);
+  });
+});

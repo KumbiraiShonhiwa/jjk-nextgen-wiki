@@ -16,5 +16,15 @@
       "level": "none"
     }
   ],
-  "fixture": true
+  "fixture": true,
+  "mechanics": [
+    {
+      "value": "Infinity stops attacks before they reach the user.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "Blue pulls, Red pushes, and combining them forms Hollow Purple.",
+      "level": "anime-s2"
+    }
+  ]
 }
