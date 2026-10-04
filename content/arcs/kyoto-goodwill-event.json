@@ -1,11 +1,15 @@
 {
   "slug": "kyoto-goodwill-event",
   "name": "Kyoto Goodwill Event",
-  "order": 3,
+  "order": 4,
   "level": "anime-s1",
   "summary": [
     {
-      "value": "The Tokyo and Kyoto schools face each other in an annual exchange event.",
+      "value": "The Tokyo and Kyoto schools hold their annual goodwill event, a two-day contest of team and one-on-one fights. Itadori, believed dead by his classmates, returns for it and old rivalries come out in the open.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "Partway through, curses sent by Mahito's allies break into the venue and the contest turns into a fight to protect the school.",
       "level": "anime-s1"
     }
   ],
@@ -17,5 +21,46 @@
     "inumaki-toge",
     "panda"
   ],
-  "fixture": true
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    32,
+    54
+  ],
+  "episodes": [
+    1,
+    14,
+    21
+  ],
+  "events": [
+    {
+      "title": "Itadori returns",
+      "detail": "Gojo reveals that he is alive, and Megumi and Nobara have to take it in.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "The team battle begins",
+      "detail": "Tokyo and Kyoto split into teams for the first day of the event.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Curses invade the venue",
+      "detail": "A curtain goes up over the school and curse users and spirits move in.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "A special grade appears",
+      "detail": "A special grade curse joins the attack and the rivals have to fight on the same side.",
+      "level": "anime-s1"
+    }
+  ]
 }

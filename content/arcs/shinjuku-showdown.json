@@ -1,11 +1,11 @@
 {
   "slug": "shinjuku-showdown",
   "name": "Shinjuku Showdown",
-  "order": 8,
+  "order": 10,
   "level": "manga",
   "summary": [
     {
-      "value": "The final confrontation of the series.",
+      "value": "On Christmas Eve the strongest sorcerer alive and the King of Curses meet in Shinjuku, while elsewhere other sorcerers move to bring the Culling Game to an end. The fight, and what follows it, decides who the jujutsu world belongs to.",
       "level": "manga"
     }
   ],
@@ -14,16 +14,45 @@
     "gojo-satoru",
     "ryomen-sukuna"
   ],
-  "fixture": true,
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    222,
+    271
+  ],
   "events": [
     {
-      "title": "Gojo meets Sukuna",
-      "detail": "The strongest sorcerer faces the King of Curses.",
+      "title": "A month of preparation",
+      "detail": "Chapter 222. Both sides get ready for the agreed date.",
       "level": "manga"
     },
     {
-      "title": "The final stand",
-      "detail": "Surviving sorcerers join together against Sukuna.",
+      "title": "Hollow Purple across the city",
+      "detail": "Gojo fires an amplified Hollow Purple across Tokyo at Sukuna before he arrives in Shinjuku.",
+      "level": "manga"
+    },
+    {
+      "title": "The domains meet",
+      "detail": "The two fighters expand their domains at the same time.",
+      "level": "manga"
+    },
+    {
+      "title": "Takaba against Kenjaku",
+      "detail": "Chapters 239 to 243 follow a comedian whose odd technique stalls a far more experienced opponent.",
+      "level": "manga"
+    },
+    {
+      "title": "The epilogue",
+      "detail": "Chapters 268 to 271 close the story.",
       "level": "manga"
     }
   ]

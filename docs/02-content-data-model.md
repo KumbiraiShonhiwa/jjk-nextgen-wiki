@@ -23,7 +23,7 @@ Ordered; a visitor at level N sees everything ≤ N.
 | 3 | `anime-s3` | Anime season 3 (Culling Game), as episodes air |
 | 4 | `manga` | Everything to the manga's final chapter |
 
-Anime boundaries are mapped to chapter numbers in `content/meta/spoiler-boundaries.json` so a chapter-referenced fact gets its level automatically. **To verify** against episode lists during the scraper spike.
+Anime boundaries are mapped to chapter numbers in `content/meta/spoiler-boundaries.json` so a chapter-referenced fact gets its level automatically (`levelForChapter`, `levelForSeason` in `src/content/schemas/boundaries.ts`). Each level's `throughChapter` is the last chapter *fully* adapted at that level; a chapter an episode adapts only in part belongs to the next level. Verified 2026-10-04 against the Jujutsu Kaisen Wiki's per-episode "adapted from" fields: season 1 ends at chapter 63, season 2 at 137, season 3 (Culling Game Part 1, 12 episodes) at 180, and the manga at 271. A test checks that every arc's `level` matches the level of its first chapter and season. Raise `anime-s3` when Part 2 airs.
 
 ## Entities
 
@@ -32,12 +32,18 @@ Anime boundaries are mapped to chapter numbers in `content/meta/spoiler-boundari
 type Slug = string;                       // kebab-case, unique per entity type
 type SpoilerLevel = 'none' | 'anime-s1' | 'anime-s2' | 'anime-s3' | 'manga';
 type Gated<T> = { value: T; level: SpoilerLevel };
-type Provenance = {
-  source: 'wikipedia' | 'fandom';
-  title: string; url: string; revisionId: number;
-  fetchedAt: string;                      // ISO date
-  licence: 'CC BY-SA 4.0' | 'CC BY-SA 3.0';
-};
+type Provenance =
+  | {                                     // adapted from a wiki page (scripts/ingest)
+      source: 'wikipedia' | 'fandom';
+      title: string; url: string; revisionId: number;
+      fetchedAt: string;                  // ISO date
+      licence: 'CC BY-SA 4.0' | 'CC BY-SA 3.0';
+    }
+  | {                                     // written for this wiki
+      source: 'original';
+      writtenAt: string;                  // ISO date
+      licence: 'CC BY-SA 4.0';
+    };
 ```
 
 | Entity | Key fields | Relationships |
@@ -79,11 +85,32 @@ content/
   organizations/<slug>.json
   locations/<slug>.json
   edges.json
+  links/community.json                    # curated outbound community links (see below)
   meta/spoiler-boundaries.json
   meta/sources.json                       # licence + attribution per source page
 ```
 
 Each file is validated by a Zod schema in `src/content/schemas/` and exposed as an Astro content collection.
+
+## Community links
+
+`content/links/community.json` is a list of curated outbound links to community discussion (`communityLink` in `src/content/schemas/links.ts`). They are links only: no thread text is copied, fetched or embedded, because posts belong to their authors and often spoil.
+
+```ts
+type CommunityLink = {
+  id: Slug;                  // unique
+  url: string;               // https, on reddit.com, under /r/<community>/
+  label: string;             // OUR neutral description, at most 100 chars; never the thread title
+  note: string;              // one sentence in our words, at most 200 chars
+  community: string;         // e.g. 'r/JuJutsuKaisen'
+  targets: Slug[];           // arcs and characters whose pages list it (at least one)
+  level: SpoilerLevel;       // how much the thread reveals; the link is gated at this level
+  addedAt: string;           // ISO date
+  verifiedAt: string;        // when a person last opened it and confirmed it; never before addedAt
+};
+```
+
+`ReadingList.astro` renders them on arc and character pages as external links (`target="_blank"`, `rel="noopener noreferrer nofollow ugc"`), each wrapped in `Gated`. The build fails on an unknown target or a duplicate id or URL. Reddit is never fetched in CI (it blocks bots), so freshness comes from `verifiedAt`. To add one: open the thread, write the label and note yourself, set `level` by what the thread reveals (when unsure, use `manga`), and add the entry.
 
 ## Example record (illustrative, values to be filled by the scraper)
 

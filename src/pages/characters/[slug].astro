@@ -6,11 +6,13 @@ import CharacterArt from '../../components/CharacterArt.astro';
 import Gated from '../../components/Gated.astro';
 import GatedText from '../../components/GatedText.astro';
 import EntityHeader from '../../components/EntityHeader.astro';
+import ReadingList from '../../components/ReadingList.astro';
 import Sources from '../../components/Sources.astro';
 import SpoilerWall from '../../components/SpoilerWall.astro';
-import { loadIndex } from '../../lib/content';
+import { loadIndex, loadLinks } from '../../lib/content';
 import { gradeLabel, titleCase } from '../../lib/format';
 import { arcsFor, maxLevel, neighbours, safeValue } from '../../lib/graph';
+import { linksFor } from '../../lib/links';
 import { hrefFor, safeTitle } from '../../lib/routes';
 import type { Character } from '../../content/schemas';
 
@@ -25,6 +27,7 @@ const techniques = c.techniques.map((s) => ix.techniques.get(s)!);
 const domain = c.domain ? ix.domains.get(c.domain) : undefined;
 const connections = neighbours(ix, c.slug).map((n) => ({ ...n, character: ix.characters.get(n.other) })).filter((n) => n.character);
 const arcs = arcsFor(ix, c.slug);
+const links = linksFor(await loadLinks(), c.slug);
 const title = safeTitle(c, c.name.en, 'Character');
 const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in the Jujutsu Kaisen encyclopedia.`;
 ---
@@ -131,6 +134,7 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
         </aside>
       </div>
 
+      <ReadingList links={links} />
       <Sources provenance={c.provenance} fixture={c.fixture} />
     </SpoilerWall>
   </article>

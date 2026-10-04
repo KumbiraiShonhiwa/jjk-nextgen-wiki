@@ -1,0 +1,11 @@
+{
+  "verifiedAt": "2026-10-04",
+  "source": "Jujutsu Kaisen Wiki episode pages (\"adapted from\" fields, episodes 24, 47 and 59) and Wikipedia's episode and chapter lists",
+  "note": "Jujutsu Kaisen 0 (the film) belongs to anime-s1. A chapter that an episode adapts only in part is placed at the later level. Season 3 is Culling Game Part 1 (12 episodes, Jan-Mar 2026); a Part 2 has been announced, so raise anime-s3 when its episodes air.",
+  "levels": {
+    "anime-s1": { "throughChapter": 63, "season": 1 },
+    "anime-s2": { "throughChapter": 137, "season": 2 },
+    "anime-s3": { "throughChapter": 180, "season": 3 },
+    "manga": { "throughChapter": 271 }
+  }
+}

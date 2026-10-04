@@ -1,11 +1,15 @@
 {
   "slug": "hidden-inventory",
   "name": "Hidden Inventory",
-  "order": 5,
+  "order": 6,
   "level": "anime-s2",
   "summary": [
     {
-      "value": "A look back at Satoru Gojo and Suguru Geto during their student days.",
+      "value": "A flashback to 2006 and 2007, when Satoru Gojo and Suguru Geto were students at Tokyo Jujutsu High. The pair, the strongest duo in the school, are assigned to escort a girl who is meant to be merged with the barrier-keeper Tengen, and the escort is targeted by the assassin Toji Zenin.",
+      "level": "anime-s2"
+    },
+    {
+      "value": "A year later, Geto's growing doubts about protecting people who cannot see curses push him to a decision that sets the two friends on different paths.",
       "level": "anime-s2"
     }
   ],
@@ -13,5 +17,51 @@
     "gojo-satoru",
     "geto-suguru"
   ],
-  "fixture": true
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    65,
+    79
+  ],
+  "episodes": [
+    2,
+    1,
+    5
+  ],
+  "events": [
+    {
+      "title": "A mission ends up on the news",
+      "detail": "Gojo forgets to raise a curtain and the school has to answer for it.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "The Star Plasma Vessel",
+      "detail": "Gojo and Geto are told to protect Riko Amanai and to grant her wishes in her last days.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "A contract on her life",
+      "detail": "Toji Zenin is hired to kill her, and he plans around Gojo's strengths.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "The escort ends in tragedy",
+      "detail": "An ambush leaves both students shaken and changes how they see their work.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "Geto's decision",
+      "detail": "A year later he can no longer reconcile the work with how he feels about non-sorcerers.",
+      "level": "anime-s2"
+    }
+  ]
 }
