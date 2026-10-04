@@ -16,7 +16,7 @@ Fully static output. No server, no database at runtime. All interactivity is cli
 
 ## ADR-001 · Framework: Astro
 
-- **Context:** read-heavy encyclopedia with rich motion on top; JS budget ≤ 120 KB gzip per route (doc 10).
+- **Context:** read-heavy encyclopedia with rich motion on top; JS budget ≤ 100 KiB gzip per route up front, plus a separately declared `lazy` allowance (`budgets.json`, doc 06).
 - **Decision:** Astro 7.3, static output, content collections, View Transitions.
 - **Alternatives:** Next.js 16 + React 19 (bigger runtime, hydration of whole trees, Strict Mode double-invokes effects that create animations); SvelteKit 3 (strong, but weaker content tooling).
 - **Consequences:** pages are HTML-first; animated parts are islands. Team must think in islands. Moving to app-like features (accounts) later would favour adding a server adapter, not a rewrite.
@@ -53,8 +53,13 @@ Fully static output. No server, no database at runtime. All interactivity is cli
 
 ## ADR-007 · 3D: Three.js in the home hero only
 
-- **Decision:** Three.js r186, loaded lazily on the home page after LCP, driven by the Anime.js Three adapter so DOM and WebGL share one timeline. Disabled under `prefers-reduced-motion` and on low-memory devices (`navigator.deviceMemory < 4`), with a static SVG fallback.
-- **Alternatives:** no 3D (simpler); 3D on domain pages (budget risk, revisit after v1).
+- **Status:** implemented (`src/hero/`, doc 08 `hero-field`).
+- **Decision:** Three.js 0.186.1, loaded lazily on the home page after LCP, driven by the Anime.js Three adapter (`animejs/adapters/three`) so DOM and WebGL share one timeline.
+- **Measured cost:** 130.5 KiB gzip in its own chunk. It is excluded from the route's `js` budget and declared instead as `/` → `lazy: 140` in `budgets.json`. Only the ~1.2 KiB guard module is loaded up front. For scale, the whole route's up-front JS budget is 100 KiB, so this layer could never have been a static import.
+- **Guards, all checked before the dynamic import** so a visitor who fails one downloads nothing: `prefers-reduced-motion`, viewport < 1024 px, coarse pointer, `navigator.deviceMemory < 4`, `prefers-reduced-data`.
+- **Fallback:** the SVG sigil is not replaced by the field — it is the hero with or without WebGL, so the fallback is the design rather than a degraded state. `mountField()` returns `null` instead of throwing when no context can be created.
+- **Rejected while implementing:** post-processing of any kind (a bloom pass costs more than the whole field; the glow is baked into the fragment shader), `WebGPURenderer`/TSL (199 KiB gzip and a mandatory TSL port for one hero), and GLTF/Draco/KTX2 (principle 6 forbids sourced artwork, so there are no models).
+- **Alternatives:** no 3D (simpler); `ogl` at 13 KiB gzip (fits the up-front budget, but loses the Anime.js adapter and with it the single-timeline integration); 3D on domain pages (budget risk, and the existing clip-path takeover is better and free).
 
 ## ADR-008 · Hosting: Cloudflare Pages
 
