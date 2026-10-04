@@ -52,6 +52,9 @@ const stats = [
         }
       </ul>
     </div>
+    <!-- The WebGL field renders here when ADR-007's guards allow it. It is purely decorative and
+         additive: the sigil below is the hero with or without it, so no content depends on WebGL. -->
+    <canvas data-hero-canvas class="hero-canvas" aria-hidden="true"></canvas>
     <div class="sigil-bleed"><Sigil class="w-full" /></div>
   </section>
 
@@ -94,6 +97,40 @@ const stats = [
   }
   .hero {
     position: relative;
+  }
+
+  /*
+   * The field sits behind the type and the sigil, filling the hero band. It starts transparent and
+   * is faded in by the mount script only once a context actually exists, so a blocked GPU or a
+   * failed chunk leaves no empty box behind — just the hero as it ships without WebGL.
+   */
+  .hero-canvas {
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(50% - 50vw);
+    z-index: 0;
+    width: 100vw;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s var(--ease-enter);
+  }
+  .hero-canvas[data-hero-field='on'] {
+    opacity: 0.85;
+  }
+
+  /*
+   * Keep the field off the headline. It fades in from the left so the type sits on clean ink and
+   * the energy pools around the seal on the right, and fades at the top and bottom so the band has
+   * no hard edge against the header or the section below. Reading comes first (doc 01).
+   */
+  @media (min-width: 48rem) {
+    .hero-canvas {
+      mask-image:
+        linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.35) 34%, #000 62%),
+        linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      mask-composite: intersect;
+    }
   }
 
   /* Paper mode has no bloom: pooled energy is an ink-mode idea, and on paper it is just a smudge. */
@@ -140,9 +177,22 @@ const stats = [
 
 <script>
   import { motionScope, drawSigil } from '../motion';
+  import { mountHero, shouldMount } from '../hero/mount';
+
+  let unmountHero: (() => void) | undefined;
 
   document.addEventListener('astro:page-load', () => {
     const sigil = document.querySelector<SVGSVGElement>('[data-hero] [data-sigil]');
     if (sigil) motionScope(sigil, ({ reduced }) => void (!reduced && drawSigil(sigil)));
+
+    const canvas = document.querySelector<HTMLCanvasElement>('[data-hero-canvas]');
+    if (canvas && shouldMount()) unmountHero = mountHero(canvas);
+  });
+
+  // The hero owns a GPU context and a rAF loop, so it is torn down before Astro swaps the page
+  // rather than left running behind the next route.
+  document.addEventListener('astro:before-swap', () => {
+    unmountHero?.();
+    unmountHero = undefined;
   });
 </script>

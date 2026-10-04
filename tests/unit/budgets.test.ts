@@ -42,6 +42,11 @@ describe('dynamicImports', () => {
     const code = `const hero=()=>import("./webgl.4.js");const b=()=>import( './three.5.js' )`;
     expect(dynamicImports(code, '/_astro/page.js')).toEqual(['/_astro/webgl.4.js', '/_astro/three.5.js']);
   });
+  it('matches the backtick form Vite emits, not just quotes', () => {
+    // Vite's preload helper writes import(`./chunk.js`); missing this reported the 130 KiB
+    // three.js hero chunk as 0 KiB lazy.
+    expect(dynamicImports('import(`./field.9.js`)', '/_astro/page.js')).toEqual(['/_astro/field.9.js']);
+  });
   it('leaves static imports out: those already count towards js', () => {
     expect(dynamicImports(`import{a}from"./split.1.js"`, '/_astro/page.js')).toEqual([]);
   });

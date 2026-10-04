@@ -50,10 +50,14 @@ export function staticImports(code, url) {
   return out;
 }
 
-/** Relative `import()` targets of a built JS chunk, resolved to site URLs. Loaded on demand, not with the route. */
+/**
+ * Relative `import()` targets of a built JS chunk, resolved to site URLs. Loaded on demand, not
+ * with the route. Backticks are matched as well as quotes: Vite emits `import(\`./chunk.js\`)` for
+ * the preload helper, and missing that form reported a 130 KiB lazy chunk as 0.
+ */
 export function dynamicImports(code, url) {
   const out = [];
-  for (const m of code.matchAll(/\bimport\s*\(\s*["'](\.{1,2}\/[^"']+\.js)["']\s*\)/g)) out.push(posix.join(posix.dirname(url), m[1]));
+  for (const m of code.matchAll(/\bimport\s*\(\s*["'`](\.{1,2}\/[^"'`]+\.js)["'`]\s*\)/g)) out.push(posix.join(posix.dirname(url), m[1]));
   return out;
 }
 
