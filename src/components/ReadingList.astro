@@ -1,0 +1,33 @@
+---
+import type { CommunityLink } from '../content/schemas';
+import Gated from './Gated.astro';
+
+/**
+ * Outbound links to community discussion. Plain links only: nothing is fetched or embedded, and the
+ * label and note are our own words. Each link is gated at the level of what the thread reveals.
+ */
+interface Props {
+  links: CommunityLink[];
+}
+const { links } = Astro.props;
+---
+
+{
+  links.length > 0 && (
+    <aside class="mt-16 border-t border-line pt-6 text-step--1 text-paper-dim" aria-label="Community discussion">
+      <h2 class="mb-1 font-semibold uppercase tracking-[0.14em]">Community discussion</h2>
+      <p class="mb-3">External links to Reddit. These threads are written by their members, not by this wiki, and may reveal more than your spoiler setting allows.</p>
+      <ul class="space-y-2">
+        {links.map((l) => (
+          <Gated level={l.level} as="li">
+            <a class="underline" href={l.url} target="_blank" rel="noopener noreferrer nofollow ugc">
+              {l.label}
+            </a>
+            <span> ({l.community}, opens Reddit in a new tab)</span>
+            <span class="block">{l.note}</span>
+          </Gated>
+        ))}
+      </ul>
+    </aside>
+  )
+}

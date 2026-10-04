@@ -22,7 +22,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={`${title} · JJK NextGen Wiki`} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#0b0b10" />
+    <meta name="theme-color" content="#06080c" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <!-- Runs before first paint so gated content never flashes; re-applied after each client-side navigation. -->
     <script is:inline>
@@ -43,7 +43,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
     <ClientRouter />
   </head>
-  <body class="grain min-h-dvh bg-ink text-paper antialiased">
+  <body class="grain min-h-dvh overflow-x-clip bg-ink text-paper antialiased">
     <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-sm focus:bg-ink-2 focus:px-3 focus:py-2">
       Skip to content
     </a>

@@ -1,11 +1,15 @@
 {
   "slug": "culling-game",
-  "name": "Culling Game",
-  "order": 7,
+  "name": "Culling Game: Part 1",
+  "order": 8,
   "level": "anime-s3",
   "summary": [
     {
-      "value": "Sorcerers are drawn into a deadly game played across colonies throughout Japan.",
+      "value": "After Shibuya the jujutsu world is in disarray, and Itadori's execution is back on the table. A new game begins: players are sealed into colonies across Japan and must fight for points under a rulebook that keeps changing.",
+      "level": "anime-s3"
+    },
+    {
+      "value": "Itadori and Megumi set out to fight the game from the inside, while the Zenin clan's succession drags a family feud into the open.",
       "level": "anime-s3"
     }
   ],
@@ -14,5 +18,61 @@
     "fushiguro-megumi",
     "zenin-maki"
   ],
-  "fixture": true
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    138,
+    180
+  ],
+  "episodes": [
+    3,
+    1,
+    12
+  ],
+  "events": [
+    {
+      "title": "Itadori's execution is reinstated",
+      "detail": "Without Gojo to protect him, he becomes a target again.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "The Zenin clan loses its head",
+      "detail": "The succession is disputed, and the will names a successor the family does not expect.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "Colonies are sealed",
+      "detail": "Barriers close over colonies across Japan and players are pulled in.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "Allies regroup",
+      "detail": "Itadori, Megumi and their allies gather to prepare for the game.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "Rules are announced",
+      "detail": "Players learn they must score points by defeating one another.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "Into the Tokyo No. 1 Colony",
+      "detail": "Itadori and Megumi go in to find a player who can change the rules.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "The fight moves to Sendai",
+      "detail": "The Sendai Colony takes over the last chapters of Part 1.",
+      "level": "anime-s3"
+    }
+  ]
 }

@@ -1,11 +1,15 @@
 {
   "slug": "vs-mahito",
   "name": "Vs. Mahito",
-  "order": 2,
+  "order": 3,
   "level": "anime-s1",
   "summary": [
     {
-      "value": "Itadori teams up with Kento Nanami to investigate a series of deaths caused by a new kind of curse.",
+      "value": "Itadori is paired with the grade 1 sorcerer Kento Nanami to look into killings where the victims are twisted into new shapes. The culprit is Mahito, a cursed spirit who treats human souls as clay.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "While Nanami fights Mahito, Itadori befriends Junpei Yoshino, a lonely student who has fallen in with Mahito, and learns what it costs to hold on to the belief that every life is worth saving.",
       "level": "anime-s1"
     }
   ],
@@ -14,5 +18,51 @@
     "nanami-kento",
     "mahito"
   ],
-  "fixture": true
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    19,
+    31
+  ],
+  "episodes": [
+    1,
+    9,
+    13
+  ],
+  "events": [
+    {
+      "title": "A murder at the cinema",
+      "detail": "Moviegoers are found disfigured, and Nanami takes Itadori to investigate.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Nanami meets Mahito underground",
+      "detail": "Mahito shows that he can reshape souls, his own included, and Nanami is badly hurt.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Itadori and Junpei",
+      "detail": "The two bond over films, and Itadori is invited to dinner with Junpei's mother.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Grief becomes rage",
+      "detail": "A loss at home pushes Junpei toward Mahito, and Itadori swears to kill him.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Itadori and Nanami fight together",
+      "detail": "Nanami arrives in time to fight beside him and the pair drive Mahito to the edge.",
+      "level": "anime-s1"
+    }
+  ]
 }

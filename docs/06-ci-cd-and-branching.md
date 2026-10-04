@@ -63,7 +63,8 @@ Runs on the same PR cancel each other; pushes to long-lived branches never cance
 
 ### Quality gates
 
-- **Bundle budgets** (`budgets.json`, checked by `scripts/check-budgets.mjs`): gzip KiB per route for HTML, CSS and JS, counting the page's scripts, island entry points and their static imports. Search (Pagefind) and dynamic imports load on demand and are not counted. Raise a number only with a reason in the PR.
+- **Bundle budgets** (`budgets.json`, checked by `scripts/check-budgets.mjs`): gzip KiB per route for HTML, CSS and JS, counting the page's scripts, island entry points and their static imports. Search (Pagefind) is loaded on demand and is not counted. Raise a number only with a reason in the PR.
+- **Lazy budget**: anything behind a dynamic `import()` is measured separately as `lazy`, which defaults to **0**. It is off the critical path but still bytes a visitor downloads, so a route that starts lazy-loading JS has to declare the cost in `overrides` rather than have it go unmeasured. Today the only entry is `/` → `lazy: 140` for the WebGL hero (ADR-007).
 - **Accessibility** (`tests/e2e/a11y.spec.ts`): axe-core with the WCAG 2.0/2.1 A and AA rules plus best practices, on one page per template at the highest spoiler level (so every gated block is present), in both colour schemes, plus the default spoiler-hiding state, the spoiler wall and the open dialogs.
 
 Run the same checks locally:

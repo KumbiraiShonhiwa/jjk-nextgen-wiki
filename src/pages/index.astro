@@ -2,39 +2,197 @@
 import Base from '../layouts/Base.astro';
 import Sigil from '../components/Sigil.astro';
 import EntityCard from '../components/EntityCard.astro';
+import CharacterArt from '../components/CharacterArt.astro';
 import { characterMeta } from '../lib/format';
 
 import { loadIndex } from '../lib/content';
+import { DEFAULT_LEVEL } from '../lib/spoiler';
+import { SPOILER_LEVELS } from '../content/schemas/common';
 
 const ix = await loadIndex();
 const characters = [...ix.characters.values()].filter((c) => c.level === 'none');
+
+/*
+ * Counts are of what is browsable at the default spoiler level, which is also what a visitor with
+ * JavaScript off sees. Counting only level `none` would print "0 arcs" and "0 domains" (nothing in
+ * either collection is unconditionally safe), and counting everything would leak how much story
+ * exists past the visitor's level. Conservative by design: a manga reader sees a number that is
+ * never too high. These are static, so they don't follow the spoiler control.
+ */
+const VISIBLE_BY_DEFAULT = SPOILER_LEVELS.slice(0, SPOILER_LEVELS.indexOf(DEFAULT_LEVEL) + 1) as readonly string[];
+const countOpen = (m: Map<string, { level: string }>) => [...m.values()].filter((e) => VISIBLE_BY_DEFAULT.includes(e.level)).length;
+const stats = [
+  { href: '/characters', count: countOpen(ix.characters), label: 'characters' },
+  { href: '/arcs', count: countOpen(ix.arcs), label: 'arcs' },
+  { href: '/techniques', count: countOpen(ix.techniques), label: 'techniques' },
+  { href: '/domains', count: countOpen(ix.domains), label: 'domains' },
+];
 ---
 
 <Base title="Home">
-  <section data-hero class="grid min-h-[80dvh] items-center gap-10 py-16 md:grid-cols-[1.2fr_1fr]">
-    <div>
+  <section data-hero class="hero grid min-h-[92dvh] items-center gap-10 py-16 md:grid-cols-[1.2fr_1fr]">
+    <div class="relative z-10">
       <p class="text-xs uppercase tracking-[0.3em] text-ce-blue">Unofficial encyclopedia</p>
-      <h1 data-kinetic class="mt-4 font-display text-6xl leading-none md:text-8xl">Jujutsu Kaisen</h1>
-      <p class="mt-6 max-w-md text-paper-dim">
+      <h1 data-kinetic class="mt-4 font-display text-step-5 leading-none">Jujutsu Kaisen</h1>
+      <p class="mt-6 max-w-md text-step-1 text-paper-dim">
         Characters, cursed techniques and arcs, with spoilers kept behind the level you choose.
       </p>
+
+      <!-- Doubles as the hero's navigation: the page previously offered no way into the site. -->
+      <ul class="mt-10 flex flex-wrap gap-x-8 gap-y-4">
+        {
+          stats.map((s) => (
+            <li>
+              <a href={s.href} class="group block">
+                <span class="block font-display text-step-3 leading-none transition-colors group-hover:text-ce-blue">{s.count}</span>
+                <span class="mt-1 block text-step--1 uppercase tracking-[0.2em] text-paper-dim">{s.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
-    <Sigil class="mx-auto w-64 md:w-80" />
+    <!-- The WebGL field renders here when ADR-007's guards allow it. It is purely decorative and
+         additive: the sigil below is the hero with or without it, so no content depends on WebGL. -->
+    <canvas data-hero-canvas class="hero-canvas" aria-hidden="true"></canvas>
+    <div class="sigil-bleed"><Sigil class="w-full" /></div>
   </section>
 
-  <section data-cascade class="py-12">
-    <h2 class="font-display text-3xl">Characters</h2>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {characters.map((c) => <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} />)}
+  <section data-cascade class="py-20">
+    <div class="flex flex-wrap items-baseline justify-between gap-4">
+      <div>
+        <p class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">Who's who</p>
+        <h2 class="mt-2 font-display text-step-4">Characters</h2>
+      </div>
+      <a href="/characters" class="text-step--1 text-paper-dim underline-offset-4 hover:text-paper hover:underline">All characters →</a>
+    </div>
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        characters.map((c) => (
+          <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent}>
+            <CharacterArt slot="art" character={c} />
+          </EntityCard>
+        ))
+      }
     </div>
   </section>
 </Base>
 
+<style>
+  /*
+   * Cursed energy pooling behind the hero. A single static radial wash, painted once: it gives the
+   * grade somewhere to fall off to, which is most of the cinematic read. No animation, no JS.
+   */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    z-index: 0;
+    height: min(92dvh, 900px);
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 70% 35%, color-mix(in oklab, var(--ce-blue) 14%, transparent), transparent 70%),
+      radial-gradient(40% 40% at 20% 20%, color-mix(in oklab, var(--ce-violet) 9%, transparent), transparent 70%);
+  }
+  .hero {
+    position: relative;
+  }
+
+  /*
+   * The field sits behind the type and the sigil, filling the hero band. It starts transparent and
+   * is faded in by the mount script only once a context actually exists, so a blocked GPU or a
+   * failed chunk leaves no empty box behind — just the hero as it ships without WebGL.
+   */
+  .hero-canvas {
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(50% - 50vw);
+    z-index: 0;
+    width: 100vw;
+    height: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.2s var(--ease-enter);
+  }
+  .hero-canvas[data-hero-field='on'] {
+    opacity: 0.85;
+  }
+
+  /*
+   * Keep the field off the headline. It fades in from the left so the type sits on clean ink and
+   * the energy pools around the seal on the right, and fades at the top and bottom so the band has
+   * no hard edge against the header or the section below. Reading comes first (doc 01).
+   */
+  @media (min-width: 48rem) {
+    .hero-canvas {
+      mask-image:
+        linear-gradient(to right, transparent 0%, rgb(0 0 0 / 0.35) 34%, #000 62%),
+        linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+      mask-composite: intersect;
+    }
+  }
+
+  /* Paper mode has no bloom: pooled energy is an ink-mode idea, and on paper it is just a smudge. */
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme='dark']) .hero::before {
+      display: none;
+    }
+  }
+
+  /*
+   * Phone: the sigil stays in flow, under the type, at a sane size.
+   */
+  .sigil-bleed {
+    margin-inline: auto;
+    width: 16rem;
+  }
+
+  /*
+   * Desktop: the seal is oversized and cropped against the right edge of the viewport rather than
+   * floating centred in its own grid cell. `right: calc(50% - 50vw)` walks it out of the
+   * max-w-6xl column to the true viewport edge whatever the window width, and the translate pushes
+   * it past that edge so it reads as a fragment of something much larger. Out of flow, so the
+   * headline keeps the full column. body carries `overflow-x-clip` (clip, not hidden, so the
+   * sticky header still sticks) to absorb the overhang without a horizontal scrollbar.
+   */
+  @media (min-width: 48rem) {
+    .sigil-bleed {
+      position: absolute;
+      top: 50%;
+      right: calc(50% - 50vw);
+      z-index: 0;
+      width: min(46rem, 60vw);
+      transform: translate(17%, -50%);
+      opacity: 0.85;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sigil-bleed {
+      opacity: 0.7;
+    }
+  }
+</style>
+
 <script>
   import { motionScope, drawSigil } from '../motion';
+  import { mountHero, shouldMount } from '../hero/mount';
+
+  let unmountHero: (() => void) | undefined;
 
   document.addEventListener('astro:page-load', () => {
     const sigil = document.querySelector<SVGSVGElement>('[data-hero] [data-sigil]');
     if (sigil) motionScope(sigil, ({ reduced }) => void (!reduced && drawSigil(sigil)));
+
+    const canvas = document.querySelector<HTMLCanvasElement>('[data-hero-canvas]');
+    if (canvas && shouldMount()) unmountHero = mountHero(canvas);
+  });
+
+  // The hero owns a GPU context and a rAF loop, so it is torn down before Astro swaps the page
+  // rather than left running behind the next route.
+  document.addEventListener('astro:before-swap', () => {
+    unmountHero?.();
+    unmountHero = undefined;
   });
 </script>

@@ -1,11 +1,15 @@
 {
   "slug": "fearsome-womb",
   "name": "Fearsome Womb",
-  "order": 1,
+  "order": 2,
   "level": "anime-s1",
   "summary": [
     {
-      "value": "Yuji Itadori swallows a cursed finger, becomes Sukuna's vessel and joins Tokyo Jujutsu High.",
+      "value": "Yuji Itadori, a high schooler with exceptional athletic ability, swallows a cursed finger to protect the people around him and becomes the host of the King of Curses, Ryomen Sukuna. His execution is postponed, not cancelled, and he is enrolled at Tokyo Jujutsu High under Satoru Gojo.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "With classmates Megumi Fushiguro and Nobara Kugisaki he takes his first missions, which lead to a detention center where a special grade curse leaves the three fighting for their lives.",
       "level": "anime-s1"
     }
   ],
@@ -16,5 +20,51 @@
     "gojo-satoru",
     "ryomen-sukuna"
   ],
-  "fixture": true
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    1,
+    18
+  ],
+  "episodes": [
+    1,
+    1,
+    8
+  ],
+  "events": [
+    {
+      "title": "Itadori swallows Sukuna's finger",
+      "detail": "Cornered by curses with his friends from the Occult Research Club, he takes in the cursed object to fight back.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "A stay of execution",
+      "detail": "The higher-ups put him on trial; Gojo arranges for him to live and study at the school.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Nobara's test",
+      "detail": "Gojo sends Itadori and Nobara to clear a haunted building in Roppongi.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "The detention center",
+      "detail": "The three first-years answer a call about a cursed womb and meet a special grade curse.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Itadori's fate in doubt",
+      "detail": "The fight ends with the future of Sukuna's vessel uncertain.",
+      "level": "anime-s1"
+    }
+  ]
 }

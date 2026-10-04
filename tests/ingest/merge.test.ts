@@ -54,6 +54,22 @@ describe('mergeRecord', () => {
     expect((same.provenance as Provenance[])[0].fetchedAt).toBe('2026-10-02T00:00:00.000Z');
   });
 
+  it('keeps the text of a record written for this wiki, and does not credit a page it took nothing from', () => {
+    const original = { source: 'original', writtenAt: '2026-10-04T00:00:00.000Z', licence: 'CC BY-SA 4.0' };
+    const arc = { slug: 'a', name: 'Arc', order: 1, summary: [{ value: 'Ours.', level: 'none' }], chapters: [1, 5], characters: ['x'], fixture: false, provenance: [original] };
+    const out = mergeRecord({
+      existing: arc,
+      sourced: { summary: [{ value: 'Theirs.', level: 'none' }], chapters: [1, 9], characters: ['y'] },
+      slug: 'a', level: 'none', provenance: prov(1),
+    });
+    expect(out.summary).toEqual(arc.summary);
+    expect(out.chapters).toEqual([1, 5]);
+    expect(out.characters).toEqual(['x', 'y']); // reference lists still union
+    expect(out.provenance).toEqual([original, prov(1)]); // something was taken, so the page is credited
+    const untouched = mergeRecord({ existing: arc, sourced: { summary: [{ value: 'Theirs.', level: 'none' }] }, slug: 'a', level: 'none', provenance: prov(1) });
+    expect(untouched).toEqual(arc);
+  });
+
   it('arc names stay curated', () => {
     const out = mergeRecord({ existing: { slug: 'a', name: 'Shibuya Incident' }, sourced: { name: { en: 'Shibuya Incident Arc' } }, slug: 'a', level: 'none', provenance: prov(1) });
     expect(out.name).toBe('Shibuya Incident');

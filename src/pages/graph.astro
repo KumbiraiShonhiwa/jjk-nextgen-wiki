@@ -58,7 +58,9 @@ const name = (slug: string) => ix.characters.get(slug)!.name.en;
     </div>
 
     <div class="mt-6 overflow-x-auto rounded-lg border border-line bg-ink-2">
-      <div data-graph data-intro class="relative aspect-[1000/640] min-w-[44rem] touch-none select-none">
+      <!-- pan-y, not none: the nodes themselves take touch-action: none so a drag still works,
+           but vertical page scrolling has to survive over a full-width graph on a phone. -->
+      <div data-graph data-intro class="relative aspect-[1000/640] min-w-[44rem] touch-pan-y select-none">
         <svg class="absolute inset-0 size-full" viewBox={`0 0 ${GRAPH_VIEW.width} ${GRAPH_VIEW.height}`} preserveAspectRatio="none" aria-hidden="true">
           {
             links.map((l) => (
