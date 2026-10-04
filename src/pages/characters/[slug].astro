@@ -51,7 +51,7 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
 
           {
             techniques.length > 0 && (
-              <section class="mt-14" aria-labelledby="techniques">
+              <section class="mt-20" aria-labelledby="techniques">
                 <h2 id="techniques" class="font-display text-step-3">Techniques</h2>
                 <div class="mt-5 grid gap-4 sm:grid-cols-2">
                   {techniques.map((t) => (
@@ -64,7 +64,7 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
 
           {
             domain && (
-              <section class="mt-14" aria-labelledby="domain">
+              <section class="mt-20" aria-labelledby="domain">
                 <h2 id="domain" class="font-display text-step-3">Domain Expansion</h2>
                 <div class="mt-5">
                   <Gated level={domain.level} as="div" scramble>
@@ -79,7 +79,7 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
 
           {
             arcs.length > 0 && (
-              <section class="mt-14" aria-labelledby="arcs">
+              <section class="mt-20" aria-labelledby="arcs">
                 <h2 id="arcs" class="font-display text-step-3">Story arcs</h2>
                 <ol class="mt-5 flex flex-wrap gap-2">
                   {arcs.map((a) => (

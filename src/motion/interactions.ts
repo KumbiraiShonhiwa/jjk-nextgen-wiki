@@ -12,35 +12,51 @@ export const springs = {
 };
 
 /**
- * Cursor-reactive tilt and cursed-energy glow for a card.
+ * Cursor-reactive tilt and cursed-energy sheen for a card.
+ *
+ * The sheen ([data-sheen] in EntityCard) is a disc that is painted once and only ever
+ * *translated*, so a pointer move costs one composited transform. The previous version drove
+ * `--glow-x/--glow-y` into a 240px `radial-gradient`, which repainted that gradient on every
+ * move -- the one hot-path paint in the codebase, and against docs/08's own rule.
+ *
  * One Animatable per card: pointer moves update targets, no animation objects are created per frame.
  */
 export function tiltCard(card: HTMLElement, maxDeg = 6): () => void {
   const tilt = createAnimatable(card, {
     rotateX: { duration: durations.sm, ease: eases.enter },
     rotateY: { duration: durations.sm, ease: eases.enter },
-    '--glow-x': { duration: durations.xs, unit: '%' },
-    '--glow-y': { duration: durations.xs, unit: '%' },
   });
+  const sheenEl = card.querySelector<HTMLElement>('[data-sheen]');
+  // Trails the pointer slightly (durations.sm) so the highlight feels like it has weight.
+  const sheen = sheenEl && createAnimatable(sheenEl, { x: { duration: durations.sm, ease: eases.move }, y: { duration: durations.sm, ease: eases.move } });
   const onMove = (e: PointerEvent) => {
     const r = card.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;
     tilt.rotateY((px - 0.5) * maxDeg * 2);
     tilt.rotateX((0.5 - py) * maxDeg * 2);
-    tilt['--glow-x'](px * 100);
-    tilt['--glow-y'](py * 100);
+    sheen?.x(px * r.width);
+    sheen?.y(py * r.height);
+  };
+  // Jump the sheen to the entry point (duration 0) so it does not slide in from the last card edge.
+  const onEnter = (e: PointerEvent) => {
+    const r = card.getBoundingClientRect();
+    sheen?.x(e.clientX - r.left, 0);
+    sheen?.y(e.clientY - r.top, 0);
   };
   const onLeave = () => {
     tilt.rotateX(0);
     tilt.rotateY(0);
   };
+  card.addEventListener('pointerenter', onEnter);
   card.addEventListener('pointermove', onMove);
   card.addEventListener('pointerleave', onLeave);
   return () => {
+    card.removeEventListener('pointerenter', onEnter);
     card.removeEventListener('pointermove', onMove);
     card.removeEventListener('pointerleave', onLeave);
     tilt.revert();
+    sheen?.revert();
   };
 }
 
