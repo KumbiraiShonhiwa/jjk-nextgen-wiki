@@ -18,6 +18,9 @@ Foundation phase. See [`docs/`](docs/):
 | 06 | [CI/CD & Branching](docs/06-ci-cd-and-branching.md) |
 | 07 | [Design System](docs/07-design-system.md) |
 | 08 | [Motion Language & Anime.js Spec](docs/08-motion-language.md) |
+| 09 | [Build, Run & Art Generation](docs/09-build-and-art.md) |
+| 10 | [Session Review (handoff)](docs/10-session-review.md) |
+| 11 | [Roadmap: finishing v1, then v2](docs/11-roadmap.md) |
 
 ## Licences
 
