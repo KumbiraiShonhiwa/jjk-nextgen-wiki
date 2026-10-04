@@ -17,9 +17,9 @@ Checked against the code on `develop` at `5b81408`.
 | A5 | **Missing character fields** | doc 02 | `gender`, `birthday`, `height` and `firstAppearance` aren't in the schema, so the ingest report lists them as unmapped | Add them to `src/content/schemas/character.ts` (gate `firstAppearance` by level) and map them in `scripts/ingest/map/character.ts` |
 | A6 | **Mobile bottom tab bar** | doc 04 | The header has a mobile menu only | Bottom tab bar (Home, Characters, Arcs, Search) with a safe-area inset. Add Media to `NAV` once A1 lands |
 | A7 | **Footer "Report a problem"** | doc 04 | Missing | A link to a GitHub issue form, pre-filled with the page URL and spoiler level. Add an issue template to `.github/ISSUE_TEMPLATE/` |
-| A8 | **Home hero and Three.js hero** | doc 08, ADR-007, doc 10 next steps 3 and 6 | Sigil only | Build the static hero first, then the lazy Three.js layer behind ADR-007's guards (reduced motion, `deviceMemory < 4`) |
+| A8 | ~~**Home hero and Three.js hero**~~ **Done** | doc 08, ADR-007, doc 10 next steps 3 and 6 | Full-bleed hero with a stat row, edge-bled sigil, and the lazy WebGL field at 130.5 KiB gzip behind ADR-007's guards | — |
 | A9 | **Page transitions** | doc 10 next step 4 | `ClientRouter` is mounted but there's no custom transition motion | Use `transition:name` on entity cards and headers so card → page morphs. Keep `motionScope` cleanup on `astro:before-swap` |
-| A10 | **Doc and config drift** | doc 10 | The README doc table stops at 08. Doc 08 still marks `graph-physics` as planned, though #7 shipped it. `.github/rulesets/*.json` don't match the live rulesets | Fix all three in one housekeeping PR |
+| A10 | **Doc and config drift** | doc 10 | Mostly fixed: the README table now lists 01–11, and doc 08 no longer marks `graph-physics` as planned. **Still open:** `.github/rulesets/*.json` don't match the live rulesets (the live `develop` ruleset also requires the four security checks and `require_extra_approval_for_unattributed_changes`) | Sync the ruleset files |
 | A11 | **Visual and Lighthouse checks** | ADR-009 | Left out on purpose (doc 10) | Add Playwright screenshot tests for the five templates. Revisit Lighthouse CI after B10 (PWA) lands |
 
 ## Part B · New features

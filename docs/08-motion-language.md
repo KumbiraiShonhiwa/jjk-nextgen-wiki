@@ -1,6 +1,9 @@
 # 08 · Motion Language & Anime.js Spec
 
-Status: v1 · 2026-10-03 · Code: `src/motion/` · Engine: Anime.js 4.5.0 (only motion engine, see ADR-002).
+Status: v2 · 2026-10-04 · Code: `src/motion/`, `src/hero/` · Engine: Anime.js 4.5.0 (the only motion engine, see ADR-002).
+
+Three.js renders the home hero's field (ADR-007) but does not animate it: its uniforms are Anime.js
+targets through `animejs/adapters/three`, so there is still one timeline and one easing vocabulary.
 
 ## Principles
 
@@ -39,11 +42,12 @@ Status: v1 · 2026-10-03 · Code: `src/motion/` · Engine: Anime.js 4.5.0 (only 
 | --- | --- | --- | --- | --- |
 | `kinetic-heading` | Page titles | Page load | `splitText` (chars, clip wrap), `createTimeline`, `stagger` from center, `eases.surge` | Plain text, not split |
 | `sigil-draw` | Home hero | Page load | `svg.createDrawable`, `createTimeline`, drop-shadow surge | Static, fully drawn |
+| `hero-field` | Home hero (desktop only) | After load, when idle | `animate` on a three.js `ShaderMaterial` via `adapters/three`; `eases.surge` on `uIntensity` | Not loaded at all |
 | `reveal-cascade` | Card grids | Scrolled into view | `animate` (`clip-path` wipe), `stagger({ grid: true, from: 'first' })`, `onScroll` | Shown immediately |
 | `card-tilt` | Every `EntityCard` (fine pointers) | Pointer move | `createAnimatable` (rotateX/Y on the card, x/y on the pre-painted `[data-sheen]` disc) | Off |
 | `spoiler-indicator` | Spoiler control | Level change | `animate` (x, width) | Jumps |
 | `spoiler-reveal` | Newly visible gated content | Level raised | `scrambleText` on text leaves; blur/opacity/y with `stagger` for blocks | Appears instantly |
 | `arc-timeline` | Arcs page | Scroll | `onScroll` with `sync` (scrubbed rail and per-arc markers), `animate`; the rail's `onUpdate` drives the sticky "now reading" label | Full rail, lit markers, no label |
-| `graph-physics` (planned) | Relationship graph | Drag | `createDraggable`, `createSpring`, `svg.createMotionPath` | Static layout, keyboard list |
+| `graph-physics` | Relationship graph | Drag | `createDraggable`, `createSpring`, `svg.createMotionPath` | Static layout, keyboard list |
 | `domain-takeover` | Domain pages | Click "Expand the domain" | `createTimeline` (clip-path iris from the click point, ring collapse, letter rise, `scrambleText`), looping `animate` breathing, `splitText` | Overlay appears without animation |
-| `grid-reflow` (implemented) | Filtering grids | Filter change | `createLayout` | Instant |
+| `grid-reflow` | Filtering grids | Filter change | `createLayout` | Instant |
