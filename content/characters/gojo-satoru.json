@@ -29,6 +29,14 @@
     {
       "value": "A special grade sorcerer and the first-year teacher at Tokyo Jujutsu High, widely regarded as the strongest sorcerer alive.",
       "level": "none"
+    },
+    {
+      "value": "Is sealed away during the Shibuya Incident, leaving Tokyo Jujutsu High without its strongest teacher.",
+      "level": "anime-s2"
+    },
+    {
+      "value": "Faces Sukuna in the Shinjuku Showdown, the fight that decides his fate.",
+      "level": "manga"
     }
   ],
   "fixture": true

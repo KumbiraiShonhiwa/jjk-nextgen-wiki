@@ -14,5 +14,22 @@
     "fushiguro-megumi",
     "zenin-maki"
   ],
-  "fixture": true
+  "fixture": true,
+  "events": [
+    {
+      "title": "Colonies are sealed",
+      "detail": "Barriers close over colonies across Japan and players are pulled in.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "Rules are announced",
+      "detail": "Players learn they must score points by defeating one another.",
+      "level": "anime-s3"
+    },
+    {
+      "title": "The game spills into the wider world",
+      "detail": "Its fallout reaches the final confrontation at Shinjuku.",
+      "level": "manga"
+    }
+  ]
 }

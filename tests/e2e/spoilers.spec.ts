@@ -45,3 +45,13 @@ test('the spoiler control is keyboard operable', async ({ page }) => {
   await expect(page.getByRole('radio', { name: 'S2' })).toBeFocused();
   await expect(page.getByRole('radio', { name: 'S2' })).toHaveAttribute('aria-checked', 'true');
 });
+
+test('later-season and manga content stays hidden until the level is raised', async ({ page }) => {
+  await page.goto('/characters/gojo-satoru');
+  await expect(page.getByText('fight that decides his fate')).toBeHidden();
+  await expect(page.locator("[data-redacted='manga']").first()).toBeVisible();
+  await page.addInitScript(() => localStorage.setItem('jjk:spoiler-level', 'manga'));
+  await page.goto('/characters/gojo-satoru');
+  await expect(page.getByText('fight that decides his fate')).toBeVisible();
+  await expect(page.getByText('sealed away during the Shibuya Incident')).toBeVisible();
+});

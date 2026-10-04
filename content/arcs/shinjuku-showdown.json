@@ -14,5 +14,17 @@
     "gojo-satoru",
     "ryomen-sukuna"
   ],
-  "fixture": true
+  "fixture": true,
+  "events": [
+    {
+      "title": "Gojo meets Sukuna",
+      "detail": "The strongest sorcerer faces the King of Curses.",
+      "level": "manga"
+    },
+    {
+      "title": "The final stand",
+      "detail": "Surviving sorcerers join together against Sukuna.",
+      "level": "manga"
+    }
+  ]
 }
