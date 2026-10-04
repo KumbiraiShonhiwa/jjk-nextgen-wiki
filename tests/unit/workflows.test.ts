@@ -24,6 +24,14 @@ describe('lintWorkflow', () => {
     expect(lintWorkflow(good, 'good.yml')).toEqual([]);
   });
 
+  it('accepts the same workflow with CRLF line endings', () => {
+    // Windows checks these files out CRLF (git core.autocrlf), and the trailing \r used to defeat
+    // the trailing-comment strip, so every pinned `uses: …@sha # v4.4.0` was reported as unpinned.
+    // The fixtures above are LF template literals, which is why this went unnoticed.
+    expect(lintWorkflow(good.replace(/\n/g, '\r\n'), 'good.yml')).toEqual([]);
+    expect(findUses(good.replace(/\n/g, '\r\n'))[0]!.ref).toBe(`actions/checkout@${SHA}`);
+  });
+
   it('flags a missing top-level permissions block (job-level does not count)', () => {
     const bad = good.replace('permissions:\n  contents: read\n', '').replace('    runs-on', '    permissions:\n      contents: read\n    runs-on');
     expect(hasTopLevelPermissions(bad)).toBe(false);

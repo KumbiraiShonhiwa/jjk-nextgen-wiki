@@ -25,9 +25,20 @@ const { href, title, subtitle, meta, accent, level = 'none', redact = false } = 
     style={`--accent:${accent ?? 'var(--ce-blue)'}`}
   >
     <span class="absolute inset-x-0 top-0 h-0.5 bg-[var(--accent)] opacity-70" aria-hidden="true"></span>
+    <!-- Always-on accent wash (not just the hover glow), so a grid reads as a cast of people
+         rather than a row of identical boxes. Static paint, no animation. -->
     <span
-      class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-      style="background: radial-gradient(240px circle at var(--glow-x, 50%) var(--glow-y, 50%), color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%);"
+      class="pointer-events-none absolute inset-0"
+      style="background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 8%, transparent), transparent 45%);"
+      aria-hidden="true"></span>
+    <!-- Cursed-energy sheen. A pre-painted 480px disc (so `closest-side` gives the same 240px
+         radius the old `radial-gradient(240px circle at …)` had) parked on the card's top-left
+         corner and centred on itself. tiltCard() only *translates* it, so following the pointer
+         costs a composited transform instead of repainting a 240px gradient every move. -->
+    <span
+      data-sheen
+      class="card-sheen pointer-events-none absolute top-0 left-0 size-[480px] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      style="background: radial-gradient(closest-side circle, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%);"
       aria-hidden="true"></span>
     <div class="relative mb-4 empty:hidden"><slot name="art" /></div>
     <span class="relative block font-display text-step-2 leading-tight">{title}</span>

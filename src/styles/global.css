@@ -12,18 +12,22 @@
  */
 :root {
   color-scheme: dark;
-  /* Surfaces */
-  --ink: #0b0b10;
-  --ink-2: #13131b;
-  --ink-3: #1c1c28;
-  --line: #2a2a38;
+  /*
+   * Surfaces carry a cool teal cast and type stays warm: the teal/orange split that makes the
+   * dark mode read as graded film rather than flat grey. Measured against WCAG AA on every
+   * surface before landing (docs/07); the old --ce-red was 4.31:1 on --ink-3 and now clears 4.5.
+   */
+  --ink: #050a0b;
+  --ink-2: #091316;
+  --ink-3: #0f1f23;
+  --line: #193036;
   /* Text */
-  --paper: #f3efe6;
-  --paper-dim: #a9a49a;
+  --paper: #f7f2e6;
+  --paper-dim: #98a0a8;
   /* Cursed energy */
   --ce-blue: #5b8cff;
-  --ce-violet: #9b6bff;
-  --ce-red: #e5484d;
+  --ce-violet: #b06cff;
+  --ce-red: #ff3b41;
   --ce-glow: color-mix(in oklab, var(--ce-blue) 55%, transparent);
   /* Status */
   --ok: #3fbf8f;
@@ -56,16 +60,26 @@
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) {
     color-scheme: light;
-    --ink: #f6f3ec;
-    --ink-2: #ece7dc;
-    --ink-3: #e2dccf;
-    --line: #d3ccbd;
-    --paper: #121218;
-    --paper-dim: #55514a;
-    --ce-blue: #2f5fe0;
-    --ce-violet: #6a3fe0;
-    --ce-red: #c4282e;
-    --shadow-1: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 8px 24px -14px rgb(0 0 0 / 0.25);
+    /*
+     * Paper mode is not the dark grade inverted — mirroring it produced washed-out pastel cards.
+     * It is manga ink on paper: one flat paper surface, structure drawn with near-black hairlines
+     * instead of fills, no gradients, and the accent spent as a single stroke rather than a wash.
+     * --ink-2 is deliberately identical to --ink so a card separates by its rule, not by a panel.
+     * Accents are darker than their dark-mode siblings to clear AA on paper (they were 4.01:1 and
+     * 4.17:1 on --ink-3 before this pass, under AA for body text).
+     */
+    --ink: #f5f2e9;
+    --ink-2: #f5f2e9;
+    --ink-3: #e8e3d5;
+    --line: #342f22;
+    --paper: #14130f;
+    --paper-dim: #56514a;
+    --ce-blue: #2b57ce;
+    --ce-violet: #7e39cc;
+    --ce-red: #b8262b;
+    /* Ink doesn't bloom: a hairline rule, no blur, no inset highlight. */
+    --shadow-1: none;
+    --shadow-glow: 0 0 0 1px var(--ce-blue);
   }
 }
 
@@ -122,8 +136,70 @@ html {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: var(--grain-opacity, 0.05);
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/*
+ * Paper mode, continued: the pieces that have to be switched off rather than recoloured.
+ *
+ * In ink mode a card is a lit panel — accent wash, radial portrait bloom, soft drop shadow. On
+ * paper all three read as pastel, so they are removed and the structure is carried by the
+ * hairline rule and the accent bar alone. The portrait keeps its accent *strokes*: line art on
+ * flat paper is the manga reference. Scoped to the same query as the light tokens above, so ink
+ * mode is untouched.
+ */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    /* Grain is doing real work on paper, where it reads as newsprint tooth. */
+    --grain-opacity: 0.1;
+  }
+  /* The always-on accent wash and the pointer sheen: both are glows, both go. */
+  :root:not([data-theme='dark']) .card > span[style*='linear-gradient'],
+  :root:not([data-theme='dark']) .card-sheen {
+    display: none;
+  }
+  /* Flat paper panel behind the generative portrait; its accent line art survives. */
+  :root:not([data-theme='dark']) [data-portrait='placeholder'] rect {
+    fill: var(--ink-3);
+  }
+}
+
+/*
+ * EntityCard pointer sheen. The disc is 480px and sits at the card's top-left corner; these
+ * margins pull it back by half so its centre is the corner. tiltCard() then moves it with
+ * translate() only -- no gradient is ever repainted while the pointer moves. The layer hint is
+ * scoped to hover so a 40-card grid does not promote 40 layers at rest.
+ */
+.card-sheen {
+  margin: -240px 0 0 -240px;
+}
+.card:hover .card-sheen {
+  will-change: transform;
+}
+
+/*
+ * Kinetic heading descender fix. splitText(chars: { wrap: 'clip' }) wraps each character in a
+ * span with overflow:clip that is only as tall as the line box, which shears j/p/g. Grow every
+ * wrapper downwards without moving the text. This is a stylesheet rule rather than an inline
+ * style written per character, so splitting an h1 no longer forces a layout per glyph.
+ */
+[data-kinetic] :has(> [data-char]) {
+  padding-bottom: 0.25em;
+  margin-bottom: -0.25em;
+}
+
+/* The sticky "now reading" arc label (/arcs) exists only on the scrubbed, full-motion path. */
+[data-arc-current] {
+  display: none;
+}
+.js-motion [data-arc-current] {
+  display: flex;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js-motion [data-arc-current] {
+    display: none;
+  }
 }
 
 /* Cascade items start hidden only when JS and motion are available; Base.astro animates them in. */

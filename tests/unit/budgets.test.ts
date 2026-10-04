@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { assetRefs, gzipSize, staticImports } from '../../scripts/check-budgets.mjs';
+import { assetRefs, dynamicImports, gzipSize, staticImports } from '../../scripts/check-budgets.mjs';
 
 describe('assetRefs', () => {
   it('finds scripts, stylesheets and island entry points, once each', () => {
@@ -34,6 +34,19 @@ describe('staticImports', () => {
   });
   it('ignores bare and absolute specifiers', () => {
     expect(staticImports(`import x from"svelte";import y from"/abs.js"`, '/_astro/a.js')).toEqual([]);
+  });
+});
+
+describe('dynamicImports', () => {
+  it('resolves import() targets against the importing file, so lazy weight is measurable', () => {
+    const code = `const hero=()=>import("./webgl.4.js");const b=()=>import( './three.5.js' )`;
+    expect(dynamicImports(code, '/_astro/page.js')).toEqual(['/_astro/webgl.4.js', '/_astro/three.5.js']);
+  });
+  it('leaves static imports out: those already count towards js', () => {
+    expect(dynamicImports(`import{a}from"./split.1.js"`, '/_astro/page.js')).toEqual([]);
+  });
+  it('ignores bare and absolute specifiers', () => {
+    expect(dynamicImports(`import("svelte");import("/pagefind/pagefind.js")`, '/_astro/a.js')).toEqual([]);
   });
 });
 

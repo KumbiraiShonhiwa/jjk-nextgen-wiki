@@ -40,24 +40,52 @@ function adjacency(lines: SVGLineElement[]) {
   return adj;
 }
 
-/** Centre of a node's dot, in viewBox units. */
-function centre(node: HTMLElement, box: DOMRect) {
-  const dot = node.querySelector<HTMLElement>('[data-dot]') ?? node;
-  const r = dot.getBoundingClientRect();
-  return {
-    x: ((r.left + r.width / 2 - box.left) / box.width) * GRAPH_VIEW.width,
-    y: ((r.top + r.height / 2 - box.top) / box.height) * GRAPH_VIEW.height,
-  };
+/** A node's live translation away from its resting place, in CSS pixels. */
+type OffsetOf = (slug: string) => { x: number; y: number };
+
+interface Rest {
+  /** Node centres at rest, in viewBox units. */
+  base: Map<string, { x: number; y: number }>;
+  /** CSS pixels → viewBox units. */
+  sx: number;
+  sy: number;
 }
 
-function redraw({ root, nodes, lines }: Parts) {
+/**
+ * Measures where every node sits at rest, in viewBox units, plus the px → viewBox scale.
+ * Only called when nothing is moving (first paint, resize), so live drag and follow
+ * transforms are zero and don't pollute the baseline.
+ */
+function measure({ root, nodes }: Parts): Rest {
   const box = root.getBoundingClientRect();
+  const sx = box.width ? GRAPH_VIEW.width / box.width : 0;
+  const sy = box.height ? GRAPH_VIEW.height / box.height : 0;
+  const base = new Map<string, { x: number; y: number }>();
+  for (const [slug, node] of nodes) {
+    const dot = node.querySelector<HTMLElement>('[data-dot]') ?? node;
+    const r = dot.getBoundingClientRect();
+    base.set(slug, { x: (r.left + r.width / 2 - box.left) * sx, y: (r.top + r.height / 2 - box.top) * sy });
+  }
+  return { base, sx, sy };
+}
+
+/**
+ * Repositions every edge from numbers already held in memory: the resting centres from `measure`
+ * plus each node's live offset, read from its Draggable and follow Animatable. Deliberately reads
+ * no layout — this runs every frame of a drag, and a getBoundingClientRect() per edge endpoint
+ * here meant a forced reflow per edge per frame.
+ */
+function redraw({ lines }: Parts, rest: Rest, offsetOf: OffsetOf) {
+  const point = (slug: string) => {
+    const b = rest.base.get(slug);
+    if (!b) return undefined;
+    const o = offsetOf(slug);
+    return { x: b.x + o.x * rest.sx, y: b.y + o.y * rest.sy };
+  };
   for (const line of lines) {
-    const a = nodes.get(line.dataset.from!);
-    const b = nodes.get(line.dataset.to!);
-    if (!a || !b) continue;
-    const p = centre(a, box);
-    const q = centre(b, box);
+    const p = point(line.dataset.from!);
+    const q = point(line.dataset.to!);
+    if (!p || !q) continue;
     line.setAttribute('x1', String(p.x));
     line.setAttribute('y1', String(p.y));
     line.setAttribute('x2', String(q.x));
@@ -82,10 +110,20 @@ export function graphPhysics(root: HTMLElement): () => void {
   const parts = collect(root);
   const adj = adjacency(parts.lines);
   const follow = new Map<string, AnimatableObject>();
+  const dragging = new Map<string, Draggable>();
   const draggables: Draggable[] = [];
   let settleTimer: ReturnType<typeof setTimeout> | undefined;
+  let rest = measure(parts);
 
-  const ticker = createTimer({ autoplay: false, loop: true, duration: 1000, onUpdate: () => redraw(parts) });
+  // Drag offset and neighbour-follow offset compose: [data-follow] wraps [data-drag], and both
+  // carry plain translations. Both are read straight off the anime.js objects.
+  const offsetOf: OffsetOf = (slug) => {
+    const f = follow.get(slug);
+    const d = dragging.get(slug);
+    return { x: (f ? Number(f.x()) : 0) + (d ? d.x : 0), y: (f ? Number(f.y()) : 0) + (d ? d.y : 0) };
+  };
+
+  const ticker = createTimer({ autoplay: false, loop: true, duration: 1000, onUpdate: () => redraw(parts, rest, offsetOf) });
   const wake = () => {
     clearTimeout(settleTimer);
     ticker.play();
@@ -94,7 +132,7 @@ export function graphPhysics(root: HTMLElement): () => void {
     clearTimeout(settleTimer);
     settleTimer = setTimeout(() => {
       ticker.pause();
-      redraw(parts);
+      redraw(parts, rest, offsetOf);
     }, SETTLE_MS);
   };
 
@@ -109,8 +147,7 @@ export function graphPhysics(root: HTMLElement): () => void {
     let moved = false;
     const neighbours = [...(adj.get(slug) ?? [])].map((s) => follow.get(s)).filter((a): a is AnimatableObject => !!a);
 
-    draggables.push(
-      createDraggable(handle, {
+    const draggable = createDraggable(handle, {
         container: root,
         x: { snap: [0] },
         y: { snap: [0] },
@@ -136,8 +173,9 @@ export function graphPhysics(root: HTMLElement): () => void {
           }
           sleep();
         },
-      }),
-    );
+    });
+    dragging.set(slug, draggable);
+    draggables.push(draggable);
 
     // A drag must not also follow the link.
     node.addEventListener('click', (e) => {
@@ -148,9 +186,13 @@ export function graphPhysics(root: HTMLElement): () => void {
     });
   }
 
-  const onResize = () => redraw(parts);
+  // The resting baseline is layout-dependent, so it is re-measured here and nowhere else.
+  const onResize = () => {
+    rest = measure(parts);
+    redraw(parts, rest, offsetOf);
+  };
   addEventListener('resize', onResize);
-  redraw(parts);
+  redraw(parts, rest, offsetOf);
 
   return () => {
     clearTimeout(settleTimer);
