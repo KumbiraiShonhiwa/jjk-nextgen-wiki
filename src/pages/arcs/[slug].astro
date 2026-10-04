@@ -5,12 +5,14 @@ import EntityCard from '../../components/EntityCard.astro';
 import EntityHeader from '../../components/EntityHeader.astro';
 import Gated from '../../components/Gated.astro';
 import GatedText from '../../components/GatedText.astro';
+import ReadingList from '../../components/ReadingList.astro';
 import Section from '../../components/Section.astro';
 import Sources from '../../components/Sources.astro';
 import SpoilerWall from '../../components/SpoilerWall.astro';
-import { loadIndex } from '../../lib/content';
+import { loadIndex, loadLinks } from '../../lib/content';
 import { chapterRange, characterMeta, episodeRange } from '../../lib/format';
 import { adjacentArcs, maxLevel } from '../../lib/graph';
+import { linksFor } from '../../lib/links';
 import { arcTitle, hrefFor } from '../../lib/routes';
 import type { Arc } from '../../content/schemas';
 
@@ -26,6 +28,7 @@ const locations = a.locations.map((s) => ix.locations.get(s)!);
 const { prev, next } = adjacentArcs(ix, a.slug);
 const chapters = chapterRange(a.chapters);
 const episodes = episodeRange(a.episodes);
+const links = linksFor(await loadLinks(), a.slug);
 ---
 
 <Base title={arcTitle(a)} description={`Story arc ${a.order} of Jujutsu Kaisen.`}>
@@ -90,6 +93,7 @@ const episodes = episodeRange(a.episodes);
         </aside>
       </div>
 
+      <ReadingList links={links} />
       <Sources provenance={a.provenance} fixture={a.fixture} />
     </SpoilerWall>
 

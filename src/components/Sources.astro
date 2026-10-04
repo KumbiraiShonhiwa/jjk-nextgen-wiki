@@ -20,9 +20,17 @@ const historyUrl = (url: string) => `${url}${url.includes('?') ? '&' : '?'}actio
       <ul class="space-y-1">
         {provenance.map((p) => (
           <li>
-            Adapted and restructured from <a class="underline" href={p.url}>{p.title}</a> on {host[p.source]} (
-            <a class="underline" href={historyUrl(p.url)}>authors</a>), licensed under{' '}
-            <a class="underline" href={licenceUrl[p.licence]}>{p.licence}</a>.
+            {p.source === 'original' ? (
+              <>
+                Written for this wiki, licensed under <a class="underline" href={licenceUrl[p.licence]}>{p.licence}</a>.
+              </>
+            ) : (
+              <>
+                Adapted and restructured from <a class="underline" href={p.url}>{p.title}</a> on {host[p.source]} (
+                <a class="underline" href={historyUrl(p.url)}>authors</a>), licensed under{' '}
+                <a class="underline" href={licenceUrl[p.licence]}>{p.licence}</a>.
+              </>
+            )}
           </li>
         ))}
       </ul>

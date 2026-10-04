@@ -42,11 +42,18 @@ export interface MergeInput {
   provenance: Provenance;
 }
 
+/** Text a record keeps when it was written for this wiki (`source: 'original'`) rather than adapted. */
+export const WRITTEN_FIELDS = new Set(['summary', 'mechanics', 'sureHit', 'chapters']);
+
 export function mergeRecord({ existing, sourced, slug, level, provenance }: MergeInput): Record<string, unknown> {
   const out: Record<string, unknown> = existing ? clone(existing) : { slug, level };
+  const written = ((existing?.provenance as { source: string }[] | undefined) ?? []).some((p) => p.source === 'original');
+  let applied = 0;
   for (const [key, value] of Object.entries(sourced)) {
     if (CURATED_FIELDS.has(key) || value === undefined) continue;
+    if (written && WRITTEN_FIELDS.has(key)) continue;
     if (Array.isArray(value) && value.length === 0) continue;
+    applied++;
     const old = out[key];
     if (REF_LISTS.has(key) && Array.isArray(old)) {
       out[key] = [...new Set([...(old as string[]), ...(value as string[])])];
@@ -63,8 +70,10 @@ export function mergeRecord({ existing, sourced, slug, level, provenance }: Merg
       out[key] = clone(value);
     }
   }
+  // A record we wrote ourselves is not credited to a page it took nothing from.
+  if (written && applied === 0) return out;
   out.fixture = false;
-  const list = (out.provenance as Provenance[] | undefined) ?? [];
+  const list =(out.provenance as Provenance[] | undefined) ?? [];
   const same = list.find((p) => p.source === provenance.source && p.title === provenance.title);
   // Re-mapping the same revision (e.g. --force) keeps the original fetch time, so the diff stays empty.
   const entry = same && same.revisionId === provenance.revisionId ? { ...provenance, fetchedAt: same.fetchedAt } : provenance;

@@ -1,0 +1,74 @@
+{
+  "slug": "culling-game-part-2",
+  "name": "Culling Game: Part 2",
+  "order": 9,
+  "level": "manga",
+  "summary": [
+    {
+      "value": "The game moves on to the Tokyo No. 2 and Sakurajima colonies, where more players with their own aims are drawn in and the plot behind the game starts to come into focus.",
+      "level": "manga"
+    },
+    {
+      "value": "The arc closes with Satoru Gojo returning to play, which sets up the final confrontation.",
+      "level": "manga"
+    }
+  ],
+  "characters": [
+    "itadori-yuji",
+    "fushiguro-megumi",
+    "zenin-maki",
+    "gojo-satoru"
+  ],
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    181,
+    221
+  ],
+  "events": [
+    {
+      "title": "Tokyo No. 2 Colony",
+      "detail": "Chapters 181 to 190.",
+      "level": "manga"
+    },
+    {
+      "title": "Sakurajima Colony",
+      "detail": "Chapters 191 to 199.",
+      "level": "manga"
+    },
+    {
+      "title": "Direct talks",
+      "detail": "Chapters 200 and 201.",
+      "level": "manga"
+    },
+    {
+      "title": "Blood, stars and oil",
+      "detail": "Chapters 202 to 208.",
+      "level": "manga"
+    },
+    {
+      "title": "An offering to the unknown",
+      "detail": "Chapters 209 and 210.",
+      "level": "manga"
+    },
+    {
+      "title": "The Fearsome Womb returns",
+      "detail": "Chapters 211 to 215.",
+      "level": "manga"
+    },
+    {
+      "title": "Gojo's comeback",
+      "detail": "Chapters 216 to 221 end the game and bring Gojo back.",
+      "level": "manga"
+    }
+  ]
+}

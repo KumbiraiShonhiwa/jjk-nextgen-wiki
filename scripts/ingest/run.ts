@@ -242,7 +242,8 @@ async function pipeline(opts: RunOptions, { contentDir, wiki, only, client, repo
   for (const type of ENTITY_TYPES) {
     for (const [slug, r] of existing.records[type]) {
       const name = r.data.name as { en?: string; romaji?: string } | string;
-      const prov = ((r.data.provenance as Provenance[] | undefined) ?? []).map((p) => p.title);
+      // Entries written for this wiki (`source: 'original'`) have no page title.
+      const prov = ((r.data.provenance as Provenance[] | undefined) ?? []).flatMap((p) => (p.title ? [p.title] : []));
       index.add(type, slug, [
         ...(typeof name === 'string' ? [name] : [name?.en, name?.romaji]),
         ...((r.data.aliases as string[] | undefined) ?? []),
