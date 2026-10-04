@@ -5,11 +5,19 @@
 
 const SHA = /^[0-9a-f]{40}$/;
 
-/** Drop a trailing `# comment` and whole-line comments. */
+/**
+ * Drop a trailing `# comment` and whole-line comments.
+ *
+ * The CR is removed first. These files are checked out CRLF on Windows (git `core.autocrlf`), and
+ * `.` does not match `\r` while `$` without the `m` flag only matches end-of-string, so
+ * `/\s+#.*$/` silently failed to match on a CRLF line. Every pinned `uses:` then kept its
+ * `# v7.0.1` comment and was reported as unpinned — green on CI, red for every Windows checkout.
+ */
 function stripComment(line) {
-  const t = line.trim();
+  const clean = line.replace(/\r$/, '');
+  const t = clean.trim();
   if (t.startsWith('#')) return '';
-  return line.replace(/\s+#.*$/, '');
+  return clean.replace(/\s+#.*$/, '');
 }
 
 /** True when the workflow has a top-level `permissions:` key (column 0). */

@@ -1,0 +1,57 @@
+{
+  "slug": "jujutsu-kaisen-0",
+  "name": "Jujutsu Kaisen 0",
+  "order": 1,
+  "level": "anime-s1",
+  "summary": [
+    {
+      "value": "A prequel set a year before the main story. Yuta Okkotsu, a teenager haunted by the vengeful spirit of his childhood friend Rika, is taken in by Tokyo Jujutsu High to learn to control a power he never asked for.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "Yuta finds his first friends among the school's other first-years, until a sorcerer who despises non-sorcerers announces an attack on two cities.",
+      "level": "anime-s1"
+    }
+  ],
+  "characters": [
+    "gojo-satoru",
+    "geto-suguru",
+    "zenin-maki",
+    "inumaki-toge",
+    "panda"
+  ],
+  "locations": [
+    "tokyo",
+    "kyoto"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "events": [
+    {
+      "title": "Yuta is spared and enrolled",
+      "detail": "Instead of being executed, he is registered as a special grade sorcerer and put under Gojo's watch.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "The first-years take him in",
+      "detail": "Maki, Toge and Panda become his classmates and bring him along on missions.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "The Night Parade of a Hundred Demons is announced",
+      "detail": "Geto declares that on 24 December a thousand curses will be released in each of Shinjuku and Kyoto.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Yuta and Geto face each other",
+      "detail": "The prequel builds to a showdown that decides what Yuta does with Rika's power.",
+      "level": "anime-s1"
+    }
+  ]
+}

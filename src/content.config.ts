@@ -1,6 +1,6 @@
 import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
-import { arc, character, domain, edge, location, organization, technique } from './content/schemas';
+import { arc, character, communityLink, domain, edge, location, organization, technique } from './content/schemas';
 
 const dir = (name: string) => glob({ pattern: '*.json', base: `./content/${name}` });
 
@@ -12,4 +12,5 @@ export const collections = {
   organizations: defineCollection({ loader: dir('organizations'), schema: organization }),
   locations: defineCollection({ loader: dir('locations'), schema: location }),
   edges: defineCollection({ loader: file('./content/edges.json'), schema: edge }),
+  links: defineCollection({ loader: file('./content/links/community.json'), schema: communityLink }),
 };

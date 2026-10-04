@@ -1,17 +1,73 @@
 {
   "slug": "death-painting",
   "name": "Death Painting",
-  "order": 4,
+  "order": 5,
   "level": "anime-s1",
   "summary": [
     {
-      "value": "The first-years are sent to investigate cursed objects connected to the Death Paintings.",
+      "value": "The first-years are sent to investigate a series of deaths in which the victims are found at their own open doorways. The trail leads to the Death Painting brothers, hybrids of curse and human who are hunting for Sukuna's fingers.",
       "level": "anime-s1"
+    },
+    {
+      "value": "The case makes Itadori and Nobara face the difference between exorcising a curse and killing someone who looks like a person.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "Afterwards Gojo, pleased with his students, begins lining them up for bigger responsibilities.",
+      "level": "anime-s2"
     }
   ],
   "characters": [
     "itadori-yuji",
-    "kugisaki-nobara"
+    "fushiguro-megumi",
+    "kugisaki-nobara",
+    "mahito"
   ],
-  "fixture": true
+  "locations": [
+    "tokyo"
+  ],
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
+  "chapters": [
+    55,
+    64
+  ],
+  "episodes": [
+    1,
+    22,
+    24
+  ],
+  "events": [
+    {
+      "title": "Deaths at the doorway",
+      "detail": "Victims are found dead beside their open front doors, with a curse waiting at the threshold.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "The trail reaches a bridge",
+      "detail": "The first-years follow the victims' shared history to the Yasohachi Bridge.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "The brothers are brought into the world",
+      "detail": "Mahito helps the Death Paintings take human form so they can hunt for the fingers.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Megumi against a finger bearer",
+      "detail": "A curse carrying one of Sukuna's fingers forces Megumi to stop imitating Itadori and fight his own way.",
+      "level": "anime-s1"
+    },
+    {
+      "title": "Gojo promotes his students",
+      "detail": "He arranges for the first-years to be recommended for harder work.",
+      "level": "anime-s2"
+    }
+  ]
 }

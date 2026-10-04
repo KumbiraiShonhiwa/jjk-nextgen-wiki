@@ -53,6 +53,7 @@ Slugs: an existing record matched by provenance title, title alias, `name.en` or
 - Replaced by the source when it provides a non-empty value: gated text (`summary`, `mechanics`, `sureHit`), `species`, `status`, `grade`, `kind`, `chapters` and single references.
 - Unioned: reference lists (`affiliations`, `techniques`, `users`, `characters`, `locations`) and `aliases`.
 - `edges.json`: hand-written edges are kept verbatim. A sourced edge is appended only when no edge of the same kind already joins the same pair. The relative is `from`, so the label (`"father"`) describes `from`, as in our hand-written edges.
+- A record with an `original` provenance entry (written for this wiki, such as the arcs) keeps its own `summary`, `mechanics`, `sureHit` and `chapters`; the source can still add references and aliases. If the source supplies nothing a written record can take, the page is not credited and the record is left untouched.
 - `fixture` becomes `false`. The provenance entry for that source page is replaced (`source`, `title`, `url` from siteinfo's `server` + `articlepath`, `revisionId`, `fetchedAt`, `licence`). Re-mapping the same revision keeps the original `fetchedAt`, so `--force` produces no diff.
 - The licence comes from `rightsinfo`: a URL or text naming 4.0 or 3.0 maps to `CC BY-SA 4.0` or `CC BY-SA 3.0`. If Fandom reports `https://www.fandom.com/licensing` with no version, its text is recorded as `CC BY-SA 3.0` and the report says the version was inferred. NC, ND or unrecognised licences abort the run.
 
@@ -122,6 +123,8 @@ Weekly, Monday 03:00 UTC, via the `content-sync` workflow (doc 06). A human merg
 | Indicate changes | The block states "Adapted and restructured from…". |
 | Share-alike | All text in `content/` and on the site is released under CC BY-SA 4.0 (`content/LICENSE`). Code is MIT (`LICENSE`). The README explains the split. |
 | Licence version | Fandom text under CC BY-SA 3.0 may be adapted under 4.0 (3.0 → 4.0 is a permitted compatible upgrade per Creative Commons' compatibility rules); we keep the original version in provenance. |
+| Original text | Arcs, events and their summaries are written for this wiki and carry `source: 'original'` provenance, shown as "Written for this wiki", released under CC BY-SA 4.0. Facts such as chapter and episode ranges are checked against Wikipedia and the wiki's episode pages. |
+| Reddit and other community sites | Never a text source: posts belong to their authors, are not CC BY-SA, and Reddit's terms restrict scraping and reuse. The ingest refuses any source that is not CC BY-SA, and the `provenance` schema has no Reddit source. Community discussion may only be linked to, not copied or paraphrased. |
 | Images | None collected. Fandom and Wikipedia JJK images are copyrighted or non-free fair use and are not covered by CC BY-SA. |
 | Trademarks | Footer: "Unofficial fan project. Jujutsu Kaisen © Gege Akutami / Shueisha, MAPPA." No logos. |
 | Corrections and takedowns | Footer contact link and a `CONTENT_ISSUES.md` process; any takedown is handled within 7 days. |

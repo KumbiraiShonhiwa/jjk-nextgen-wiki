@@ -1,5 +1,8 @@
 {
-  "_comment": "Gzip budgets in KiB per route, measured from dist/ after `pnpm build` (docs/05, ADR-009). Raise a number only with a reason in the PR. Measured when set: js 86, css 14, html 8.",
-  "route": { "js": 100, "css": 25, "html": 20 },
-  "overrides": {}
+  "_comment": "Gzip budgets in KiB per route, measured from dist/ after `pnpm build` (docs/05, ADR-009). Raise a number only with a reason in the PR. Measured when set: js 86, css 14, html 8. `js` is what the route loads up front; `lazy` is everything behind a dynamic import() and defaults to 0, so a route that starts lazy-loading JS has to declare the cost in `overrides` instead of it going unmeasured.",
+  "route": { "js": 100, "css": 25, "html": 20, "lazy": 0 },
+  "overrides": {
+    "_comment": "/ lazy 140: the ADR-007 WebGL hero (three.js r186 + the field shader) measured 130.4 KiB gzip. It is fetched only after load, only on desktop, and never under prefers-reduced-motion, reduced-data or deviceMemory < 4, so it is off the critical path and off phones entirely. Keep it under 140 or drop a renderer feature.",
+    "/": { "lazy": 140 }
+  }
 }

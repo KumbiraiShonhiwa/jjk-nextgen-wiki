@@ -5,9 +5,15 @@
  * Fails when a route is over budget. Run after `pnpm build`:  node scripts/check-budgets.mjs
  *
  *   --json   print the measurements as JSON (used by tests)
+ *
+ * `js` counts only what the route loads up front. Chunks reached through a dynamic `import()`
+ * (the WebGL hero, ADR-007) load on demand and so are measured separately as `lazy`: they don't
+ * block first paint, but they are still bytes a visitor downloads, so they get their own limit
+ * rather than being invisible.
  */
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
-import { join, posix, relative, resolve } from 'node:path';
+import { join, posix, relative, resolve, sep } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { gzipSync } from 'node:zlib';
 
 const root = resolve(process.argv.find((a) => a.startsWith('--dist='))?.slice(7) ?? 'dist');
@@ -44,6 +50,17 @@ export function staticImports(code, url) {
   return out;
 }
 
+/**
+ * Relative `import()` targets of a built JS chunk, resolved to site URLs. Loaded on demand, not
+ * with the route. Backticks are matched as well as quotes: Vite emits `import(\`./chunk.js\`)` for
+ * the preload helper, and missing that form reported a 130 KiB lazy chunk as 0.
+ */
+export function dynamicImports(code, url) {
+  const out = [];
+  for (const m of code.matchAll(/\bimport\s*\(\s*["'`](\.{1,2}\/[^"'`]+\.js)["'`]\s*\)/g)) out.push(posix.join(posix.dirname(url), m[1]));
+  return out;
+}
+
 const cache = new Map();
 function chunk(url) {
   if (!cache.has(url)) {
@@ -55,16 +72,36 @@ function chunk(url) {
 
 export function measureRoute(html) {
   const seen = new Set();
+  const deferred = [];
   const stack = [...assetRefs(html)];
   while (stack.length) {
     const url = stack.pop();
     if (seen.has(url)) continue;
     seen.add(url);
     const buf = chunk(url);
-    if (buf && url.endsWith('.js')) stack.push(...staticImports(buf.toString('utf8'), url));
+    if (buf && url.endsWith('.js')) {
+      const code = buf.toString('utf8');
+      stack.push(...staticImports(code, url));
+      deferred.push(...dynamicImports(code, url));
+    }
   }
-  const sum = (ext) => [...seen].filter((u) => u.endsWith(ext)).reduce((n, u) => n + (chunk(u) ? gzipSize(chunk(u)) : 0), 0);
-  return { html: gzipSize(Buffer.from(html)), css: sum('.css'), js: sum('.js') };
+
+  // Everything reachable only through an import(), plus whatever those chunks pull in statically.
+  const lazy = new Set();
+  const lazyStack = [...deferred];
+  while (lazyStack.length) {
+    const url = lazyStack.pop();
+    if (seen.has(url) || lazy.has(url)) continue;
+    lazy.add(url);
+    const buf = chunk(url);
+    if (buf && url.endsWith('.js')) {
+      const code = buf.toString('utf8');
+      lazyStack.push(...staticImports(code, url), ...dynamicImports(code, url));
+    }
+  }
+
+  const sum = (urls, ext) => [...urls].filter((u) => u.endsWith(ext)).reduce((n, u) => n + (chunk(u) ? gzipSize(chunk(u)) : 0), 0);
+  return { html: gzipSize(Buffer.from(html)), css: sum(seen, '.css'), js: sum(seen, '.js'), lazy: sum(lazy, '.js') };
 }
 
 function main() {
@@ -72,10 +109,12 @@ function main() {
   const rows = [];
   for (const file of walk(root)) {
     if (!file.endsWith('.html')) continue;
-    const route = '/' + relative(root, file).replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '');
+    // Split on the platform separator and rejoin with "/", so a route key is the same on Windows
+    // and Linux. Without this, `overrides` entries never match on Windows.
+    const route = ('/' + relative(root, file).split(sep).join('/')).replace(/index\.html$/, '').replace(/\.html$/, '').replace(/(?!^)\/$/, '');
     const m = measureRoute(readFileSync(file, 'utf8'));
     const limit = { ...budgets.route, ...(budgets.overrides[route] ?? {}) };
-    const over = ['js', 'css', 'html'].filter((k) => m[k] > limit[k] * KIB);
+    const over = ['js', 'css', 'html', 'lazy'].filter((k) => limit[k] !== undefined && m[k] > limit[k] * KIB);
     rows.push({ route: route === '/' ? '/' : route, ...m, limit, over });
   }
   rows.sort((a, b) => b.js - a.js);
@@ -84,9 +123,9 @@ function main() {
     console.log(JSON.stringify(rows, null, 2));
   } else {
     const kb = (n) => (n / KIB).toFixed(1).padStart(6);
-    console.log('route'.padEnd(36), '  js(KiB)  css(KiB)  html(KiB)');
+    console.log('route'.padEnd(36), '  js(KiB)  css(KiB)  html(KiB)  lazy(KiB)');
     for (const r of rows.slice(0, 12)) {
-      console.log(r.route.padEnd(36), kb(r.js), '  ', kb(r.css), '  ', kb(r.html), r.over.length ? `  OVER: ${r.over.join(',')}` : '');
+      console.log(r.route.padEnd(36), kb(r.js), '  ', kb(r.css), '  ', kb(r.html), '  ', kb(r.lazy), r.over.length ? `  OVER: ${r.over.join(',')}` : '');
     }
     if (rows.length > 12) console.log(`... ${rows.length - 12} more routes, all within budget or listed above`);
   }
@@ -98,4 +137,6 @@ function main() {
   if (!asJson) console.log(`\nAll ${rows.length} routes are within budget.`);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) main();
+// pathToFileURL, not a `file://` template: on Windows argv[1] is a `C:\…` path, which never
+// matches import.meta.url, so the template form silently skipped the whole check locally.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

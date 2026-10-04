@@ -47,7 +47,7 @@ test.describe('a whole page above the visitor level', () => {
     await page.goto(ARC);
     await expect(page.getByRole('region', { name: 'Spoiler warning' })).toBeVisible();
     await expect(page.getByRole('heading', { level: 1, name: 'Culling Game' })).toBeHidden();
-    await expect(page).toHaveTitle('Story arc 7 · JJK NextGen Wiki');
+    await expect(page).toHaveTitle('Story arc 8 · JJK NextGen Wiki');
     expect(await page.locator('meta[name="description"]').getAttribute('content')).not.toContain('Culling');
     // The back link stays usable behind the wall.
     await expect(page.getByRole('link', { name: '← Arcs' })).toBeVisible();

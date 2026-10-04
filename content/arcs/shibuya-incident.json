@@ -1,11 +1,15 @@
 {
   "slug": "shibuya-incident",
   "name": "Shibuya Incident",
-  "order": 6,
+  "order": 7,
   "level": "anime-s2",
   "summary": [
     {
-      "value": "A large-scale attack in Shibuya on Halloween pulls every sorcerer into the city.",
+      "value": "On Halloween night a curtain drops over Shibuya and traps thousands of civilians inside. It is a trap built over years to take the strongest sorcerer, Satoru Gojo, out of the picture.",
+      "level": "anime-s2"
+    },
+    {
+      "value": "Teams of sorcerers go in, and each is pushed into fights they did not plan for. The incident changes the jujutsu world for good.",
       "level": "anime-s2"
     }
   ],
@@ -16,15 +20,23 @@
     "gojo-satoru",
     "nanami-kento",
     "mahito",
-    "ryomen-sukuna"
+    "ryomen-sukuna",
+    "inumaki-toge"
   ],
   "locations": [
     "shibuya"
   ],
-  "fixture": true,
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-04T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ],
   "chapters": [
     79,
-    136
+    137
   ],
   "episodes": [
     2,
@@ -33,12 +45,28 @@
   ],
   "events": [
     {
-      "title": "A curtain falls over Shibuya",
-      "detail": "Civilians are trapped inside a barrier on Halloween night.",
+      "title": "A traitor at Jujutsu High",
+      "detail": "Utahime Iori takes the first-years to find the person leaking the school's secrets.",
       "level": "anime-s2"
     },
     {
-      "title": "Sorcerers split up to reach the station",
+      "title": "A curtain falls over Shibuya",
+      "detail": "At 7 p.m. on 31 October, civilians are sealed in and Gojo is called in.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "Gojo is sealed",
+      "detail": "The enemy's plan to remove him works.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "The station becomes a battlefield",
+      "detail": "Sorcerers fight their way in while mutated people crowd the platforms.",
+      "level": "anime-s2"
+    },
+    {
+      "title": "Sukuna awakens",
+      "detail": "A curse feeds Itadori several fingers at once, and Sukuna takes his body.",
       "level": "anime-s2"
     }
   ]
