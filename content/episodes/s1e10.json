@@ -1,0 +1,30 @@
+{
+  "slug": "s1e10",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 10,
+  "number": 10,
+  "title": {
+    "en": "Idle Transfiguration",
+    "ja": "無為転変"
+  },
+  "airedAt": "2020-12-05",
+  "summary": [
+    {
+      "value": "Mahito reveals that as a curse who can manipulate the shape of souls, he views human life as expendable. Encouraged by the idea that killing can be justified without guilt, Junpei confronts his teacher who had previously ignored his bullying, and prepares to kill him before Yuji intervenes. Meanwhile, Nanami engages Mahito in the sewers and discovers that Mahito's transfigured humans are still alive and enduring immense suffering. When Nanami exceeds his designated \"work hours\", he removes his self-imposed limits and begins fighting at full strength, catching Mahito off guard.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "vs-mahito",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

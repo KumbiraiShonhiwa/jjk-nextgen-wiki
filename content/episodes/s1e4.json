@@ -1,0 +1,30 @@
+{
+  "slug": "s1e4",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 4,
+  "number": 4,
+  "title": {
+    "en": "Curse Womb Must Die",
+    "ja": "呪胎戴天"
+  },
+  "airedAt": "2020-10-24",
+  "summary": [
+    {
+      "value": "Yuji, Megumi, and Nobara investigate the detention center. Kiyotaka Ijichi, assistant director at Jujutsu High, conceals the building from ordinary citizens using a barrier. Upon entering, the trio discovers that the prison has become nightmarish and that the inmates have been brutally murdered. They are then attacked by a special grade curse which Yuji fights, while Megumi rescues Nobara and escapes. During the fight, Yuji's left hand is severed, prompting him to release Sukuna. Sukuna quickly kills the curse, regenerates Yuji's hand, and retrieves one of his own fingers that had been powering the curse. Sukuna then waits for Yuji to regain control but, to his surprise, Yuji does not respond.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "fearsome-womb",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

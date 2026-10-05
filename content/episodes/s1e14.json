@@ -1,0 +1,30 @@
+{
+  "slug": "s1e14",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 14,
+  "number": 14,
+  "title": {
+    "en": "Kyoto Sister School Exchange Event – Group Battle 0 -",
+    "ja": "京都姉妹校交流会－団体戦⓪－"
+  },
+  "airedAt": "2021-01-16",
+  "summary": [
+    {
+      "value": "Geto, along with the regenerated Jogo and Mahito, continues planning their next move. He declares their plan to collect all of Sukuna's fingers to fully restore him, starting with an attack on Tokyo Jujutsu High. Meanwhile, the Kyoto students arrive for the exchange event, and Yuji surprises his classmates by revealing he is still alive, having remained hidden for two months. The event consists of two rounds, beginning with a team competition between the Tokyo and Kyoto schools. Acting on Gakuganji's orders, several Kyoto students secretly conspire to kill Yuji under the pretense of an accident, as they also believe him to be too dangerous as Sukuna's vessel. Separately, Gojo tells Kyoto teacher Utahime Iori that he suspects a traitor exists within Tokyo Jujutsu High.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "kyoto-goodwill-event",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

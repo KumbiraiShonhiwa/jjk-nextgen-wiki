@@ -1,0 +1,25 @@
+{{Episode list/sublist|Jujutsu Kaisen season 1
+| EpisodeNumber   = 1
+| EpisodeNumber2  = 1
+| Title           = Ryomen Sukuna
+| NativeTitle     = 両面宿儺
+| NativeTitleLangCode = ja
+| DirectedBy      = {{StoryTeleplay|tlabel=Directed by|t=Yui Umemoto|sb={{Ill|Tadashi Hiramatsu|ja|平松禎史}}}}
+| Aux2            = Tadashi Hiramatsu
+| OriginalAirDate = {{Start date|2020|10|3}}{{efn|Episode 1 had an advanced streaming debut on September 19, 2020.<ref name="Advanced-Debut"/>}}
+| ShortSummary    = [[Yuji Itadori]] is a high school student with exceptional athletic ability who counterintuitively spends time with his friends at the Occult Research Club. Before dying, Yuji's grandfather advises him to use his strength to help others. [[Megumi Fushiguro]], a first-year student from Tokyo Jujutsu High, is dispatched to retrieve a "cursed object" hidden at Yuji's school—one of the twenty severed fingers of [[Ryomen Sukuna]], a sadistic ancient sorcerer. Megumi tracks the finger's energy to Yuji and discovers that it is with his friends. He fights the curses attacking them and is joined by Yuji, who can see the curses and remembers his grandfather's words. In an attempt to save themselves, Yuji swallows the finger, unwittingly becoming the physical host of Sukuna. However, to Megumi's surprise, Yuji retains control over his body and easily suppresses Sukuna. Nevertheless, Megumi deems him a threat and prepares to exorcise him.
+| LineColor       = B11030
+}}
+{{Episode list/sublist|Jujutsu Kaisen season 1
+| EpisodeNumber   = 2
+| EpisodeNumber2  = 2
+| Title           = For Myself
+| TranslitTitle   = Jibun no Tameni
+| NativeTitle     = 自分のために
+| NativeTitleLangCode = ja
+| DirectedBy      = {{Ill|Ryōhei Takeshita|ja|竹下良平}}
+| Aux2            = Sayaka Koiso
+| OriginalAirDate = {{Start date|2020|10|10}}
+| ShortSummary    = [[Satoru Gojo]], a powerful sorcerer and Megumi's teacher, arrives and effortlessly defeats Sukuna. He tells Yuji that the jujutsu higher-ups have ordered his execution due to Sukuna's possession, but Gojo has managed to delay the sentence. Since Sukuna's power is divided among twenty of his preserved fingers, which have been classified as special grade cursed objects, Gojo proposes that Yuji consume all of them, as doing so would allow Sukuna to be fully destroyed—along with Yuji himself. Yuji agrees to the plan, choosing to sacrifice himself to protect others, and consumes a second finger. Gojo then brings him to Tokyo Jujutsu High to begin his training as a sorcerer alongside Megumi and other students.
+| LineColor       = B11030
+}}

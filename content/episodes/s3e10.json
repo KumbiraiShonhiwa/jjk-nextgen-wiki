@@ -1,0 +1,30 @@
+{
+  "slug": "s3e10",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 10,
+  "number": 57,
+  "title": {
+    "en": "Tokyo Colony No. 1 - Part 4",
+    "ja": "東京第1コロニー④"
+  },
+  "airedAt": "2026-03-13",
+  "summary": [
+    {
+      "value": "Megumi is attacked by Reggie, Remi, and two more of Reggie's underlings, reluctantly saving Remi from an explosion caused by one of the underlings, Hazenoki. After Kogane informs the players of Yuji and Higuruma's new rule addition, Megumi kills Reggie's second underling, after which he is cornered by Reggie and Hazenoki. Suddenly, Takaba appears, stating he will help Megumi to make it an even fight. The three other sorcerers are completely befuddled by Takaba's nonsensical comedy routine, but when he demonstrates a great prowess with cursed energy, Megumi accepts his help, letting him handle Hazenoki, while he fights Reggie. The two fight across the colony, with Reggie using his cursed technique to manifest an endless amount of objects from the receipts attached to him. Megumi lures Reggie into a gymnasium, the latter seemingly getting the drop on him by overwhelming him with objects, but Megumi shocks Reggie by activating his Domain Expansion, using the gym to help complete it.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

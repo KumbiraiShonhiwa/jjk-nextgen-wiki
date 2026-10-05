@@ -1,0 +1,30 @@
+{
+  "slug": "s3e6",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 6,
+  "number": 53,
+  "title": {
+    "en": "Cog",
+    "ja": "部品"
+  },
+  "airedAt": "2026-02-06",
+  "summary": [
+    {
+      "value": "Megumi and Panda infiltrate the compound, when they are spotted by Kirara, who warns Hakari. Megumi attempts to convince Kirara to help them, but they refuse on account of Jujutsu High's conservative board and don't believe that Gojo has been sealed. Kirara uses their Cursed Technique, which appropriates the Southern Cross, allowing them to repel Megumi and Panda away from themselves and Hakari's door. Megumi eventually deduces the technique's function and uses his Ten Shadows to defeat Kirara. He once again asks for their assistance, just as Hakari and Yuji bust onto the roof. Yuji endures several unguarded punches from Hakari, declaring himself as a cog in jujutsu society for the purpose of exorcising curses, and willing to do anything to accomplish it. Seeing his firm resolve convinces Hakari to assist them. A Kogane then appears to inform the sorcerers of a new rule added to the Culling Game, allowing all players to view each other's status. The player who created the rule, a reincarnated sorcerer named Hajime Kashimo, voices his frustration at being unable to find strong opponents, desiring to fight Sukuna.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "slug": "s1e7",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 7,
+  "number": 7,
+  "title": {
+    "en": "Assault",
+    "ja": "急襲"
+  },
+  "airedAt": "2020-11-14",
+  "summary": [
+    {
+      "value": "After Jogo's failed attempts to kill Gojo, Gojo demonstrates his innate cursed technique, explaining that he manipulates the flow of cursed energy to create an \"Infinity\" barrier that slows down attacks, therefore rendering them unable to touch him. He briefly teleports to Jujutsu High, takes Yuji, and returns within seconds to teach him about Domain Expansions. Gojo counters Jogo's Domain Expansion with his, overwhelming Jogo and allowing Gojo to decapitate him. Before they can interrogate him, however, the curse Hanami escapes with Jogo's head. Geto, Jogo, Hanami, and the recently manifested curse Mahito regroup in their realm, plotting to seal Gojo using the Prison Realm and release Sukuna.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "fearsome-womb",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "slug": "s2e20",
+  "level": "anime-s2",
+  "season": 2,
+  "numberInSeason": 20,
+  "number": 44,
+  "title": {
+    "en": "Right and Wrong, Part 3",
+    "ja": "理非-参-"
+  },
+  "airedAt": "2023-12-07",
+  "summary": [
+    {
+      "value": "Yuji goes into a state of shock upon seeing Nobara's seemingly lifeless body. Overwhelmed with guilt, he is left vulnerable, allowing Mahito to land several blows on him and execute a Black Flash. Just before Mahito can finish him off, however, Todo intervenes, saving Yuji and attempting to re-energize him. Meanwhile, Arata Nitta begins treating Yuji's injuries and attempts emergency treatment on Nobara, revealing that there is a slim chance she may survive. Todo and Yuji fight Mahito as the remaining Kyoto students head to Shibuya to provide backup. They had been kept away by Mechamaru's puppet, which had been acting independently to protect them, believing that only Todo and Arata had a real chance of surviving. Mahito then releases a massive wave of transfigured humans to force the battle out into the streets.",
+      "level": "anime-s2"
+    }
+  ],
+  "arc": "shibuya-incident",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 2",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_2",
+      "revisionId": 1374276445,
+      "fetchedAt": "2026-10-05T12:07:14.673Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}
