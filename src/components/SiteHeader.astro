@@ -8,7 +8,9 @@ const active = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
 
 <header class="sticky top-0 z-40 border-b border-line bg-ink/80 backdrop-blur-md">
-  <nav class="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3" aria-label="Primary">
+  <!-- flex-wrap and a tighter gap on small screens: at 390px the logo, search, spoiler control and
+     menu together measured 418px, so the control and the menu ran off the right edge. -->
+<nav class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3 sm:gap-x-4" aria-label="Primary">
     <a href="/" class="font-display text-step-1 tracking-wide" aria-label="JJK NextGen Wiki home">
       <span lang="ja">呪術</span><span class="text-paper-dim"> · NextGen</span>
     </a>

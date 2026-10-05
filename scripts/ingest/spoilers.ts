@@ -4,6 +4,9 @@
  * - Lead text and Appearance / Personality sections: `none`.
  * - Text under a heading that names an arc (arc name or an alias in arc-aliases.json):
  *   that arc's level, taken from content/arcs/*.json (or the alias table's `extra` levels).
+ * - Text that cites a chapter or an anime season, with no arc heading above it: the level from
+ *   content/meta/spoiler-boundaries.json, so a fact cited to chapter 12 is anime-s1 rather than
+ *   falling all the way to the safe default.
  * - Everything else, including infobox status: `manga` (safe default).
  * - Grades / species without arc context: the first listed value is `none`, the rest `manga`.
  * - Gated values are never below the record's own level (clamp), so a manga-only
@@ -12,6 +15,7 @@
  */
 import { z } from 'astro/zod';
 import { SPOILER_LEVELS, spoilerLevel, type SpoilerLevel } from '../../src/content/schemas/index.ts';
+import { levelForChapter, levelForSeason, type SpoilerBoundaries } from '../../src/content/schemas/boundaries.ts';
 import type { Section } from './wikitext.ts';
 
 export const rank = (l: SpoilerLevel) => SPOILER_LEVELS.indexOf(l);
@@ -54,10 +58,17 @@ export const SAFE_HEADINGS = ['appearance', 'personality'] as const;
 export const SAFE_LEAD: SpoilerLevel = 'none';
 export const DEFAULT_LEVEL: SpoilerLevel = 'manga';
 
+/** "Chapter 136", "chapters 54-56", "ch. 12". The first number is the one that dates the fact. */
+const CHAPTER_RE = /\bch(?:apter)?s?\.?\s*(\d{1,3})\b/i;
+/** "Season 2", "S2". Episode numbers need the episode list (A1) to resolve, so they are left alone. */
+const SEASON_RE = /\bseason\s*(\d)\b|\bs(\d)\b(?!\d)/i;
+
 export class SpoilerPolicy {
   private aliases: { norm: string; alias: string; arc?: string; level: SpoilerLevel }[] = [];
+  private boundaries?: SpoilerBoundaries;
 
-  constructor(arcs: ArcRef[], table: ArcAliasTable) {
+  constructor(arcs: ArcRef[], table: ArcAliasTable, boundaries?: SpoilerBoundaries) {
+    this.boundaries = boundaries;
     const add = (alias: string, level: SpoilerLevel, arc?: string) => {
       const norm = normalizeHeading(alias);
       if (norm) this.aliases.push({ norm, alias, arc, level });
@@ -81,6 +92,19 @@ export class SpoilerPolicy {
     return { arc: worst.arc, level: worst.level, alias: worst.alias };
   }
 
+  /**
+   * The level a chapter or season citation implies, from the boundary table. Returns undefined when
+   * there is no table loaded or nothing cited, so callers keep their existing fallback.
+   */
+  matchCitation(text: string): SpoilerLevel | undefined {
+    if (!this.boundaries) return undefined;
+    const chapter = CHAPTER_RE.exec(text);
+    if (chapter) return levelForChapter(this.boundaries, Number(chapter[1]));
+    const season = SEASON_RE.exec(text);
+    if (season) return levelForSeason(this.boundaries, Number(season[1] ?? season[2]));
+    return undefined;
+  }
+
   /** Level for a section's text: deepest arc-named heading, else safe headings, else manga. */
   sectionLevel(section: Pick<Section, 'path'>): SpoilerLevel {
     if (section.path.length === 0) return SAFE_LEAD;
@@ -90,13 +114,16 @@ export class SpoilerPolicy {
     }
     const top = normalizeHeading(section.path[0]);
     if ((SAFE_HEADINGS as readonly string[]).includes(top)) return 'none';
-    return DEFAULT_LEVEL;
+    // No arc named anywhere above: a chapter or season cited in a heading still dates the section.
+    return this.matchCitation(section.path.join(' ')) ?? DEFAULT_LEVEL;
   }
 
   /** Level for the i-th item of an infobox list (grade, species). */
   listItemLevel(text: string, index: number): SpoilerLevel {
     const m = this.matchArc(text);
     if (m) return m.level;
+    const cited = this.matchCitation(text);
+    if (cited) return cited;
     return index === 0 ? 'none' : DEFAULT_LEVEL;
   }
 }

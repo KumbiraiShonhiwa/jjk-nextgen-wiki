@@ -154,7 +154,11 @@ describe('offline ingest into a temp content dir', () => {
     expect(result.reportPath).toBe(join(root, 'reports', 'ingest-2026-10-05.md'));
     const md = readFileSync(result.reportPath!, 'utf8');
     expect(md).toContain('## Unmapped infobox parameters');
-    expect(md).toMatch(/Character Infobox · gender \| 2 \|/);
+    expect(md).toMatch(/Character Infobox · occupation \| 2 \|/);
+    // gender, birthday, height and manga debut are mapped as of A5, so they must not be listed here.
+    for (const mapped of ['gender', 'birthday', 'height', 'manga debut']) {
+      expect(md).not.toContain(`Character Infobox · ${mapped} |`);
+    }
     expect(md).toContain('| characters/gojo-satoru | techniques | Six Eyes |');
     expect(md).toContain('Licence version not stated by siteinfo');
   });

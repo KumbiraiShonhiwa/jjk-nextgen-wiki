@@ -134,7 +134,13 @@ describe('character mapper (recorded Fandom pages)', () => {
       techniques: ['Limitless', 'Six Eyes'],
       domain: ['Unlimited Void'],
     });
-    expect(d.unmapped).toEqual(['gender', 'age', 'birthday', 'height', 'occupation', 'manga debut', 'anime debut', 'japanese voice', 'english voice']);
+    // Profile fields (A5) are kept verbatim; only `firstAppearance` is gated.
+    expect(d.fields.gender).toBe('Male');
+    expect(d.fields.birthday).toBe('December 7, 1989');
+    expect(d.fields.height).toBe('190 cm');
+    expect(d.fields.firstAppearance).toEqual([{ value: 'Chapter 1', level: 'manga' }]);
+    // Shorter than it was: gender, birthday, height and manga debut are now mapped.
+    expect(d.unmapped).toEqual(['age', 'occupation', 'anime debut', 'japanese voice', 'english voice']);
     expect(d.level).toBe('anime-s2');
   });
 

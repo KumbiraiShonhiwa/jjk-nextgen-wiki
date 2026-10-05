@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+import Gated from '../../components/Gated.astro';
+import Section from '../../components/Section.astro';
+import { loadIndex } from '../../lib/content';
+import { episodeRange } from '../../lib/format';
+import { maxLevel } from '../../lib/graph';
+import { hrefFor } from '../../lib/routes';
+import { levelForSeason, spoilerBoundaries } from '../../content/schemas';
+import boundariesJson from '../../../content/meta/spoiler-boundaries.json';
+
+const boundaries = spoilerBoundaries.parse(boundariesJson);
+const arcs = [...(await loadIndex()).arcs.values()].filter((a) => a.episodes).sort((a, b) => a.order - b.order);
+
+/*
+ * Seasons are derived from the arcs rather than stored: an arc already records
+ * `[season, first, last]`, so there is one source of truth and nothing to keep in sync. Per-episode
+ * records (A1's other half) need the episode list from Wikipedia, which is not ingested yet.
+ */
+const seasons = [...new Set(arcs.map((a) => a.episodes![0]))].sort((a, b) => a - b).map((season) => {
+  const inSeason = arcs.filter((a) => a.episodes![0] === season);
+  const episodes = inSeason.flatMap((a) => [a.episodes![1], a.episodes![2]]);
+  return {
+    season,
+    arcs: inSeason,
+    first: Math.min(...episodes),
+    last: Math.max(...episodes),
+    // A season's existence is itself a spoiler, so the heading sits at the later of the boundary
+    // table's level for that season and the earliest arc in it.
+    level: inSeason.reduce((acc, a) => maxLevel(acc, a.level), levelForSeason(boundaries, season)),
+  };
+});
+---
+
+<Base title="Anime" description="Every season of the Jujutsu Kaisen anime and the arcs it adapts, kept behind your spoiler level.">
+  <section class="py-12">
+    <p class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">Media</p>
+    <h1 data-kinetic class="mt-2 font-display text-step-5 leading-none">Anime</h1>
+    <p class="mt-3 max-w-prose text-paper-dim">
+      Which arc each season adapts, and where it sits in the manga. Seasons past your spoiler level stay hidden.
+    </p>
+
+    {
+      seasons.map((s) => (
+        <Gated level={s.level} as="div">
+          <Section id={`season-${s.season}`} title={`Season ${s.season}`}>
+            <p class="text-step--1 text-paper-dim">
+              Episodes {s.first}–{s.last} · {s.arcs.length} {s.arcs.length === 1 ? 'arc' : 'arcs'}
+            </p>
+            <ol class="mt-5 space-y-3">
+              {s.arcs.map((a) => (
+                <Gated level={maxLevel(a.level, s.level)} as="li">
+                  <a href={hrefFor('arcs', a.slug)} class="group flex flex-wrap items-baseline justify-between gap-x-4 rounded-sm border border-line px-4 py-3 hover:border-ce-blue">
+                    <span class="font-display text-step-1 group-hover:text-ce-blue">{a.name}</span>
+                    <span class="text-step--1 text-paper-dim">{episodeRange(a.episodes)}</span>
+                  </a>
+                </Gated>
+              ))}
+            </ol>
+          </Section>
+        </Gated>
+      ))
+    }
+
+    <p class="mt-16 max-w-prose text-step--1 text-paper-dim">
+      Per-episode pages are not built yet: they need the episode list, which the ingest does not read
+      yet (roadmap A1).
+    </p>
+  </section>
+</Base>

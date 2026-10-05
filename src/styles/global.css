@@ -108,6 +108,13 @@
 }
 
 html {
+  /*
+   * The hero's seal is deliberately bled past the right edge. `overflow-x: clip` has to sit on the
+   * root: on <body> it does not propagate to the viewport (Chrome keeps html's overflow-x visible),
+   * so the page stayed scrollable sideways by the width of the overhang. `clip` rather than
+   * `hidden` because hidden would make the root a scroll container and break the sticky header.
+   */
+  overflow-x: clip;
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-body);
