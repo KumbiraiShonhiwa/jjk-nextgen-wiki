@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import SiteHeader from '../components/SiteHeader.astro';
+import TabBar from '../components/TabBar.astro';
 
 interface Props {
   title: string;
@@ -70,7 +71,7 @@ const reportHref = `https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/
     <main id="main" class="mx-auto max-w-6xl px-4">
       <slot />
     </main>
-    <footer class="mx-auto mt-24 max-w-6xl border-t border-line px-4 py-8 text-step--1 text-paper-dim">
+    <footer class="mx-auto mt-24 max-w-6xl border-t border-line px-4 pt-8 pb-[calc(5rem+env(safe-area-inset-bottom,0px))] text-step--1 text-paper-dim md:pb-8">
       <p>
         Unofficial fan project. Jujutsu Kaisen © Gege Akutami / Shueisha, MAPPA. Text adapted from Wikipedia and the
         Jujutsu Kaisen Wiki under <a class="underline" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
@@ -80,6 +81,7 @@ const reportHref = `https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/
         <a class="underline hover:text-paper" data-report href={reportHref}>Report a problem</a>
       </p>
     </footer>
+    <TabBar />
   </body>
 </html>
 
