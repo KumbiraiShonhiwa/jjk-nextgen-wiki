@@ -76,7 +76,7 @@ Sorted by audience (doc 01). Each feature lists its data, route, signature motio
 
 **B12 · Keyboard power use.** Extend the `/` search palette with commands: "go to random character", "set spoiler level", "toggle reduced motion", "compare with…". Add `j`/`k` to move between cards in grids.
 
-**B13 · Content coverage page.** `/about/coverage` lists records still marked `fixture`, empty fields, last sync date and source revision per page. It makes the content-sync backlog visible and helps reviewers of the weekly sync PR.
+**B13 · Content coverage page. Done.** `/about/coverage` lists records still marked `fixture`, empty fields, last sync date and source revision per page. It makes the content-sync backlog visible and helps reviewers of the weekly sync PR.
 
 ### Explicitly still out (from doc 01)
 
