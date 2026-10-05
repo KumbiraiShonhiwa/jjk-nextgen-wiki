@@ -51,3 +51,4 @@ targets through `animejs/adapters/three`, so there is still one timeline and one
 | `graph-physics` | Relationship graph | Drag | `createDraggable`, `createSpring`, `svg.createMotionPath` | Static layout, keyboard list |
 | `domain-takeover` | Domain pages | Click "Expand the domain" | `createTimeline` (clip-path iris from the click point, ring collapse, letter rise, `scrambleText`), looping `animate` breathing, `splitText` | Overlay appears without animation |
 | `grid-reflow` | Filtering grids | Filter change | `createLayout` | Instant |
+| `page-morph` | Index grid -> entity page | Navigation | Astro `transition:name` shared element (`morphName`), not Anime.js | Cuts; every `::view-transition-*` animation is stopped |

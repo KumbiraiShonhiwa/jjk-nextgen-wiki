@@ -189,6 +189,22 @@ html {
   margin-bottom: -0.25em;
 }
 
+/*
+ * View transitions (docs/08 `page-morph`). A card's title and the page title it links to share a
+ * `transition:name`, so the browser morphs one into the other across the navigation.
+ *
+ * Reduced motion is handled here rather than left to Astro: its own fallback covers the default
+ * page animation, but a custom shared-element name still animates, so every view-transition
+ * pseudo-element is stopped explicitly. The navigation still happens, it just cuts.
+ */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
 /* The sticky "now reading" arc label (/arcs) exists only on the scrubbed, full-motion path. */
 [data-arc-current] {
   display: none;

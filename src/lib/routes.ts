@@ -14,6 +14,13 @@ const BASE: Record<EntityType, string> = {
 export const hrefFor = (type: EntityType, slug: string) => `${BASE[type]}/${slug}`;
 
 /**
+ * Shared-element name for the card -> page view transition (docs/08 `page-morph`). One helper so a
+ * grid and the page it links to cannot drift apart. A name has to be unique within a document, so
+ * only index grids set it; entity pages can list the same entity twice.
+ */
+export const morphName = (type: EntityType, slug: string) => `morph-${type}-${slug}`;
+
+/**
  * Page titles and meta descriptions are seen by search engines and link previews, so they may only
  * name an entity whose existence is spoiler-free (docs/04). Gated entities get a neutral title.
  */

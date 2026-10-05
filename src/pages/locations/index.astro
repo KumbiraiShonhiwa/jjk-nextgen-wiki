@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import EntityCard from '../../components/EntityCard.astro';
 import { loadIndex } from '../../lib/content';
-import { hrefFor } from '../../lib/routes';
+import { hrefFor, morphName } from '../../lib/routes';
 
 const ix = await loadIndex();
 const locations = [...ix.locations.values()].sort((a, b) => a.name.en.localeCompare(b.name.en));
@@ -29,7 +29,7 @@ const meta = (slug: string) => {
     <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
         locations.map((l) => (
-          <EntityCard href={hrefFor('locations', l.slug)} title={l.name.en} subtitle={l.name.ja} meta={meta(l.slug)} level={l.level} redact />
+          <EntityCard href={hrefFor('locations', l.slug)} title={l.name.en} subtitle={l.name.ja} meta={meta(l.slug)} level={l.level} transitionName={morphName('locations', l.slug)} redact />
         ))
       }
     </div>

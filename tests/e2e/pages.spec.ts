@@ -35,6 +35,19 @@ test('a location page lists the arcs set there and the organizations based there
   await expect(page.getByRole('link', { name: '← Locations' })).toBeVisible();
 });
 
+test('a card title and the page it links to share a view-transition name', async ({ page }) => {
+  // The morph only happens if both sides agree on the name, and nothing else enforces that
+  // across two files. A mismatch degrades silently to a plain cut, so it needs a test.
+  await page.goto('/characters');
+  const card = page.locator('a[href="/characters/gojo-satoru"] span.font-display').first();
+  const cardName = await card.evaluate((el) => getComputedStyle(el).viewTransitionName);
+  expect(cardName).toBe('morph-characters-gojo-satoru');
+
+  await page.goto('/characters/gojo-satoru');
+  const headingName = await page.locator('h1').first().evaluate((el) => getComputedStyle(el).viewTransitionName);
+  expect(headingName).toBe(cardName);
+});
+
 test('the header navigation marks the current section', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/techniques/limitless');
