@@ -3,7 +3,7 @@ import { adjacentArcs, buildIndex, findDanglingRefs, maxLevel, membersOf, neighb
 
 const empty: Dataset = { characters: [], techniques: [], domains: [], arcs: [], organizations: [], locations: [], edges: [] };
 const person = (slug: string, extra = {}) =>
-  ({ slug, level: 'none', name: { en: slug }, aliases: [], species: [], summary: [{ value: 'x', level: 'none' }], status: [], grade: [], affiliations: [], techniques: [], fixture: true, provenance: [], ...extra }) as Dataset['characters'][number];
+  ({ slug, level: 'none', name: { en: slug }, aliases: [], species: [], summary: [{ value: 'x', level: 'none' }], status: [], grade: [], affiliations: [], techniques: [], firstAppearance: [], fixture: true, provenance: [], ...extra }) as Dataset['characters'][number];
 
 describe('findDanglingRefs', () => {
   it('reports references to missing entities', () => {

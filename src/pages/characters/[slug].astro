@@ -97,6 +97,46 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
 
         <aside aria-labelledby="connections">
           <CharacterArt character={c} eager class="mb-8 max-w-xs" />
+
+          {
+            /* Profile fields (A5). Rendered only when the record has them, so a fixture that
+               carries none shows nothing rather than a row of blanks. firstAppearance is gated. */
+            (c.gender || c.birthday || c.height || c.firstAppearance.length > 0) && (
+              <>
+                <h2 class="font-display text-step-2">Profile</h2>
+                <dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-step--1">
+                  {c.gender && (
+                    <>
+                      <dt class="text-paper-dim">Gender</dt>
+                      <dd>{c.gender}</dd>
+                    </>
+                  )}
+                  {c.birthday && (
+                    <>
+                      <dt class="text-paper-dim">Birthday</dt>
+                      <dd>{c.birthday}</dd>
+                    </>
+                  )}
+                  {c.height && (
+                    <>
+                      <dt class="text-paper-dim">Height</dt>
+                      <dd>{c.height}</dd>
+                    </>
+                  )}
+                  {c.firstAppearance.map((f) => (
+                    <>
+                      {/* The label is not a spoiler, the value is: gate inside the <dd> so the
+                          row keeps its place in the grid and the markup stays valid. */}
+                      <dt class="text-paper-dim">First seen</dt>
+                      <dd>
+                        <Gated level={maxLevel(f.level, c.level)}>{f.value}</Gated>
+                      </dd>
+                    </>
+                  ))}
+                </dl>
+              </>
+            )
+          }
           {
             connections.length > 0 && (
               <>
