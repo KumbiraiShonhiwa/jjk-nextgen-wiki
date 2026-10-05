@@ -211,6 +211,11 @@ html {
     animation: none !important;
   }
 }
+html[data-motion='reduced'] ::view-transition-group(*),
+html[data-motion='reduced'] ::view-transition-old(*),
+html[data-motion='reduced'] ::view-transition-new(*) {
+  animation: none !important;
+}
 
 /* The sticky "now reading" arc label (/arcs) exists only on the scrubbed, full-motion path. */
 [data-arc-current] {
@@ -233,6 +238,10 @@ html {
   .js-motion [data-cascade] [data-reveal] {
     opacity: 1;
   }
+}
+/* The site's own motion toggle (roadmap B12) mirrors every reduced-motion rule below. */
+html[data-motion='reduced'] .js-motion [data-cascade] [data-reveal] {
+  opacity: 1;
 }
 
 /*
@@ -338,4 +347,8 @@ html[data-spoiler='anime-s3'] [data-redacted='manga'] {
   color: var(--ce-blue);
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+html[data-motion='reduced'] [data-arc-current] {
+  display: none;
 }

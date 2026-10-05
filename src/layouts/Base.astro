@@ -44,6 +44,11 @@ const reportHref = `https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/
           } catch (e) {}
           document.documentElement.dataset.spoiler = level;
           document.documentElement.classList.add('js-motion');
+          // The site's own motion preference, applied before first paint so nothing animates once
+          // and then stops. It can only add reduction; the OS setting is never overridden upward.
+          try {
+            if (localStorage.getItem('jjk:motion') === 'reduced') document.documentElement.dataset.motion = 'reduced';
+          } catch (e) {}
         }
         // The report link already carries the page; add the level the reader actually has set.
         // Separate from apply(), which runs in <head> before the footer exists.
@@ -87,10 +92,14 @@ const reportHref = `https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/
 
 <script>
   import { SPOILER_EVENT, newlyVisible } from '../lib/spoiler';
+  import { bindGridKeys } from '../lib/grid-keys';
   import { kineticHeading, motionScope, prefersReducedMotion, revealCascade, revealSpoilers, showAll, tiltCard } from '../motion';
   import type { SpoilerLevel } from '../content/schemas';
 
   let cleanups: (() => void)[] = [];
+
+  // j / k step between cards wherever a grid or list of links is on the page (roadmap B12).
+  bindGridKeys();
 
   // Page-agnostic motion: any page opts in with data-kinetic (h1) or data-cascade (grid/list of [data-reveal]).
   document.addEventListener('astro:page-load', () => {
