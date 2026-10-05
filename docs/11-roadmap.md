@@ -18,7 +18,7 @@ Checked against the code on `develop` at `5b81408`.
 | A6 | **Mobile bottom tab bar** | doc 04 | The header has a mobile menu only | Bottom tab bar (Home, Characters, Arcs, Search) with a safe-area inset. Add Media to `NAV` once A1 lands |
 | A7 | **Footer "Report a problem"** | doc 04 | Missing | A link to a GitHub issue form, pre-filled with the page URL and spoiler level. Add an issue template to `.github/ISSUE_TEMPLATE/` |
 | A8 | ~~**Home hero and Three.js hero**~~ **Done** | doc 08, ADR-007, doc 10 next steps 3 and 6 | Full-bleed hero with a stat row, edge-bled sigil, and the lazy WebGL field at 130.5 KiB gzip behind ADR-007's guards | — |
-| A9 | **Page transitions** | doc 10 next step 4 | `ClientRouter` is mounted but there's no custom transition motion | Use `transition:name` on entity cards and headers so card → page morphs. Keep `motionScope` cleanup on `astro:before-swap` |
+| A9 | ~~**Page transitions**~~ **Done** | doc 10 next step 4 | Card titles and entity page titles share a `transition:name` via `morphName`, so a card morphs into the page title. Reduced motion cuts instead | — |
 | A10 | ~~**Doc and config drift**~~ **Done** | doc 10 | README lists 01–11; doc 08 no longer marks `graph-physics` as planned; `.github/rulesets/*.json` now mirror the live rulesets (the security checks and `require_extra_approval_for_unattributed_changes` were live but unrecorded). Note: the committed `develop` ruleset declared a `merge_queue` rule that is **not** enabled live — the file now matches reality, so re-enable it in the GitHub UI if it is wanted | — |
 | A11 | **Visual and Lighthouse checks** | ADR-009 | Left out on purpose (doc 10) | Add Playwright screenshot tests for the five templates. Revisit Lighthouse CI after B10 (PWA) lands |
 

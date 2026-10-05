@@ -9,7 +9,7 @@ import SpoilerWall from '../../components/SpoilerWall.astro';
 import { loadIndex } from '../../lib/content';
 import { chapterRange, episodeRange, titleCase } from '../../lib/format';
 import { maxLevel, safeValue } from '../../lib/graph';
-import { hrefFor, locationTitle } from '../../lib/routes';
+import { hrefFor, locationTitle, morphName } from '../../lib/routes';
 import type { Location } from '../../content/schemas';
 
 export async function getStaticPaths() {
@@ -30,7 +30,7 @@ const description = (l.level === 'none' && safeValue(l.summary)) || 'A location 
   <article class="py-12" style="--accent: var(--ce-blue)">
     <a href="/locations" class="text-step--1 text-paper-dim hover:text-paper">← Locations</a>
     <SpoilerWall level={l.level} type="Location">
-      <EntityHeader title={l.name.en} ja={l.name.ja} eyebrow="Location" />
+      <EntityHeader title={l.name.en} ja={l.name.ja} eyebrow="Location" transitionName={morphName('locations', l.slug)} />
 
       <div class="mt-10">
         <GatedText values={l.summary} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
