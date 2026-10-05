@@ -14,6 +14,8 @@
   import { prefersReducedMotion } from '../motion/reduced';
 
   const MAX_RESULTS = 8;
+  /** Raised by the mobile tab bar's search button. */
+  const OPEN_EVENT = 'jjk:open-search';
 
   let dialog: HTMLDialogElement | undefined = $state();
   let panel: HTMLDivElement | undefined = $state();
@@ -76,6 +78,13 @@
     const onLevel = () => dialog?.open && void run(query);
     document.addEventListener(SPOILER_EVENT, onLevel);
     return () => document.removeEventListener(SPOILER_EVENT, onLevel);
+  });
+
+  // The mobile tab bar has no reference to this island, so it asks by event.
+  $effect(() => {
+    const onRequest = () => void open();
+    document.addEventListener(OPEN_EVENT, onRequest);
+    return () => document.removeEventListener(OPEN_EVENT, onRequest);
   });
 
   export async function open() {

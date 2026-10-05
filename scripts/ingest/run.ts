@@ -16,6 +16,7 @@ import { licenceFromRights, mergeEdges, mergeRecord, provenanceFor, type EdgeRec
 import { newReport, renderReport, type RecordLine, type Report } from './report.ts';
 import { ENTITY_TYPES, NameIndex, type EntityType } from './slugs.ts';
 import { applyOverrides, arcAliasTable, clampToRecordLevel, SpoilerPolicy, spoilerOverrides, type SpoilerOverrides } from './spoilers.ts';
+import { spoilerBoundaries, type SpoilerBoundaries } from '../../src/content/schemas/boundaries.ts';
 
 export const SCHEMAS: Record<EntityType, z.ZodType> = {
   characters: character,
@@ -165,10 +166,13 @@ async function pipeline(opts: RunOptions, { contentDir, wiki, only, client, repo
   const sources = await readJson<Sources>(join(metaDir, 'sources.json'), {});
   const overrides: SpoilerOverrides = spoilerOverrides.parse(await readJson(join(metaDir, 'spoiler-overrides.json'), {}));
   const aliases = arcAliasTable.parse(await readJson(opts.arcAliasesPath ?? join(HERE, 'arc-aliases.json'), { arcs: {} }));
+  // Optional: without the table the policy just keeps its arc-heading rules and the manga default.
+  const boundariesRaw = await readJson<unknown>(join(metaDir, 'spoiler-boundaries.json'), null as unknown);
+  const boundaries: SpoilerBoundaries | undefined = boundariesRaw ? spoilerBoundaries.parse(boundariesRaw) : undefined;
   const titleAliases = await readJson<Record<string, string[]>>(opts.titleAliasesPath ?? join(HERE, 'title-aliases.json'), {});
 
   const arcs = [...existing.records.arcs.values()].map((r) => ({ slug: String(r.data.slug), name: String(r.data.name), level: (r.data.level as SpoilerLevel) ?? 'none' }));
-  const policy = new SpoilerPolicy(arcs, aliases);
+  const policy = new SpoilerPolicy(arcs, aliases, boundaries);
 
   // 1. Site info and licence.
   const site = await client.siteInfo();
