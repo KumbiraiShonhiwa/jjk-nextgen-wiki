@@ -13,6 +13,7 @@ const SECTIONS = [
   { path: '/domains', heading: 'Domain Expansions' },
   { path: '/arcs', heading: 'Story arcs' },
   { path: '/organizations', heading: 'Organizations' },
+  { path: '/locations', heading: 'Locations' },
   { path: '/about', heading: 'About' },
 ];
 
@@ -25,6 +26,14 @@ for (const { path, heading } of SECTIONS) {
     expect(errors).toEqual([]);
   });
 }
+
+test('a location page lists the arcs set there and the organizations based there', async ({ page }) => {
+  // Tokyo holds Tokyo Jujutsu High in the fixtures, and is a setting for level-none arcs.
+  await page.goto('/locations/tokyo');
+  await expect(page.getByRole('heading', { level: 1, name: 'Tokyo', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Tokyo Jujutsu High/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: '← Locations' })).toBeVisible();
+});
 
 test('the header navigation marks the current section', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
