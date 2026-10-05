@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Gated from '../../components/Gated.astro';
+import Section from '../../components/Section.astro';
+import { coverageByCollection, coveragePercent, sourcePages, type CoverageRecord } from '../../lib/coverage';
+
+const NAMES = ['characters', 'techniques', 'domains', 'arcs', 'organizations', 'locations', 'episodes', 'chapters'] as const;
+
+const byCollection: Record<string, CoverageRecord[]> = {};
+for (const name of NAMES) {
+  byCollection[name] = (await getCollection(name)).map((e) => e.data as CoverageRecord);
+}
+
+const rows = coverageByCollection(byCollection);
+const pages = sourcePages(byCollection);
+const percent = coveragePercent(rows);
+const totals = {
+  records: rows.reduce((n, r) => n + r.total, 0),
+  fixtures: rows.reduce((n, r) => n + r.fixtures, 0),
+  sourced: rows.reduce((n, r) => n + r.sourced, 0),
+};
+const day = (iso?: string) => iso?.slice(0, 10) ?? '—';
+---
+
+<Base title="Content coverage" description="What this wiki has sourced, what is still a placeholder, and when each source page was last read.">
+  <article class="py-12">
+    <a href="/about" class="text-step--1 text-paper-dim hover:text-paper">← About</a>
+    <h1 data-kinetic class="mt-8 font-display text-step-5 leading-none">Content coverage</h1>
+    <p class="mt-3 max-w-prose text-paper-dim">
+      What is sourced, what is still a hand-written placeholder, and which revision of each source page it came from.
+      This page is built from the records themselves, so it cannot drift from them.
+    </p>
+
+    <dl class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+      {
+        [
+          { label: 'Records', value: totals.records },
+          { label: 'Sourced', value: totals.sourced },
+          { label: 'Placeholders', value: totals.fixtures },
+          { label: 'Not a placeholder', value: `${percent}%` },
+        ].map((s) => (
+          <div class="rounded-md border border-line bg-ink-2 p-4">
+            <dt class="text-step--1 uppercase tracking-[0.14em] text-paper-dim">{s.label}</dt>
+            <dd class="mt-1 font-display text-step-3">{s.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <Section id="collections" title="By collection">
+      <table class="w-full text-left text-step--1">
+        <thead class="text-paper-dim uppercase tracking-[0.14em]">
+          <tr>
+            <th class="py-2 pr-4 font-normal">Collection</th>
+            <th class="py-2 pr-4 text-right font-normal">Records</th>
+            <th class="py-2 pr-4 text-right font-normal">Sourced</th>
+            <th class="py-2 pr-4 text-right font-normal">Placeholders</th>
+            <th class="py-2 font-normal">Last synced</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            rows.map((r) => (
+              <tr class="border-t border-line">
+                <td class="py-2 pr-4 font-display text-step-0">{r.collection}</td>
+                <td class="py-2 pr-4 text-right tabular-nums">{r.total}</td>
+                <td class="py-2 pr-4 text-right tabular-nums">{r.sourced}</td>
+                <td class={`py-2 pr-4 text-right tabular-nums ${r.fixtures ? 'text-ce-red' : 'text-paper-dim'}`}>{r.fixtures}</td>
+                <td class="py-2 text-paper-dim">{day(r.lastSynced)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </Section>
+
+    <Section id="backlog" title="Placeholder backlog">
+      <p class="text-step--1 text-paper-dim">
+        Records still written by hand for the prototype. The content sync replaces each one with sourced, attributed text.
+      </p>
+      {
+        rows.filter((r) => r.backlog.length).length === 0 ? (
+          <p class="mt-4">Nothing left: every record is sourced.</p>
+        ) : (
+          rows
+            .filter((r) => r.backlog.length)
+            .map((r) => (
+              <div class="mt-5">
+                <h3 class="font-display text-step-1">{r.collection}</h3>
+                <ul class="mt-2 flex flex-wrap gap-2">
+                  {r.backlog.map((b) => (
+                    /* A gated record's slug names it, so the chip is gated like anything else. */
+                    <Gated level={b.level} as="li">
+                      <code class="rounded-sm border border-line px-2 py-0.5 text-step--1 text-paper-dim">{b.slug}</code>
+                    </Gated>
+                  ))}
+                </ul>
+              </div>
+            ))
+        )
+      }
+    </Section>
+
+    <Section id="sources" title="Source pages">
+      <p class="text-step--1 text-paper-dim">The revision of each page the current text was read from.</p>
+      <table class="mt-4 w-full text-left text-step--1">
+        <thead class="text-paper-dim uppercase tracking-[0.14em]">
+          <tr>
+            <th class="py-2 pr-4 font-normal">Page</th>
+            <th class="py-2 pr-4 text-right font-normal">Records</th>
+            <th class="py-2 pr-4 text-right font-normal">Revision</th>
+            <th class="py-2 font-normal">Read</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            pages.map((p) => (
+              <tr class="border-t border-line">
+                <td class="py-2 pr-4">
+                  <a class="underline" href={p.url}>{p.title}</a>
+                </td>
+                <td class="py-2 pr-4 text-right tabular-nums">{p.records}</td>
+                <td class="py-2 pr-4 text-right tabular-nums text-paper-dim">{p.revisionId ?? '—'}</td>
+                <td class="py-2 text-paper-dim">{day(p.fetchedAt)}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      {pages.length === 0 && <p class="mt-4">No sourced records yet.</p>}
+    </Section>
+  </article>
+</Base>
