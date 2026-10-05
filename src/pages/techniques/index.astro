@@ -4,7 +4,7 @@ import EntityCard from '../../components/EntityCard.astro';
 import { TECHNIQUE_KINDS } from '../../content/schemas';
 import { loadIndex } from '../../lib/content';
 import { titleCase } from '../../lib/format';
-import { hrefFor } from '../../lib/routes';
+import { hrefFor, morphName } from '../../lib/routes';
 
 const ix = await loadIndex();
 const techniques = [...ix.techniques.values()].sort((a, b) => a.name.en.localeCompare(b.name.en));
@@ -24,7 +24,7 @@ const accentOf = (users: string[]) => ix.characters.get(users[0] ?? '')?.accent;
           </h2>
           <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((t) => (
-              <EntityCard href={hrefFor('techniques', t.slug)} title={t.name.en} subtitle={t.name.ja} accent={accentOf(t.users)} level={t.level} redact />
+              <EntityCard href={hrefFor('techniques', t.slug)} title={t.name.en} subtitle={t.name.ja} accent={accentOf(t.users)} level={t.level} transitionName={morphName('techniques', t.slug)} redact />
             ))}
           </div>
         </section>

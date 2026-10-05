@@ -4,6 +4,7 @@ import Sigil from '../components/Sigil.astro';
 import EntityCard from '../components/EntityCard.astro';
 import CharacterArt from '../components/CharacterArt.astro';
 import { characterMeta } from '../lib/format';
+import { morphName } from '../lib/routes';
 
 import { loadIndex } from '../lib/content';
 import { DEFAULT_LEVEL } from '../lib/spoiler';
@@ -69,7 +70,7 @@ const stats = [
     <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
         characters.map((c) => (
-          <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent}>
+          <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} transitionName={morphName('characters', c.slug)}>
             <CharacterArt slot="art" character={c} />
           </EntityCard>
         ))

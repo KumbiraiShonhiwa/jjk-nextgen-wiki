@@ -5,7 +5,7 @@ import { ORGANIZATION_KINDS } from '../../content/schemas';
 import { loadIndex } from '../../lib/content';
 import { titleCase } from '../../lib/format';
 import { membersOf } from '../../lib/graph';
-import { hrefFor } from '../../lib/routes';
+import { hrefFor, morphName } from '../../lib/routes';
 
 const ix = await loadIndex();
 const orgs = [...ix.organizations.values()].sort(
@@ -28,6 +28,7 @@ const orgs = [...ix.organizations.values()].sort(
               subtitle={o.name.ja}
               meta={`${titleCase(o.kind)} · ${n} ${n === 1 ? 'member' : 'members'}`}
               level={o.level}
+              transitionName={morphName('organizations', o.slug)}
               redact
             />
           );

@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import EntityCard from '../../components/EntityCard.astro';
 import CharacterArt from '../../components/CharacterArt.astro';
 import { loadIndex } from '../../lib/content';
+import { morphName } from '../../lib/routes';
 import { characterMeta } from '../../lib/format';
 
 const ix = await loadIndex();
@@ -32,7 +33,7 @@ const levelAttr = (level: string) => (level === 'none' ? undefined : level);
       {
         characters.map((c) => (
           <div data-grid-item data-orgs={c.affiliations.join(' ')}>
-            <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={c.level} redact>
+            <EntityCard href={`/characters/${c.slug}`} title={c.name.en} subtitle={c.name.ja} meta={characterMeta(c)} accent={c.accent} level={c.level} transitionName={morphName('characters', c.slug)} redact>
               <CharacterArt slot="art" character={c} />
             </EntityCard>
           </div>

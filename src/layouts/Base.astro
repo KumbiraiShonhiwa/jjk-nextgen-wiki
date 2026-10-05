@@ -9,6 +9,13 @@ interface Props {
 }
 const { title, description = 'An unofficial, motion-first Jujutsu Kaisen encyclopedia.' } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+
+/*
+ * "Report a problem" opens the issue form with the page already filled in (docs/04). The spoiler
+ * level is only known in the browser, so the inline script below appends it; without JavaScript the
+ * link still works and still carries the page.
+ */
+const reportHref = `https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/new?template=content-problem.yml&page=${encodeURIComponent(Astro.url.pathname)}`;
 ---
 
 <!doctype html>
@@ -37,8 +44,20 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
           document.documentElement.dataset.spoiler = level;
           document.documentElement.classList.add('js-motion');
         }
+        // The report link already carries the page; add the level the reader actually has set.
+        // Separate from apply(), which runs in <head> before the footer exists.
+        function markReport() {
+          var report = document.querySelector('[data-report]');
+          if (!report) return;
+          var level = document.documentElement.dataset.spoiler || 'anime-s1';
+          report.href = report.href.split('&spoiler=')[0] + '&spoiler=' + level;
+        }
         apply();
         document.addEventListener('astro:after-swap', apply);
+        // page-load covers the first paint and every client-side navigation; the spoiler event
+        // covers changing the level without navigating.
+        document.addEventListener('astro:page-load', markReport);
+        document.addEventListener('jjk:spoiler', markReport);
       })();
     </script>
     <ClientRouter />
@@ -58,7 +77,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       </p>
       <p class="mt-3 flex gap-4">
         <a class="underline hover:text-paper" href="/about">About and sources</a>
-        <a class="underline hover:text-paper" href="https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/new">Report a problem</a>
+        <a class="underline hover:text-paper" data-report href={reportHref}>Report a problem</a>
       </p>
     </footer>
   </body>
