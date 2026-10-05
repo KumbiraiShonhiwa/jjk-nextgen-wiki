@@ -93,6 +93,7 @@ const reportHref = `https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/
 <script>
   import { SPOILER_EVENT, newlyVisible } from '../lib/spoiler';
   import { bindGridKeys } from '../lib/grid-keys';
+  import { applyProgress } from '../lib/progress-runtime';
   import { kineticHeading, motionScope, prefersReducedMotion, revealCascade, revealSpoilers, showAll, tiltCard } from '../motion';
   import type { SpoilerLevel } from '../content/schemas';
 
@@ -100,6 +101,10 @@ const reportHref = `https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki/issues/
 
   // j / k step between cards wherever a grid or list of links is on the page (roadmap B12).
   bindGridKeys();
+
+  // Episode/chapter progress is applied per page, because the generated rule only lists the
+  // numbers that page actually marks (roadmap B1).
+  document.addEventListener('astro:page-load', () => applyProgress());
 
   // Page-agnostic motion: any page opts in with data-kinetic (h1) or data-cascade (grid/list of [data-reveal]).
   document.addEventListener('astro:page-load', () => {

@@ -38,17 +38,38 @@ const arcName = (slug?: string) => (slug ? ix.arcs.get(slug)?.name : undefined);
         </p>
       </header>
 
+      {/* Roadmap B1, the reading half. Same rule: it can only hide more than the bucket. */}
+      <p data-progress-status hidden class="mt-8 flex flex-wrap items-center gap-3 rounded-md border border-line bg-ink-2 px-4 py-2 text-step--1">
+        <span data-progress-text></span>
+        <button type="button" data-progress-clear class="underline underline-offset-4 hover:text-paper">Show everything at my spoiler level again</button>
+      </p>
+
       <ol class="mt-10 divide-y divide-line border-b border-line">
         {
           chapters.map((c) => (
             <li class="grid grid-cols-[3rem_1fr] gap-x-4 py-3">
               <span class="font-display text-step-1 text-paper-dim tabular-nums">{c.number}</span>
               <div>
-                {/* The number is safe; the title is not, so only the title is gated. */}
+                {/*
+                  The number is safe; the title is not. `data-ch` sits on the title block rather
+                  than the row, so a chapter past the reader's progress still shows its number and
+                  its own "read up to here" control - hiding the row would strand them, unable to
+                  advance past wherever they set it.
+                */}
                 <Gated level={c.level} as="div">
+                <div data-ch={`ch${c.number}`}>
                   <p class="font-display text-step-1 leading-tight">{c.title.en}</p>
                   {c.title.ja && <p class="mt-0.5 text-step--1 text-paper-dim" lang="ja">{c.title.ja}</p>}
+                </div>
                 </Gated>
+                <button
+                  type="button"
+                  data-read-to
+                  data-chapter={c.number}
+                  class="mt-2 rounded-full border border-line px-3 py-0.5 text-step--1 text-paper-dim hover:border-ce-blue hover:text-paper"
+                >
+                  I've read up to here
+                </button>
                 {c.arc && (
                   <Gated level={c.level} as="div">
                     <a class="mt-1 inline-block text-step--1 text-paper-dim underline-offset-4 hover:text-paper hover:underline" href={hrefFor('arcs', c.arc)}>
@@ -66,3 +87,32 @@ const arcName = (slug?: string) => (slug ? ix.arcs.get(slug)?.name : undefined);
     </SpoilerWall>
   </article>
 </Base>
+
+<script>
+  import { readProgress, setProgress, clearProgress } from '../../../lib/progress-runtime';
+  import { PROGRESS_EVENT } from '../../../lib/progress';
+
+  function render() {
+    const status = document.querySelector<HTMLElement>('[data-progress-status]');
+    const text = document.querySelector<HTMLElement>('[data-progress-text]');
+    if (!status || !text) return;
+    const progress = readProgress();
+    if (!progress.episode && !progress.chapter) {
+      status.setAttribute('hidden', '');
+      return;
+    }
+    text.textContent = progress.chapter
+      ? `Showing up to chapter ${progress.chapter}.`
+      : `Showing up to season ${progress.episode!.season}, episode ${progress.episode!.number}.`;
+    status.removeAttribute('hidden');
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    render();
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-read-to]')) {
+      button.addEventListener('click', () => setProgress({ chapter: Number(button.dataset.chapter) }));
+    }
+    document.querySelector('[data-progress-clear]')?.addEventListener('click', () => clearProgress());
+  });
+  document.addEventListener(PROGRESS_EVENT, render);
+</script>
