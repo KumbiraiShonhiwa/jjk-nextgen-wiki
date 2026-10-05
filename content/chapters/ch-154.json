@@ -1,0 +1,22 @@
+{
+  "slug": "ch-154",
+  "level": "anime-s3",
+  "number": 154,
+  "title": {
+    "en": "Sneaking In",
+    "ja": "潜入"
+  },
+  "volume": 18,
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "List of Jujutsu Kaisen chapters",
+      "url": "https://en.wikipedia.org/wiki/List_of_Jujutsu_Kaisen_chapters",
+      "revisionId": 1372942341,
+      "fetchedAt": "2026-10-05T14:00:01.905Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ Checked against the code on `develop` at `5b81408`.
 
 | # | Gap | Promised in | What exists today | Work |
 |---|-----|-------------|-------------------|------|
-| A1 | **Chapters and episodes** (episodes done) | doc 01 scope, doc 02 entities, doc 04 `/media/*` | `episode` schema and collection; 59 records ingested from the English Wikipedia season pages (the first Wikipedia mapping); `/media`, `/media/manga`, `/media/anime` and `/media/anime/<season>` | Still to do: the `chapter` schema, collection and ingest from Wikipedia's chapter list, and `/media/manga` by volume |
+| A1 | ~~**Chapters and episodes**~~ **Done** | doc 01 scope, doc 02 entities, doc 04 `/media/*` | `episode` and `chapter` schemas and collections; 59 episodes and 271 chapters across 30 volumes ingested from the English Wikipedia; `/media`, `/media/manga`, `/media/manga/<volume>`, `/media/anime`, `/media/anime/<season>` | — |
 | A2 | ~~**Spoiler boundaries file**~~ **Done** | doc 02 | `content/meta/spoiler-boundaries.json` and its schema already existed and arc levels were already tested against it; the gap was the ingest. `SpoilerPolicy` now takes the table and dates a fact from a cited chapter or season instead of falling back to manga | Revisit the episode half once A1 lands |
 | A3 | ~~**Location pages**~~ **Done** | doc 04 | `/locations` and `/locations/<slug>`: summary, arcs set there, organizations based there, each gated at `maxLevel(entity, location)` | — |
 | A4 | ~~**Alias redirects**~~ **Done** | doc 04 ("`/characters/gojo` → `/characters/gojo-satoru`") | `scripts/aliases.mjs` builds Astro `redirects` from each record's `aliases` at build time, refusing an alias that is claimed twice or that would shadow a real page. Inert until records declare aliases | — |

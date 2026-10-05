@@ -1,0 +1,22 @@
+{
+  "slug": "ch-184",
+  "level": "manga",
+  "number": 184,
+  "title": {
+    "en": "Tokyo No. 2 Colony, Part 4",
+    "ja": "東京第2結界④"
+  },
+  "volume": 21,
+  "arc": "culling-game-part-2",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "List of Jujutsu Kaisen chapters",
+      "url": "https://en.wikipedia.org/wiki/List_of_Jujutsu_Kaisen_chapters",
+      "revisionId": 1372942341,
+      "fetchedAt": "2026-10-05T14:00:01.905Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

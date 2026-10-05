@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Gated from '../../../components/Gated.astro';
+import SpoilerWall from '../../../components/SpoilerWall.astro';
+import Sources from '../../../components/Sources.astro';
+import { loadIndex } from '../../../lib/content';
+import { hrefFor } from '../../../lib/routes';
+import type { Chapter } from '../../../content/schemas';
+
+export async function getStaticPaths() {
+  const chapters = (await getCollection('chapters')).map((c) => c.data);
+  const volumes = [...new Set(chapters.map((c) => c.volume))].sort((a, b) => a - b);
+  return volumes.map((volume) => ({
+    params: { volume: String(volume) },
+    props: { chapters: chapters.filter((c) => c.volume === volume).sort((a, b) => a.number - b.number) },
+  }));
+}
+
+const { chapters } = Astro.props as { chapters: Chapter[] };
+const ix = await loadIndex();
+const volume = chapters[0]!.volume;
+// The volume is reachable once its first chapter is; later chapters inside it gate individually.
+const level = chapters[0]!.level;
+const provenance = [...new Map(chapters.flatMap((c) => c.provenance).map((p) => [p.source === 'original' ? 'original' : p.url, p])).values()];
+const arcName = (slug?: string) => (slug ? ix.arcs.get(slug)?.name : undefined);
+---
+
+<Base title={`Manga volume ${volume}`} description={`Volume ${volume} of the Jujutsu Kaisen manga.`}>
+  <article class="py-12">
+    <a href="/media/manga" class="text-step--1 text-paper-dim hover:text-paper">← Manga</a>
+    <SpoilerWall level={level} type="Volume">
+      <header class="mt-8 border-b border-line pb-8">
+        <p class="text-step--1 uppercase tracking-[0.3em] text-ce-blue">Manga</p>
+        <h1 data-kinetic class="mt-4 font-display text-step-5 leading-none">Volume {volume}</h1>
+        <p class="mt-3 text-step--1 text-paper-dim">
+          Chapters {chapters[0]!.number}–{chapters.at(-1)!.number}
+        </p>
+      </header>
+
+      <ol class="mt-10 divide-y divide-line border-b border-line">
+        {
+          chapters.map((c) => (
+            <li class="grid grid-cols-[3rem_1fr] gap-x-4 py-3">
+              <span class="font-display text-step-1 text-paper-dim tabular-nums">{c.number}</span>
+              <div>
+                {/* The number is safe; the title is not, so only the title is gated. */}
+                <Gated level={c.level} as="div">
+                  <p class="font-display text-step-1 leading-tight">{c.title.en}</p>
+                  {c.title.ja && <p class="mt-0.5 text-step--1 text-paper-dim" lang="ja">{c.title.ja}</p>}
+                </Gated>
+                {c.arc && (
+                  <Gated level={c.level} as="div">
+                    <a class="mt-1 inline-block text-step--1 text-paper-dim underline-offset-4 hover:text-paper hover:underline" href={hrefFor('arcs', c.arc)}>
+                      {arcName(c.arc)}
+                    </a>
+                  </Gated>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <Sources provenance={provenance} fixture={false} />
+    </SpoilerWall>
+  </article>
+</Base>

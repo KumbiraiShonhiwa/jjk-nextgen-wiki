@@ -6,6 +6,9 @@
  * reads the templates directly rather than the prose.
  */
 import type { SpoilerLevel } from '../../../src/content/schemas/index.ts';
+import { templateParams, templatesNamed } from './wikitemplate.ts';
+
+export { templateParams } from './wikitemplate.ts';
 
 export interface EpisodeDraft {
   season: number;
@@ -65,72 +68,9 @@ export function airDate(value: string): string | undefined {
   return `${y}-${mo!.padStart(2, '0')}-${d!.padStart(2, '0')}`;
 }
 
-/**
- * Splits a template body into named parameters. Done by hand rather than with a regex per
- * parameter because values contain nested templates and `|` inside them.
- */
-export function templateParams(body: string): Record<string, string> {
-  const out: Record<string, string> = {};
-  let depth = 0;
-  let current = '';
-  const parts: string[] = [];
-  for (let i = 0; i < body.length; i++) {
-    const two = body.slice(i, i + 2);
-    if (two === '{{' || two === '[[') {
-      depth++;
-      current += two;
-      i++;
-      continue;
-    }
-    if (two === '}}' || two === ']]') {
-      depth--;
-      current += two;
-      i++;
-      continue;
-    }
-    if (body[i] === '|' && depth === 0) {
-      parts.push(current);
-      current = '';
-      continue;
-    }
-    current += body[i];
-  }
-  parts.push(current);
-  for (const part of parts) {
-    const eq = part.indexOf('=');
-    if (eq === -1) continue;
-    const key = part.slice(0, eq).trim().toLowerCase();
-    if (key) out[key] = part.slice(eq + 1).trim();
-  }
-  return out;
-}
-
-/** Every `{{Episode list…}}` body on a page, braces balanced. */
+/** Every `{{Episode list}}` / `{{Episode list/sublist}}` body on a page. */
 export function episodeTemplates(wikitext: string): string[] {
-  const out: string[] = [];
-  const re = /\{\{\s*Episode list(?:\/sublist)?\s*(?=[|\n])/gi;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(wikitext))) {
-    let depth = 1;
-    let i = m.index + 2;
-    const start = i;
-    while (i < wikitext.length && depth > 0) {
-      const two = wikitext.slice(i, i + 2);
-      if (two === '{{') {
-        depth++;
-        i += 2;
-        continue;
-      }
-      if (two === '}}') {
-        depth--;
-        i += 2;
-        continue;
-      }
-      i++;
-    }
-    if (depth === 0) out.push(wikitext.slice(start, i - 2));
-  }
-  return out;
+  return templatesNamed(wikitext, 'Episode list(?:\/sublist)?');
 }
 
 /**
