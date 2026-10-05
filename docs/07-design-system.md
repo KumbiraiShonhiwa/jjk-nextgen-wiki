@@ -65,6 +65,8 @@ Every level ships in the HTML. An inline head script sets `html[data-spoiler]` f
 ## Accessibility rules
 
 - Visible focus ring (`--ce-blue`, 2 px, offset 3 px) on every interactive element; skip link to `#main`.
+- `j` / `k` step between cards by moving focus, so the focus ring shows the position and Enter follows the link. Suppressed in fields and while a dialog is open.
+- The palette carries commands as well as results: random character, spoiler level, and a site motion toggle. The toggle can only *add* reduction; an OS request for reduced motion is never overridden upward.
 - **Contrast is checked against every surface in both themes, not just the page background.** Body
   text needs 4.5:1. The worst pairing is currently 4.80:1 (ink) and 4.88:1 (paper). Accents are a
   few percent darker on paper for this reason: at the ink values, `--ce-blue` measured 4.01:1 and

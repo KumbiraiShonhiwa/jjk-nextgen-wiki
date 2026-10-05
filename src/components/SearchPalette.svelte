@@ -7,13 +7,22 @@
   import { stagger } from 'animejs/utils';
   import { navigate } from 'astro:transitions/client';
   import { tick, untrack } from 'svelte';
-  import { readLevel, SPOILER_EVENT } from '../lib/spoiler';
+  import { LEVEL_LABELS, readLevel, setLevel, SPOILER_EVENT } from '../lib/spoiler';
+  import { SPOILER_LEVELS, type SpoilerLevel } from '../content/schemas/common';
+  import { isVisible } from '../content/schemas/common';
+  import { setSiteMotionReduced, siteMotionReduced } from '../motion/reduced';
   import { allowedLevels, canonicalUrl, rank, type Hit, type Pagefind } from '../lib/search';
   import { hitHref, sitePath } from '../lib/site';
   import { durations, eases, staggers } from '../motion/tokens';
   import { prefersReducedMotion } from '../motion/reduced';
 
   const MAX_RESULTS = 8;
+
+  /**
+   * Characters are passed in at build time so "random character" needs no extra request. Every
+   * level ships, as everywhere else, and the command filters to the visitor's level before picking.
+   */
+  let { characters = [] }: { characters: { slug: string; name: string; level: SpoilerLevel }[] } = $props();
   /** Raised by the mobile tab bar's search button. */
   const OPEN_EVENT = 'jjk:open-search';
 
@@ -27,6 +36,54 @@
   let status = $state<'idle' | 'loading' | 'ready' | 'unavailable'>('idle');
 
   let pagefind: Pagefind | undefined;
+
+  interface Command {
+    id: string;
+    label: string;
+    hint?: string;
+    run: () => void;
+  }
+
+  /** Rebuilt on open so the labels reflect the current level and motion setting. */
+  function buildCommands(): Command[] {
+    const current = readLevel();
+    const reduced = siteMotionReduced();
+    return [
+      {
+        id: 'random-character',
+        label: 'Go to a random character',
+        hint: 'at your spoiler level',
+        run: () => {
+          const reachable = characters.filter((c) => isVisible(c.level, readLevel()));
+          const pick = reachable[Math.floor(Math.random() * reachable.length)];
+          if (pick) void navigate(`/characters/${pick.slug}`);
+        },
+      },
+      ...SPOILER_LEVELS.filter((l) => l !== 'none').map((level) => ({
+        id: `level-${level}`,
+        label: `Set spoiler level: ${LEVEL_LABELS[level].long}`,
+        hint: level === current ? 'current' : undefined,
+        run: () => setLevel(level),
+      })),
+      {
+        id: 'motion',
+        label: reduced ? 'Follow the system motion setting' : 'Reduce motion on this site',
+        hint: reduced ? 'currently reduced' : undefined,
+        run: () => setSiteMotionReduced(!reduced),
+      },
+    ];
+  }
+
+  let commands = $state<Command[]>([]);
+
+  /** Commands matching the query; everything when the box is empty, so the palette teaches itself. */
+  const matching = $derived(
+    query.trim()
+      ? commands.filter((c) => c.label.toLowerCase().includes(query.trim().toLowerCase()))
+      : commands,
+  );
+  /** One list for the keyboard: commands first, then search results. */
+  const rowCount = $derived(matching.length + hits.length);
 
   async function load(): Promise<Pagefind | undefined> {
     if (pagefind || status === 'unavailable') return pagefind;
@@ -90,6 +147,8 @@
   export async function open() {
     if (!dialog || dialog.open) return;
     dialog.showModal();
+    commands = buildCommands();
+    active = 0;
     input?.select();
     // The spoiler level may have changed since the last search, so re-run rather than reuse results.
     void run(query);
@@ -108,19 +167,33 @@
     void navigate(hitHref(hit.url));
   }
 
+  /** Runs whatever the active row is: a command, or the search result under it. */
+  function activate() {
+    if (active < matching.length) {
+      const command = matching[active];
+      if (!command) return;
+      close();
+      command.run();
+      // The labels depend on what the command just changed.
+      commands = buildCommands();
+      return;
+    }
+    go(hits[active - matching.length]);
+  }
+
   function onInputKey(e: KeyboardEvent) {
     if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault();
-      if (!hits.length) return;
-      active = (active + (e.key === 'ArrowDown' ? 1 : -1) + hits.length) % hits.length;
-      document.getElementById(`search-hit-${active}`)?.scrollIntoView({ block: 'nearest' });
+      if (!rowCount) return;
+      active = (active + (e.key === 'ArrowDown' ? 1 : -1) + rowCount) % rowCount;
+      document.getElementById(`search-row-${active}`)?.scrollIntoView({ block: 'nearest' });
     } else if (e.key === 'Escape') {
       // A search input swallows the first Escape to clear itself; close in one press instead.
       e.preventDefault();
       close();
     } else if (e.key === 'Enter') {
       e.preventDefault();
-      go(hits[active]);
+      activate();
     }
   }
 
@@ -169,10 +242,10 @@
         bind:value={query}
         type="search"
         role="combobox"
-        aria-expanded={hits.length > 0}
+        aria-expanded={rowCount > 0}
         aria-controls="search-results"
         aria-autocomplete="list"
-        aria-activedescendant={hits.length ? `search-hit-${active}` : undefined}
+        aria-activedescendant={rowCount ? `search-row-${active}` : undefined}
         placeholder="Characters, techniques, arcs…"
         autocomplete="off"
         spellcheck="false"
@@ -183,18 +256,38 @@
     </div>
 
     <ul bind:this={list} id="search-results" role="listbox" aria-label="Results" class="max-h-[50vh] overflow-y-auto p-2">
+      {#if matching.length}
+        <li role="presentation" class="px-3 pt-3 pb-1 text-[0.7rem] uppercase tracking-[0.3em] text-paper-dim">Commands</li>
+      {/if}
+      {#each matching as command, i (command.id)}
+        <li
+          id="search-row-{i}"
+          role="option"
+          aria-selected={i === active}
+          class="flex cursor-pointer items-baseline justify-between gap-3 rounded-md px-3 py-2 {i === active ? 'bg-ink-3' : ''}"
+          onclick={() => { close(); command.run(); commands = buildCommands(); }}
+          onkeydown={() => {}}
+          onmousemove={() => (active = i)}
+        >
+          <span class="block">{command.label}</span>
+          {#if command.hint}
+            <span class="shrink-0 text-step--1 text-paper-dim">{command.hint}</span>
+          {/if}
+        </li>
+      {/each}
+
       {#each hits as hit, i (hit.url)}
         {#if groupStart(i)}
           <li role="presentation" class="px-3 pt-3 pb-1 text-[0.7rem] uppercase tracking-[0.3em] text-paper-dim">{hit.type}</li>
         {/if}
         <li
-          id="search-hit-{i}"
+          id="search-row-{matching.length + i}"
           role="option"
-          aria-selected={i === active}
-          class="cursor-pointer rounded-md px-3 py-2 {i === active ? 'bg-ink-3' : ''}"
+          aria-selected={matching.length + i === active}
+          class="cursor-pointer rounded-md px-3 py-2 {matching.length + i === active ? 'bg-ink-3' : ''}"
           onclick={() => go(hit)}
           onkeydown={() => {}}
-          onmousemove={() => (active = i)}
+          onmousemove={() => (active = matching.length + i)}
         >
           <span class="block font-display text-step-1">{hit.title}</span>
           <!-- Pagefind escapes indexed text and only adds <mark> around matches. -->
