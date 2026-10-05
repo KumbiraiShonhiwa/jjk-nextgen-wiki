@@ -1,0 +1,29 @@
+{
+  "slug": "binding-vow",
+  "level": "anime-s1",
+  "name": {
+    "en": "Binding Vow",
+    "ja": "縛り"
+  },
+  "aliases": [
+    "binding vows"
+  ],
+  "definition": [
+    {
+      "value": "A deal that trades freedom for power — accepting a restriction, or a condition made out loud, in exchange for a stronger effect. The terms bind whoever made them, and breaking one costs far more than keeping it.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "A vow can be made with another person or entirely with oneself.",
+      "level": "anime-s1"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

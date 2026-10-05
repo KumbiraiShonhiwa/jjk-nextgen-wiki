@@ -40,7 +40,7 @@ Sorted by audience (doc 01). Each feature lists its data, route, signature motio
 
 ### For lore hunters
 
-**B4 · Glossary with inline definitions.** Jujutsu terms (cursed energy, Binding Vow, Black Flash, Reverse Cursed Technique, Simple Domain, Heavenly Restriction, Domain Amplification) are the main obstacle for new readers.
+**B4 · Glossary with inline definitions. Done.** Jujutsu terms (cursed energy, Binding Vow, Black Flash, Reverse Cursed Technique, Simple Domain, Heavenly Restriction, Domain Amplification) are the main obstacle for new readers.
 - Data: a new `term` collection (slug, name, gated definition, related techniques).
 - Route: `/glossary` with an A–Z index and `/glossary/<slug>`.
 - In body text, the first mention of a term gets a dotted underline and a popover definition: CSS `popover`, keyboard reachable, no JavaScript required.

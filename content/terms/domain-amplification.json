@@ -1,0 +1,23 @@
+{
+  "slug": "domain-amplification",
+  "level": "anime-s2",
+  "name": {
+    "en": "Domain Amplification",
+    "ja": "領域展開・帳"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "Coating oneself in the surface of a domain rather than expanding one, which lets the user push through an opponent’s technique instead of being subject to it.",
+      "level": "anime-s2"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

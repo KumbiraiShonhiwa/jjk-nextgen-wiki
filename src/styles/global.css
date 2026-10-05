@@ -277,3 +277,65 @@ html[data-spoiler='anime-s3'] [data-level='manga'] {
 html[data-spoiler='anime-s3'] [data-redacted='manga'] {
   display: var(--redacted-display, inline-flex);
 }
+
+/*
+ * Glossary mentions (doc 11, B4). The first mention of a term in body text becomes a button that
+ * opens a native popover: keyboard reachable, and it works with no JavaScript at all.
+ */
+.term {
+  display: inline;
+}
+.term-trigger {
+  anchor-name: --term-anchor;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: help;
+  background: none;
+  text-decoration: underline dotted var(--ce-violet);
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 2px;
+}
+.term-trigger:hover {
+  color: var(--ce-violet);
+}
+.term-popover {
+  position: absolute;
+  position-anchor: --term-anchor;
+  position-area: block-end;
+  position-try-fallbacks: block-start, inline-end, inline-start;
+  max-width: min(28rem, calc(100vw - 2rem));
+  margin: 0.4rem 0 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--ink-2);
+  color: var(--paper);
+  padding: 0.9rem 1rem;
+  box-shadow: var(--shadow-1);
+  /* The popover is a span, so it has to be told to lay its children out as blocks. */
+  display: none;
+}
+.term-popover:popover-open {
+  display: block;
+}
+.term-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+}
+.term-definition {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--paper-dim);
+  font-size: var(--step--1);
+  line-height: 1.6;
+}
+.term-more {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: var(--step--1);
+  color: var(--ce-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
