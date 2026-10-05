@@ -48,7 +48,9 @@ const years = [...new Set(episodes.map((e) => e.airedAt?.slice(0, 4)).filter(Boo
             <li class="grid grid-cols-[2.5rem_1fr] gap-x-3 py-5 sm:gap-x-5">
               <span class="font-display text-step-2 text-paper-dim tabular-nums">{e.numberInSeason}</span>
               <div>
-                <p class="font-display text-step-2 leading-tight">{e.title.en}</p>
+                <p class="font-display text-step-2 leading-tight">
+                  <a class="hover:text-ce-blue" href={`/media/anime/${e.season}/${e.numberInSeason}`}>{e.title.en}</a>
+                </p>
                 {e.title.ja && <p class="mt-0.5 text-step--1 text-paper-dim" lang="ja">{e.title.ja}</p>}
                 <p class="mt-1 text-step--1 text-paper-dim">
                   {e.airedAt}
