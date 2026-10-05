@@ -17,19 +17,42 @@ export interface EpisodeDraft {
   level: SpoilerLevel;
 }
 
+/**
+ * Removes every HTML-ish tag, repeatedly, then drops any angle bracket left over.
+ *
+ * A single pass is not enough: `<<ref>script>` leaves `<script` behind once the inner `<ref>` is
+ * removed, which is CodeQL's js/incomplete-multi-character-sanitization. Looping to a fixed point
+ * and then removing stray brackets means no element can survive, whatever the input.
+ */
+function stripTags(value: string): string {
+  let previous: string;
+  let out = value;
+  do {
+    previous = out;
+    out = out.replace(/<[^<>]*>/g, '');
+  } while (out !== previous);
+  return out.replace(/[<>]/g, '');
+}
+
 /** Strips wiki markup from a parameter's value: links, bold/italics, refs, notes and templates. */
 export function plain(value: string): string {
-  return value
-    .replace(/<ref[^>]*\/>/gi, '')
-    .replace(/<ref[\s\S]*?<\/ref>/gi, '')
-    .replace(/\{\{\s*efn[\s\S]*?\}\}/gi, '')
-    // {{Nihongo|English|漢字|romaji}} keeps the first argument.
-    .replace(/\{\{\s*nihongo\s*\|([^|}]*)[^}]*\}\}/gi, '$1')
-    // Any other template: keep the last argument, which is usually the display text.
-    .replace(/\{\{[^{}]*\}\}/g, (m) => m.slice(2, -2).split('|').pop() ?? '')
-    .replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, '$1')
-    .replace(/'{2,}/g, '')
-    .replace(/<[^>]+>/g, '')
+  let out = value;
+  // <ref>…</ref> takes its contents with it; done before the general tag strip so citation text goes too.
+  let previous: string;
+  do {
+    previous = out;
+    out = out.replace(/<ref[^<>]*>[\s\S]*?<\/ref\s*>/gi, '').replace(/<ref[^<>]*\/>/gi, '');
+  } while (out !== previous);
+  return stripTags(
+    out
+      .replace(/\{\{\s*efn[\s\S]*?\}\}/gi, '')
+      // {{Nihongo|English|漢字|romaji}} keeps the first argument.
+      .replace(/\{\{\s*nihongo\s*\|([^|}]*)[^}]*\}\}/gi, '$1')
+      // Any other template: keep the last argument, which is usually the display text.
+      .replace(/\{\{[^{}]*\}\}/g, (m) => m.slice(2, -2).split('|').pop() ?? '')
+      .replace(/\[\[(?:[^|\]]*\|)?([^\]]*)\]\]/g, '$1')
+      .replace(/'{2,}/g, ''),
+  )
     .replace(/\s+/g, ' ')
     .trim();
 }

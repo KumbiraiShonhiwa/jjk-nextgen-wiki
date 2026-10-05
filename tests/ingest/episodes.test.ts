@@ -16,6 +16,16 @@ describe('plain', () => {
     expect(plain('aired{{efn|with a note}} then')).toBe('aired then');
     expect(plain('{{Nihongo|Ryomen Sukuna|両面宿儺|Ryōmen Sukuna}}')).toBe('Ryomen Sukuna');
   });
+
+  it('leaves no tag behind, however the input is nested', () => {
+    // A single pass is not enough: removing the inner <ref> from the first case would otherwise
+    // reassemble "<script". CodeQL flagged exactly this (js/incomplete-multi-character-sanitization).
+    for (const nasty of ['<<ref>script>alert(1)', '<<>script>', '<scr<x>ipt>', '<img src=x onerror=1>']) {
+      const out = plain(nasty);
+      expect(out).not.toContain('<');
+      expect(out).not.toContain('>');
+    }
+  });
 });
 
 describe('airDate', () => {
