@@ -48,6 +48,19 @@ test('a card title and the page it links to share a view-transition name', async
   expect(headingName).toBe(cardName);
 });
 
+test('the report link carries the page and the spoiler level the reader has set', async ({ page }) => {
+  const report = page.locator('[data-report]');
+  await page.goto('/characters/gojo-satoru');
+  // The page is server-rendered into the href; the level is added in the browser.
+  await expect.poll(() => report.getAttribute('href')).toContain('page=%2Fcharacters%2Fgojo-satoru');
+  await expect.poll(() => report.getAttribute('href')).toContain('spoiler=anime-s1');
+
+  await page.getByRole('radio', { name: 'Manga' }).click();
+  await expect.poll(() => report.getAttribute('href')).toContain('spoiler=manga');
+  // Changing the level repeatedly must replace the param, not stack it.
+  expect(((await report.getAttribute('href')) ?? '').match(/&spoiler=/g)).toHaveLength(1);
+});
+
 test('the header navigation marks the current section', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto('/techniques/limitless');
