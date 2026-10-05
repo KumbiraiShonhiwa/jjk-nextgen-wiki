@@ -1,8 +1,11 @@
 ---
 import { NAV } from '../lib/nav';
+import { loadIndex } from '../lib/content';
 import SearchPalette from './SearchPalette.svelte';
 import SpoilerControl from './SpoilerControl.svelte';
 
+// Passed to the palette so "go to a random character" needs no extra request (roadmap B12).
+const characters = [...(await loadIndex()).characters.values()].map((c) => ({ slug: c.slug, name: c.name.en, level: c.level }));
 const path = Astro.url.pathname;
 const active = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
@@ -30,7 +33,7 @@ const active = (href: string) => path === href || path.startsWith(`${href}/`);
       }
     </ul>
     <div class="ml-auto flex items-center gap-3">
-      <SearchPalette client:load />
+      <SearchPalette client:load characters={characters} />
       <SpoilerControl client:load />
     </div>
     <details class="relative md:hidden">
