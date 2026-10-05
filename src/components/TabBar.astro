@@ -1,0 +1,101 @@
+---
+/**
+ * Mobile bottom tab bar (doc 04). Four destinations within thumb reach; the header's menu keeps
+ * the full section list, so nothing is only reachable from here.
+ *
+ * Search is a button rather than a link: the palette is an island already on the page, so the tab
+ * raises `jjk:open-search` and SearchPalette opens itself. Without JavaScript the button is simply
+ * not rendered, and the three links still work.
+ */
+import { TABS } from '../lib/nav';
+
+const path = Astro.url.pathname;
+const active = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`));
+---
+
+<nav class="tabbar" aria-label="Quick navigation">
+  {
+    TABS.map((tab) => (
+      <a href={tab.href} class="tab" aria-current={active(tab.href) ? 'page' : undefined}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <Fragment set:html={tab.icon} />
+        </svg>
+        <span>{tab.label}</span>
+      </a>
+    ))
+  }
+  <button type="button" class="tab" data-open-search aria-haspopup="dialog">
+    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="10.5" cy="10.5" r="6.5"></circle>
+      <path d="m15.5 15.5 4.5 4.5"></path>
+    </svg>
+    <span>Search</span>
+  </button>
+</nav>
+
+<style>
+  /*
+   * The breakpoint lives here rather than on a `md:hidden` class: Astro scopes this rule to
+   * `.tabbar[data-astro-cid-…]`, which outranks Tailwind's single-class `.md\:hidden`, so the
+   * utility lost and the bar stayed on screen at desktop widths.
+   */
+  .tabbar {
+    display: none;
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: 40;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    border-top: 1px solid var(--line);
+    background: color-mix(in oklab, var(--ink) 88%, transparent);
+    backdrop-filter: blur(12px);
+    /* Clear of the home indicator on a notched phone. */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @media (max-width: 47.999rem) {
+    .tabbar {
+      display: grid;
+    }
+  }
+
+  .tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.6rem 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    /* A tap target of at least 44px, measured with the safe-area padding excluded. */
+    min-height: 3rem;
+    transition: color 0.2s;
+  }
+
+  .tab svg {
+    width: 1.35rem;
+    height: 1.35rem;
+  }
+
+  .tab[aria-current='page'] {
+    color: var(--paper);
+  }
+
+  .tab[aria-current='page'] svg {
+    color: var(--ce-blue);
+  }
+</style>
+
+<script>
+  // The palette listens for this and opens itself; see SearchPalette.svelte.
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as HTMLElement | null)?.closest('[data-open-search]');
+    if (trigger) document.dispatchEvent(new CustomEvent('jjk:open-search'));
+  });
+</script>
