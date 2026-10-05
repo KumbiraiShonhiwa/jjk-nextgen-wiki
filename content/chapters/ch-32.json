@@ -1,0 +1,22 @@
+{
+  "slug": "ch-32",
+  "level": "anime-s1",
+  "number": 32,
+  "title": {
+    "en": "Introspection",
+    "ja": "反省"
+  },
+  "volume": 4,
+  "arc": "kyoto-goodwill-event",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "List of Jujutsu Kaisen chapters",
+      "url": "https://en.wikipedia.org/wiki/List_of_Jujutsu_Kaisen_chapters",
+      "revisionId": 1372942341,
+      "fetchedAt": "2026-10-05T14:00:01.905Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

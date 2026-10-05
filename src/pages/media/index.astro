@@ -1,15 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
-import { loadIndex } from '../../lib/content';
 
-const arcs = [...(await loadIndex()).arcs.values()];
-const chapters = Math.max(...arcs.filter((a) => a.chapters).map((a) => a.chapters![1]));
 const episodes = await getCollection('episodes');
+const chapters = await getCollection('chapters');
 const seasons = new Set(episodes.map((e) => e.data.season)).size;
+const volumes = new Set(chapters.map((c) => c.data.volume)).size;
 
 const cards = [
-  { href: '/media/manga', title: 'Manga', meta: `${chapters} chapters`, blurb: 'Every arc in chapter order, with its share of the run.' },
+  { href: '/media/manga', title: 'Manga', meta: `${volumes} volumes · ${chapters.length} chapters`, blurb: 'Every volume, chapter by chapter, with the arc each one covers.' },
   { href: '/media/anime', title: 'Anime', meta: `${seasons} seasons · ${episodes.length} episodes`, blurb: 'Every episode, with its air date and the arc it belongs to.' },
 ];
 ---

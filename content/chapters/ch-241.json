@@ -1,0 +1,22 @@
+{
+  "slug": "ch-241",
+  "level": "manga",
+  "number": 241,
+  "title": {
+    "en": "Win and Remain!!",
+    "ja": "バカサバイバー！！〜勝ち残れ〜"
+  },
+  "volume": 27,
+  "arc": "shinjuku-showdown",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "List of Jujutsu Kaisen chapters",
+      "url": "https://en.wikipedia.org/wiki/List_of_Jujutsu_Kaisen_chapters",
+      "revisionId": 1372942341,
+      "fetchedAt": "2026-10-05T14:00:01.905Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

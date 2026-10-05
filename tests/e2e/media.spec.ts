@@ -12,12 +12,26 @@ test('the media index links to both halves', async ({ page }) => {
   await expect(page.getByRole('link', { name: /Anime/ })).toBeVisible();
 });
 
-test('the manga page lists arcs in chapter order', async ({ page }) => {
+test('the manga page lists volumes, and a volume lists its chapters', async ({ page }) => {
   await page.goto('/media/manga');
-  const items = page.locator('ol li:visible');
-  await expect(items.first()).toContainText('Fearsome Womb');
-  // Ranges are rendered from the arc records, not hard-coded.
-  await expect(items.first()).toContainText('Chapters 1–18');
+  await expect(page.getByRole('link', { name: /^Volume 1 / })).toContainText('Chapters 1–7');
+
+  await page.goto('/media/manga/1');
+  await expect(page.getByRole('heading', { level: 1, name: 'Volume 1' })).toBeVisible();
+  const items = page.locator('ol li');
+  await expect(items).toHaveCount(7);
+  // Ingested from Wikipedia, so these are real titles.
+  await expect(items.first()).toContainText('Ryomen Sukuna');
+});
+
+test('a chapter title past the spoiler level is hidden while its number stays', async ({ page }) => {
+  // Volume 30 is all manga-level; the default is anime-s1.
+  await page.goto('/media/manga/30');
+  await expect(page.getByText('Hidden at your spoiler level')).toBeVisible();
+  await expect(page.getByText('From Now On')).toBeHidden();
+
+  await page.getByRole('radio', { name: 'Manga' }).click();
+  await expect(page.getByText('From Now On')).toBeVisible();
 });
 
 test('a season card past the spoiler level is hidden until the level is raised', async ({ page }) => {
