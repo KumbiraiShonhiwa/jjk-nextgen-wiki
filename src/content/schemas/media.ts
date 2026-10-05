@@ -34,3 +34,29 @@ export type Episode = z.infer<typeof episode>;
 
 /** `s1e1`, used as both the record slug and the route segment. */
 export const episodeSlug = (season: number, numberInSeason: number) => `s${season}e${numberInSeason}`;
+
+/**
+ * Manga chapters (doc 02, roadmap A1), ingested from the English Wikipedia chapter list.
+ *
+ * Like an episode, a chapter's title is a spoiler at its own level and its number is not: the
+ * manga page has to be able to say how long a volume is without naming what happens in it.
+ */
+export const chapter = z.object({
+  /** `ch-271`. */
+  slug,
+  /** The level at which the chapter's content becomes visible, from the boundary table. */
+  level: spoilerLevel.default('manga'),
+  number: z.number().int().positive(),
+  title: z.object({ en: z.string().min(1), ja: z.string().optional() }),
+  /** Collected volume ("tankōbon") this chapter appears in. */
+  volume: z.number().int().positive(),
+  /** The arc this chapter belongs to, when one covers it. */
+  arc: slug.optional(),
+  fixture: z.boolean().default(false),
+  provenance: z.array(provenance).default([]),
+});
+
+export type Chapter = z.infer<typeof chapter>;
+
+/** `ch-271`, used as both the record slug and a stable id. */
+export const chapterSlug = (number: number) => `ch-${number}`;

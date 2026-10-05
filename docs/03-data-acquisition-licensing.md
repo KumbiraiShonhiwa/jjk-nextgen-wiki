@@ -30,7 +30,7 @@ The ingest CLI lives in `scripts/ingest/` and is run locally and by the weekly `
 | 9. Write | 2-space JSON with a trailing newline into `content/`; `content/meta/sources.json` (`{ "<source>": { "<title>": <revisionId> } }`); `reports/ingest-<date>.md` (git-ignored) | `run.ts`, `report.ts` |
 | 10. Propose | The workflow opens or updates a PR "Content sync <date>" from `content/sync` into `develop` | `.github/workflows/content-sync.yml` |
 
-Fandom is ingested by `run.ts`. Wikipedia is now ingested too, by `episodes.ts` (`pnpm ingest:episodes`): it reads the per-season pages (`Jujutsu Kaisen season 1`–3), which carry one `{{Episode list}}` per episode, and writes `content/episodes/*.json` with CC BY-SA 4.0 provenance. It is a separate entry point from the Fandom run, which discovers pages by category. The chapter list is not mapped yet.
+Fandom is ingested by `run.ts`. Wikipedia is now ingested too, by `episodes.ts` (`pnpm ingest:episodes`): it reads the per-season pages (`Jujutsu Kaisen season 1`–3), which carry one `{{Episode list}}` per episode, and writes `content/episodes/*.json` with CC BY-SA 4.0 provenance. `chapters.ts` (`pnpm ingest:chapters`) does the same for `List of Jujutsu Kaisen chapters`, whose `{{Graphic novel list}}` templates give 271 chapters across 30 volumes. Both are separate entry points from the Fandom run, which discovers pages by category.
 
 ### What the mappers read
 
