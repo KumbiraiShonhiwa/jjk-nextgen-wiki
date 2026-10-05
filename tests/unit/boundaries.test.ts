@@ -2,6 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { arc, levelForChapter, levelForSeason, provenance, spoilerBoundaries } from '../../src/content/schemas';
+import { SpoilerPolicy } from '../../scripts/ingest/spoilers.ts';
 
 const root = join(import.meta.dirname, '../../content');
 const boundaries = spoilerBoundaries.parse(JSON.parse(readFileSync(join(root, 'meta/spoiler-boundaries.json'), 'utf8')));
@@ -55,5 +56,40 @@ describe('provenance', () => {
     expect(provenance.safeParse(original).success).toBe(true);
     expect(provenance.safeParse({ ...original, licence: 'CC BY-SA 3.0' }).success).toBe(false);
     expect(provenance.safeParse({ source: 'reddit', title: 'x', url: 'https://reddit.com/r/x', revisionId: 1, fetchedAt: sourced.fetchedAt, licence: 'CC BY-SA 4.0' }).success).toBe(false);
+  });
+});
+
+describe('SpoilerPolicy reads the boundary table', () => {
+  const policy = new SpoilerPolicy([], { arcs: {}, extra: [] }, boundaries);
+
+  it('reads a chapter citation in the shapes the wikis use', () => {
+    // These pin the word boundaries in CHAPTER_RE. Lose one and every call returns undefined,
+    // so the table silently stops affecting anything while every other test still passes.
+    expect(policy.matchCitation('Chapter 12')).toBe('anime-s1');
+    expect(policy.matchCitation('chapter 136')).toBe('anime-s2');
+    expect(policy.matchCitation('ch. 200')).toBe('manga');
+    expect(policy.matchCitation('Chapters 54-56')).toBe('anime-s1');
+  });
+
+  it('reads a season citation', () => {
+    expect(policy.matchCitation('Season 2 adaptation')).toBe('anime-s2');
+    expect(policy.matchCitation('S3')).toBe('anime-s3');
+  });
+
+  it('returns undefined when nothing is cited, so callers keep their own fallback', () => {
+    expect(policy.matchCitation('Appearance and personality')).toBeUndefined();
+    expect(policy.matchCitation('')).toBeUndefined();
+  });
+
+  it('does nothing at all when no table is supplied, rather than guessing', () => {
+    expect(new SpoilerPolicy([], { arcs: {}, extra: [] }).matchCitation('Chapter 12')).toBeUndefined();
+  });
+
+  it('dates a section from a cited chapter instead of falling back to manga', () => {
+    expect(policy.sectionLevel({ path: ['Trivia'] })).toBe('manga');
+    expect(policy.sectionLevel({ path: ['Debut in chapter 3'] })).toBe('anime-s1');
+    // Lead text and the safe headings keep their own rules.
+    expect(policy.sectionLevel({ path: [] })).toBe('none');
+    expect(policy.sectionLevel({ path: ['Personality'] })).toBe('none');
   });
 });
