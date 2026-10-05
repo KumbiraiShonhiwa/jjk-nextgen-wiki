@@ -12,8 +12,14 @@ interface Props {
   level?: SpoilerLevel;
   /** Show a card-shaped placeholder when hidden, instead of dropping the card (galleries, timelines). */
   redact?: boolean;
+  /**
+   * Shared-element name for the view transition to this card's page (docs/08 `page-morph`).
+   * Only index grids pass it: a name must be unique in a document, and an entity page can list the
+   * same entity in two places, which would abort the transition for the whole page.
+   */
+  transitionName?: string;
 }
-const { href, title, subtitle, meta, accent, level = 'none', redact = false } = Astro.props;
+const { href, title, subtitle, meta, accent, level = 'none', redact = false, transitionName } = Astro.props;
 ---
 
 <Gated level={level} as="div" silent class="h-full">
@@ -41,7 +47,7 @@ const { href, title, subtitle, meta, accent, level = 'none', redact = false } = 
       style="background: radial-gradient(closest-side circle, color-mix(in oklab, var(--accent) 22%, transparent), transparent 70%);"
       aria-hidden="true"></span>
     <div class="relative mb-4 empty:hidden"><slot name="art" /></div>
-    <span class="relative block font-display text-step-2 leading-tight">{title}</span>
+    <span class="relative block font-display text-step-2 leading-tight" transition:name={transitionName}>{title}</span>
     {subtitle && <span class="relative mt-1 block text-step--1 text-paper-dim" lang="ja">{subtitle}</span>}
     {meta && <span class="relative mt-4 block text-step--1 uppercase tracking-[0.14em] text-paper-dim">{meta}</span>}
   </a>

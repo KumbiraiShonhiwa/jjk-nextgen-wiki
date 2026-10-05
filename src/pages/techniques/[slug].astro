@@ -11,7 +11,7 @@ import SpoilerWall from '../../components/SpoilerWall.astro';
 import { loadIndex } from '../../lib/content';
 import { characterMeta, titleCase } from '../../lib/format';
 import { maxLevel, safeValue } from '../../lib/graph';
-import { hrefFor, techniqueTitle } from '../../lib/routes';
+import { hrefFor, morphName, techniqueTitle } from '../../lib/routes';
 import type { Technique } from '../../content/schemas';
 
 export async function getStaticPaths() {
@@ -32,7 +32,7 @@ const description = (t.level === 'none' && safeValue(t.summary)) || 'A cursed te
   <article class="py-12" style={`--accent:${accent}`}>
     <a href="/techniques" class="text-step--1 text-paper-dim hover:text-paper">← Techniques</a>
     <SpoilerWall level={t.level} type="Technique">
-      <EntityHeader title={t.name.en} ja={t.name.ja}>
+      <EntityHeader title={t.name.en} ja={t.name.ja} transitionName={morphName('techniques', t.slug)}>
         <Fragment slot="badges">
           <Badge tone="violet">{titleCase(t.kind)}</Badge>
           {clan && <Gated level={clan.level}><Badge>{clan.name.en}</Badge></Gated>}

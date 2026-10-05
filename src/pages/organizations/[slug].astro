@@ -11,7 +11,7 @@ import SpoilerWall from '../../components/SpoilerWall.astro';
 import { loadIndex } from '../../lib/content';
 import { characterMeta, titleCase } from '../../lib/format';
 import { maxLevel, membersOf, safeValue } from '../../lib/graph';
-import { hrefFor, organizationTitle } from '../../lib/routes';
+import { hrefFor, morphName, organizationTitle } from '../../lib/routes';
 import type { Organization } from '../../content/schemas';
 
 export async function getStaticPaths() {
@@ -31,7 +31,7 @@ const description = (o.level === 'none' && safeValue(o.summary)) || 'An organiza
   <article class="py-12" style="--accent: var(--ce-violet)">
     <a href="/organizations" class="text-step--1 text-paper-dim hover:text-paper">← Organizations</a>
     <SpoilerWall level={o.level} type="Organization">
-      <EntityHeader title={o.name.en} ja={o.name.ja}>
+      <EntityHeader title={o.name.en} ja={o.name.ja} transitionName={morphName('organizations', o.slug)}>
         <Fragment slot="badges">
           <Badge tone="violet">{titleCase(o.kind)}</Badge>
           {location && <Gated level={location.level}><Badge>{location.name.en}</Badge></Gated>}

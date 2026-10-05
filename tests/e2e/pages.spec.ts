@@ -13,6 +13,7 @@ const SECTIONS = [
   { path: '/domains', heading: 'Domain Expansions' },
   { path: '/arcs', heading: 'Story arcs' },
   { path: '/organizations', heading: 'Organizations' },
+  { path: '/locations', heading: 'Locations' },
   { path: '/about', heading: 'About' },
 ];
 
@@ -25,6 +26,40 @@ for (const { path, heading } of SECTIONS) {
     expect(errors).toEqual([]);
   });
 }
+
+test('a location page lists the arcs set there and the organizations based there', async ({ page }) => {
+  // Tokyo holds Tokyo Jujutsu High in the fixtures, and is a setting for level-none arcs.
+  await page.goto('/locations/tokyo');
+  await expect(page.getByRole('heading', { level: 1, name: 'Tokyo', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Tokyo Jujutsu High/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: '← Locations' })).toBeVisible();
+});
+
+test('a card title and the page it links to share a view-transition name', async ({ page }) => {
+  // The morph only happens if both sides agree on the name, and nothing else enforces that
+  // across two files. A mismatch degrades silently to a plain cut, so it needs a test.
+  await page.goto('/characters');
+  const card = page.locator('a[href="/characters/gojo-satoru"] span.font-display').first();
+  const cardName = await card.evaluate((el) => getComputedStyle(el).viewTransitionName);
+  expect(cardName).toBe('morph-characters-gojo-satoru');
+
+  await page.goto('/characters/gojo-satoru');
+  const headingName = await page.locator('h1').first().evaluate((el) => getComputedStyle(el).viewTransitionName);
+  expect(headingName).toBe(cardName);
+});
+
+test('the report link carries the page and the spoiler level the reader has set', async ({ page }) => {
+  const report = page.locator('[data-report]');
+  await page.goto('/characters/gojo-satoru');
+  // The page is server-rendered into the href; the level is added in the browser.
+  await expect.poll(() => report.getAttribute('href')).toContain('page=%2Fcharacters%2Fgojo-satoru');
+  await expect.poll(() => report.getAttribute('href')).toContain('spoiler=anime-s1');
+
+  await page.getByRole('radio', { name: 'Manga' }).click();
+  await expect.poll(() => report.getAttribute('href')).toContain('spoiler=manga');
+  // Changing the level repeatedly must replace the param, not stack it.
+  expect(((await report.getAttribute('href')) ?? '').match(/&spoiler=/g)).toHaveLength(1);
+});
 
 test('the header navigation marks the current section', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });

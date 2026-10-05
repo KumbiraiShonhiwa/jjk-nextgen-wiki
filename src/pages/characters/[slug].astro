@@ -13,7 +13,7 @@ import { loadIndex, loadLinks } from '../../lib/content';
 import { gradeLabel, titleCase } from '../../lib/format';
 import { arcsFor, maxLevel, neighbours, safeValue } from '../../lib/graph';
 import { linksFor } from '../../lib/links';
-import { hrefFor, safeTitle } from '../../lib/routes';
+import { hrefFor, morphName, safeTitle } from '../../lib/routes';
 import type { Character } from '../../content/schemas';
 
 export async function getStaticPaths() {
@@ -37,7 +37,7 @@ const description = (c.level === 'none' && safeValue(c.summary)) || `${title} in
     <a href="/characters" class="text-step--1 text-paper-dim hover:text-paper">← Characters</a>
 
     <SpoilerWall level={c.level} type="Character">
-      <EntityHeader title={c.name.en} ja={c.name.ja}>
+      <EntityHeader title={c.name.en} ja={c.name.ja} transitionName={morphName('characters', c.slug)}>
         <Fragment slot="badges">
           {c.grade.map((g) => <Gated level={g.level}><Badge tone="blue">{gradeLabel(g.value)}</Badge></Gated>)}
           {c.species.map((s) => <Gated level={s.level}><Badge>{titleCase(s.value)}</Badge></Gated>)}

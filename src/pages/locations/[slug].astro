@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import EntityHeader from '../../components/EntityHeader.astro';
+import GatedText from '../../components/GatedText.astro';
+import Section from '../../components/Section.astro';
+import Sources from '../../components/Sources.astro';
+import SpoilerWall from '../../components/SpoilerWall.astro';
+import { loadIndex } from '../../lib/content';
+import { chapterRange, episodeRange, titleCase } from '../../lib/format';
+import { maxLevel, safeValue } from '../../lib/graph';
+import { hrefFor, locationTitle, morphName } from '../../lib/routes';
+import type { Location } from '../../content/schemas';
+
+export async function getStaticPaths() {
+  const ix = await loadIndex();
+  return [...ix.locations.values()].map((location) => ({ params: { slug: location.slug }, props: { location } }));
+}
+
+const { location: l } = Astro.props as { location: Location };
+const ix = await loadIndex();
+
+// Arcs set here, in story order; organizations based here.
+const arcs = [...ix.arcs.values()].filter((a) => a.locations.includes(l.slug)).sort((a, b) => a.order - b.order);
+const orgs = [...ix.organizations.values()].filter((o) => o.location === l.slug);
+const description = (l.level === 'none' && safeValue(l.summary)) || 'A location in the Jujutsu Kaisen encyclopedia.';
+---
+
+<Base title={locationTitle(l)} description={description}>
+  <article class="py-12" style="--accent: var(--ce-blue)">
+    <a href="/locations" class="text-step--1 text-paper-dim hover:text-paper">← Locations</a>
+    <SpoilerWall level={l.level} type="Location">
+      <EntityHeader title={l.name.en} ja={l.name.ja} eyebrow="Location" transitionName={morphName('locations', l.slug)} />
+
+      <div class="mt-10">
+        <GatedText values={l.summary} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
+
+        {
+          arcs.length > 0 && (
+            <Section id="arcs" title="Arcs set here">
+              <div data-cascade class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {arcs.map((a) => (
+                  <EntityCard
+                    href={hrefFor('arcs', a.slug)}
+                    title={a.name}
+                    meta={[chapterRange(a.chapters), episodeRange(a.episodes)].filter(Boolean).join(' · ')}
+                    level={maxLevel(a.level, l.level)}
+                    redact
+                  />
+                ))}
+              </div>
+            </Section>
+          )
+        }
+
+        {
+          orgs.length > 0 && (
+            <Section id="organizations" title="Based here">
+              <div data-cascade class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {orgs.map((o) => (
+                  <EntityCard
+                    href={hrefFor('organizations', o.slug)}
+                    title={o.name.en}
+                    subtitle={o.name.ja}
+                    meta={titleCase(o.kind)}
+                    level={maxLevel(o.level, l.level)}
+                    redact
+                  />
+                ))}
+              </div>
+            </Section>
+          )
+        }
+      </div>
+
+      <Sources provenance={l.provenance} fixture={l.fixture} />
+    </SpoilerWall>
+  </article>
+</Base>

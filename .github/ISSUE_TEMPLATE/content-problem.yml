@@ -1,0 +1,62 @@
+name: Report a problem with a page
+description: Something is wrong, missing, or spoils more than it should.
+title: 'Content: '
+labels: ['content']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping. If you followed the "Report a problem" link from the site, the page and
+        your spoiler level are already filled in below — leave them as they are.
+
+        Text on this site is adapted from Wikipedia and the Jujutsu Kaisen Wiki under CC BY-SA 4.0,
+        so "the source wiki says something different" is a useful report, not a nuisance.
+  - type: input
+    id: page
+    attributes:
+      label: Page
+      description: The page the problem is on.
+      placeholder: /characters/gojo-satoru
+    validations:
+      required: true
+  - type: dropdown
+    id: spoiler
+    attributes:
+      label: Spoiler level
+      description: The level the page was set to. It changes what is visible, so a problem can depend on it.
+      options:
+        - anime-s1
+        - anime-s2
+        - anime-s3
+        - manga
+        - not sure
+    validations:
+      required: false
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of problem?
+      options:
+        - Wrong or outdated fact
+        - Missing information
+        - A spoiler shown too early
+        - Something is hidden that should not be
+        - Broken link, layout or motion
+        - Accessibility problem
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong?
+      description: What you saw, and what you expected instead.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source (optional)
+      description: A link backing the correction, if you have one.
+    validations:
+      required: false
