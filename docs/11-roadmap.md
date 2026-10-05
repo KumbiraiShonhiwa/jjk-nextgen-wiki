@@ -28,7 +28,7 @@ Sorted by audience (doc 01). Each feature lists its data, route, signature motio
 
 ### For new anime viewers
 
-**B1 · Episode-precise spoiler progress.** The five spoiler buckets are coarse: someone at S2E5 has to choose between seeing too little and seeing Shibuya. Add a second, finer control: "I've watched up to S2 E5" or "I've read up to ch. 120".
+**B1 · Episode-precise spoiler progress. Done for episodes and chapters** (the optional `at` on arbitrary gated values still waits for citation data in the ingest). The five spoiler buckets are coarse: someone at S2E5 has to choose between seeing too little and seeing Shibuya. Add a second, finer control: "I've watched up to S2 E5" or "I've read up to ch. 120".
 - Data: gated values may carry an optional `at: { chapter?: number; episode?: [season, number] }` next to `level`. The ingest fills it from citations, and `level` stays the fallback, so nothing breaks.
 - Gating stays CSS-first. The build emits `data-ch` on gated nodes, and the head script injects one generated `<style>` rule for the visitor's chapter. Without JavaScript, the bucket rules still apply.
 - Motion: the existing `spoiler-reveal` scramble, played only on the newly crossed facts.

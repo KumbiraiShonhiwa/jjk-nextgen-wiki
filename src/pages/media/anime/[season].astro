@@ -42,12 +42,22 @@ const years = [...new Set(episodes.map((e) => e.airedAt?.slice(0, 4)).filter(Boo
         </p>
       </header>
 
+      {/* Roadmap B1: the finer setting. It only ever hides more than the bucket, so it is safe to
+          offer here and clearing it returns to bucket-only gating exactly. */}
+      <p data-progress-status hidden class="mt-8 flex flex-wrap items-center gap-3 rounded-md border border-line bg-ink-2 px-4 py-2 text-step--1">
+        <span data-progress-text></span>
+        <button type="button" data-progress-clear class="underline underline-offset-4 hover:text-paper">Show everything at my spoiler level again</button>
+      </p>
+
       <ol class="mt-10 divide-y divide-line border-b border-line">
         {
           episodes.map((e) => (
             <li class="grid grid-cols-[2.5rem_1fr] gap-x-3 py-5 sm:gap-x-5">
               <span class="font-display text-step-2 text-paper-dim tabular-nums">{e.numberInSeason}</span>
               <div>
+                {/* `data-ep` on the title block, not the row: an episode past the reader's progress
+                    keeps its number and its control, so they can always move forward. */}
+                <div data-ep={`s${e.season}e${e.numberInSeason}`}>
                 <p class="font-display text-step-2 leading-tight">
                   <a class="hover:text-ce-blue" href={`/media/anime/${e.season}/${e.numberInSeason}`}>{e.title.en}</a>
                 </p>
@@ -62,6 +72,16 @@ const years = [...new Set(episodes.map((e) => e.airedAt?.slice(0, 4)).filter(Boo
                   )}
                 </p>
                 <GatedText values={e.summary} class="mt-3 max-w-prose space-y-2 leading-relaxed" />
+                </div>
+                <button
+                  type="button"
+                  data-watched-to
+                  data-season={e.season}
+                  data-episode={e.numberInSeason}
+                  class="mt-3 rounded-full border border-line px-3 py-1 text-step--1 text-paper-dim hover:border-ce-blue hover:text-paper"
+                >
+                  I've watched up to here
+                </button>
               </div>
             </li>
           ))
@@ -72,3 +92,34 @@ const years = [...new Set(episodes.map((e) => e.airedAt?.slice(0, 4)).filter(Boo
     </SpoilerWall>
   </article>
 </Base>
+
+<script>
+  import { readProgress, setProgress, clearProgress } from '../../../lib/progress-runtime';
+  import { PROGRESS_EVENT } from '../../../lib/progress';
+
+  function render() {
+    const status = document.querySelector<HTMLElement>('[data-progress-status]');
+    const text = document.querySelector<HTMLElement>('[data-progress-text]');
+    if (!status || !text) return;
+    const progress = readProgress();
+    if (!progress.episode && !progress.chapter) {
+      status.setAttribute('hidden', '');
+      return;
+    }
+    text.textContent = progress.chapter
+      ? `Showing up to chapter ${progress.chapter}.`
+      : `Showing up to season ${progress.episode!.season}, episode ${progress.episode!.number}.`;
+    status.removeAttribute('hidden');
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    render();
+    for (const button of document.querySelectorAll<HTMLButtonElement>('[data-watched-to]')) {
+      button.addEventListener('click', () =>
+        setProgress({ episode: { season: Number(button.dataset.season), number: Number(button.dataset.episode) } }),
+      );
+    }
+    document.querySelector('[data-progress-clear]')?.addEventListener('click', () => clearProgress());
+  });
+  document.addEventListener(PROGRESS_EVENT, render);
+</script>
