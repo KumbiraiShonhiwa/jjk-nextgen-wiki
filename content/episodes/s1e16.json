@@ -1,0 +1,30 @@
+{
+  "slug": "s1e16",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 16,
+  "number": 16,
+  "title": {
+    "en": "Kyoto Sister School Exchange Event – Group Battle 2 -",
+    "ja": "京都姉妹校交流会－団体戦②－"
+  },
+  "airedAt": "2021-01-30",
+  "summary": [
+    {
+      "value": "During their fight, Todo teaches Yuji how to better control his cursed energy. Elsewhere, Nobara is knocked out by a non-lethal sniper attack from Mechamaru. Panda engages Mechamaru, revealing himself to be a Cursed Corpse created by the Principal, containing three distinct cores that allow him to switch between different forms when one is damaged. Mechamaru is also revealed to be a puppet operated remotely by Kokichi Muta, who has a severely incapacitated body and compensates for his physical limitations by channeling cursed energy through mechanical proxies. During their battle, Panda's \"Gorilla\" form emerges and defeats Mechamaru.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "kyoto-goodwill-event",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

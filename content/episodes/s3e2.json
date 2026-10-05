@@ -1,0 +1,30 @@
+{
+  "slug": "s3e2",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 2,
+  "number": 49,
+  "title": {
+    "en": "One More Time",
+    "ja": "もう一度"
+  },
+  "airedAt": "2026-01-09",
+  "summary": [
+    {
+      "value": "Choso struggles against Naoya, but by flooding the underpass they are in with his blood, he emerges victorious. Yuta defeats Choso and heals Naoya in exchange for confirming Yuji's execution. Yuji sees a memory of his grandfather's conversation with his father Jin, being distrustful of his mother Kaori, who bears stitches on her forehead. Yuta reveals he faked Yuji's death after being tasked by Gojo with protecting him, being sympathetic to Yuji after his own experiences. Megumi appears to ask for his help, but Yuji refuses out of fear of Sukuna's continual threat. Megumi reveals his stepsister Tsumiki will be forced to participate in Pseudo-Geto's Culling Game, a battle royale of jujutsu sorcerers awakened after the Shibuya Incident. Yuji agrees to help, but tells Yuta to kill him if Sukuna emerges again. Knowing they must free Gojo, they head to Jujutsu High and meet up with Yuki Tsukumo and Maki, who survived Jogo's attack. Using Choso's connection to the Death Paintings as a guide, they enter the school's specialized underground chamber to consult immortal jujutsu sorcerer Master Tengen.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

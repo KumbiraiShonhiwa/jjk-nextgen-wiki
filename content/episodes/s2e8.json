@@ -1,0 +1,30 @@
+{
+  "slug": "s2e8",
+  "level": "anime-s2",
+  "season": 2,
+  "numberInSeason": 8,
+  "number": 32,
+  "title": {
+    "en": "The Shibuya Incident",
+    "ja": "渋谷事変"
+  },
+  "airedAt": "2023-09-15",
+  "summary": [
+    {
+      "value": "Gojo enters the crowded Shibuya Station, where he confronts the curses Jogo, Hanami, and Choso on the train tracks. Meanwhile, Yuji accompanies Mei Mei and her younger brother Ui Ui to investigate a second veil at a different station. There, they find transfigured humans, indicating Mahito's presence. While Mei Mei and Ui Ui handle the victims, Yuji fights the grasshopper curse guarding the veil and defeats it, dispelling the veil, but finds that Mahito and all the civilians have already disappeared. Following Geto's strategy, Jogo uses the surrounding civilians to limit Gojo's movements and prevent him from using his full power. He and Hanami execute a Domain Amplification, which allows them to neutralize a sorcerer's cursed technique, forcing Gojo to avoid them. Jogo recalls Geto's order to delay Gojo for twenty minutes until Geto arrives with the Prison Realm.",
+      "level": "anime-s2"
+    }
+  ],
+  "arc": "shibuya-incident",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 2",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_2",
+      "revisionId": 1374276445,
+      "fetchedAt": "2026-10-05T12:07:14.673Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

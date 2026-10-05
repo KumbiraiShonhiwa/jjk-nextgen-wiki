@@ -1,0 +1,30 @@
+{
+  "slug": "s1e21",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 21,
+  "number": 21,
+  "title": {
+    "en": "Jujutsu Koshien",
+    "ja": "呪術甲子園"
+  },
+  "airedAt": "2021-03-06",
+  "summary": [
+    {
+      "value": "Hanami narrowly survives Gojo's attack. Meanwhile, Mahito reveals that the attack on the competition was a diversion to distract Gojo and allow him to infiltrate Tokyo Jujutsu High. There, Mahito killed several sorcerers and stole six of Sukuna's fingers along with three special grade cursed wombs. Geto reiterates his plan to enact a major operation in Shibuya on October 31, instructing the curses to prioritize sealing Gojo while avoiding any harm to Sukuna or the students—particularly Megumi, whom Sukuna has taken an interest in. In the aftermath, Gojo resumes the exchange event, replacing the remaining battles with a friendly baseball game to give the students a break.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "kyoto-goodwill-event",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

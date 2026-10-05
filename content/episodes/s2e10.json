@@ -1,0 +1,30 @@
+{
+  "slug": "s2e10",
+  "level": "anime-s2",
+  "season": 2,
+  "numberInSeason": 10,
+  "number": 34,
+  "title": {
+    "en": "Pandemonium",
+    "ja": "昏乱"
+  },
+  "airedAt": "2023-09-29",
+  "summary": [
+    {
+      "value": "Gojo briefly makes contact with the real Geto's residual consciousness, causing Geto's body to momentarily resist the possession by choking itself. The reaction surprises \"Pseudo-Geto\", but he regains control and the Prison Realm successfully seals Gojo. Yuji hears of the incident through a Mechamaru earpiece—part of a series of fail-safes Muta created in the event of his death and Gojo's sealing. Following Mechamaru's instructions, Yuji loudly announces the seal to alert the other sorcerers. Teams of sorcerers enter the veil; Ijichi is ambushed and stabbed by curse user Haruta Shigemo. Yuji reunites with Nanami, Megumi, and Takuma Ino to strategize their next move. Meanwhile, the Prison Realm strains under Gojo's power from within, forcing Pseudo-Geto to remain nearby and guard the seal until it stabilizes. The curses argue over Yuji's fate—Choso and Mahito want to kill him, while Jogo wishes to resurrect Sukuna; Mahito proposes a challenge on who can find Yuji first.",
+      "level": "anime-s2"
+    }
+  ],
+  "arc": "shibuya-incident",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 2",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_2",
+      "revisionId": 1374276445,
+      "fetchedAt": "2026-10-05T12:07:14.673Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

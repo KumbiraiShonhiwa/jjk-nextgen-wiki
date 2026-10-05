@@ -1,0 +1,30 @@
+{
+  "slug": "s3e3",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 3,
+  "number": 50,
+  "title": {
+    "en": "About the Culling Game",
+    "ja": "死滅回遊について"
+  },
+  "airedAt": "2026-01-16",
+  "summary": [
+    {
+      "value": "Tengen explains that the host in Suguru Geto's body is Kenjaku, and that the Culling Game's purpose is to gather enough cursed energy to force evolution throughout all mankind in Japan by assimilating with the omnipresent Tengen, destroying the world. His previous attempts failed due to a Six Eyes user's presence and Tengen's assimilation with a Star Plasma Vessel, but between Toji's killing of Riko Amanai, Kenjaku acquiring Geto's body, and Gojo's sealing in the Prison Realm, his plan can now be completed. The sorcerers learn that the Culling Game will not end until every player is killed; however, they are allowed the creation of new rules, which they will use to free players. Tengen reveals they possess the \"Back\" of the Prison Realm, and that one of the players, the \"Angel\" Hana Kurusu, has a cursed technique capable of opening it. The group enact their plan: Choso and Yuki stay behind to protect Tengen, Maki will raid the Zen'in clan vault for cursed tools, Yuta will investigate a Game colony, and Yuji and Megumi will recruit Kinji Hakari, a third-year suspended from Jujutsu High. Meanwhile, Fumihiko Takaba, a comedian lamenting his failed career, is unknowingly a player.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

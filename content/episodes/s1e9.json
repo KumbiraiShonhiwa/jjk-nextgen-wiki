@@ -1,0 +1,30 @@
+{
+  "slug": "s1e9",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 9,
+  "number": 9,
+  "title": {
+    "en": "Small Fry and Reverse Retribution",
+    "ja": "幼魚と逆罰"
+  },
+  "airedAt": "2020-11-28",
+  "summary": [
+    {
+      "value": "High school student Junpei Yoshino skips class to watch a movie but witnesses his bullies die when their faces are grotesquely transfigured. He follows Mahito, a curse born from human hatred, and asks him for help in learning how to control cursed energy. Mahito begins indoctrinating Junpei with his nihilistic views on human existence. Meanwhile, Yuji teams up with Kento Nanami, a former salaryman turned jujutsu sorcerer, to investigate the incident. During a battle against two curses, Yuji uncovers his cursed technique, which involves using cursed energy to enhance his punches and physical strength. Nanami determines that the curses are actually humans who have been transformed. He sends Yuji and Ijichi to investigate Junpei, while he confronts Mahito directly.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "vs-mahito",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

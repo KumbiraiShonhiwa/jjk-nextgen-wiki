@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import GatedText from '../../../components/GatedText.astro';
+import SpoilerWall from '../../../components/SpoilerWall.astro';
+import Sources from '../../../components/Sources.astro';
+import { loadIndex } from '../../../lib/content';
+import { hrefFor } from '../../../lib/routes';
+import { maxLevel } from '../../../lib/graph';
+import { levelForSeason, spoilerBoundaries, type Episode } from '../../../content/schemas';
+import boundariesJson from '../../../../content/meta/spoiler-boundaries.json';
+
+export async function getStaticPaths() {
+  const episodes = (await getCollection('episodes')).map((e) => e.data);
+  const seasons = [...new Set(episodes.map((e) => e.season))].sort((a, b) => a - b);
+  return seasons.map((season) => ({
+    params: { season: String(season) },
+    props: { episodes: episodes.filter((e) => e.season === season).sort((a, b) => a.numberInSeason - b.numberInSeason) },
+  }));
+}
+
+const { episodes } = Astro.props as { episodes: Episode[] };
+const boundaries = spoilerBoundaries.parse(boundariesJson);
+const ix = await loadIndex();
+const season = episodes[0]!.season;
+// The season's own level gates the whole page, so a hidden season shows the wall rather than a list.
+const level = episodes.reduce((acc, e) => maxLevel(acc, e.level), levelForSeason(boundaries, season));
+const provenance = [...new Map(episodes.flatMap((e) => e.provenance).map((p) => [p.source === 'original' ? 'original' : p.url, p])).values()];
+const arcName = (slug?: string) => (slug ? ix.arcs.get(slug)?.name : undefined);
+const years = [...new Set(episodes.map((e) => e.airedAt?.slice(0, 4)).filter(Boolean))];
+---
+
+<Base title={`Anime season ${season}`} description={`Season ${season} of the Jujutsu Kaisen anime, episode by episode.`}>
+  <article class="py-12">
+    <a href="/media/anime" class="text-step--1 text-paper-dim hover:text-paper">← Anime</a>
+    <SpoilerWall level={level} type="Season">
+      <header class="mt-8 border-b border-line pb-8">
+        <p class="text-step--1 uppercase tracking-[0.3em] text-ce-blue">Anime</p>
+        <h1 data-kinetic class="mt-4 font-display text-step-5 leading-none">Season {season}</h1>
+        <p class="mt-3 text-step--1 text-paper-dim">
+          {episodes.length} episodes{years.length ? ` · ${years[0]}${years.length > 1 ? `–${years.at(-1)}` : ''}` : ''}
+        </p>
+      </header>
+
+      <ol class="mt-10 divide-y divide-line border-b border-line">
+        {
+          episodes.map((e) => (
+            <li class="grid grid-cols-[2.5rem_1fr] gap-x-3 py-5 sm:gap-x-5">
+              <span class="font-display text-step-2 text-paper-dim tabular-nums">{e.numberInSeason}</span>
+              <div>
+                <p class="font-display text-step-2 leading-tight">{e.title.en}</p>
+                {e.title.ja && <p class="mt-0.5 text-step--1 text-paper-dim" lang="ja">{e.title.ja}</p>}
+                <p class="mt-1 text-step--1 text-paper-dim">
+                  {e.airedAt}
+                  {e.arc && (
+                    <>
+                      {' · '}
+                      <a class="underline-offset-4 hover:text-paper hover:underline" href={hrefFor('arcs', e.arc)}>{arcName(e.arc)}</a>
+                    </>
+                  )}
+                </p>
+                <GatedText values={e.summary} class="mt-3 max-w-prose space-y-2 leading-relaxed" />
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+
+      <Sources provenance={provenance} fixture={false} />
+    </SpoilerWall>
+  </article>
+</Base>

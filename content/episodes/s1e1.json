@@ -1,0 +1,30 @@
+{
+  "slug": "s1e1",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 1,
+  "number": 1,
+  "title": {
+    "en": "Ryomen Sukuna",
+    "ja": "両面宿儺"
+  },
+  "airedAt": "2020-10-03",
+  "summary": [
+    {
+      "value": "Yuji Itadori is a high school student with exceptional athletic ability who counterintuitively spends time with his friends at the Occult Research Club. Before dying, Yuji's grandfather advises him to use his strength to help others. Megumi Fushiguro, a first-year student from Tokyo Jujutsu High, is dispatched to retrieve a \"cursed object\" hidden at Yuji's school—one of the twenty severed fingers of Ryomen Sukuna, a sadistic ancient sorcerer. Megumi tracks the finger's energy to Yuji and discovers that it is with his friends. He fights the curses attacking them and is joined by Yuji, who can see the curses and remembers his grandfather's words. In an attempt to save themselves, Yuji swallows the finger, unwittingly becoming the physical host of Sukuna. However, to Megumi's surprise, Yuji retains control over his body and easily suppresses Sukuna. Nevertheless, Megumi deems him a threat and prepares to exorcise him.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "fearsome-womb",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "slug": "s3e1",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 1,
+  "number": 48,
+  "title": {
+    "en": "Execution",
+    "ja": "執行"
+  },
+  "airedAt": "2026-01-09",
+  "summary": [
+    {
+      "value": "Following the events of the Shibuya Incident, Tokyo has become infested with curses; Yuji Itadori and Choso exorcise them, which also serves as further training for the two. Naobito Zen'in succumbs to his wounds, and his will is read out to his brother Ogi (Maki's and Mai's father), his nephew Jinichi, and his narcissistic, misogynistic son Naoya. Naoya is set to be the Zen'in clan's new head, but the will stipulates that due to an arrangement by Toji Fushiguro, if Satoru Gojo is out of commission, Megumi Fushiguro will succeed him instead. Naoya heads to Tokyo to use Yuji to lure Megumi to him, so he can kill them both. Having inherited Naobito's technique, Naoya overwhelms Yuji and Choso with his speed. Yuta Okkotsu then arrives, and the three immediately acknowledge his immense strength. When Naoya offers to let Yuta kill Yuji in exchange for his silence, Yuji flees and Choso battles Naoya. Yuji and Yuta clash, but the latter proves to be too powerful. Just as Yuji manages to break Yuta's katana, he is caught by his shikigami Rika, allowing Yuta to stab him in the heart.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "slug": "s1e18",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 18,
+  "number": 18,
+  "title": {
+    "en": "Sage",
+    "ja": "賢者"
+  },
+  "airedAt": "2021-02-13",
+  "summary": [
+    {
+      "value": "Miwa is eliminated after Toge manipulates her to fall asleep during the match. Toge is then pursued by Hanami, whose arrival abruptly ends the exchange event. While Megumi and Noritoshi are engaged in battle, they see Toge fleeing and are urged by him to escape, but the curse blocks their path. The sorcerers responsible for the Hanami's invasion erect a large barrier around the area that prevents Gojo from entering but allows others to come and go freely. Toge, Megumi, and Noritoshi are left to confront Hanami.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "kyoto-goodwill-event",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

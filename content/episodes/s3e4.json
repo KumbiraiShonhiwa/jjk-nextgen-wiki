@@ -1,0 +1,30 @@
+{
+  "slug": "s3e4",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 4,
+  "number": 51,
+  "title": {
+    "en": "Perfect Preparation",
+    "ja": "葦を啣む"
+  },
+  "airedAt": "2026-01-23",
+  "summary": [
+    {
+      "value": "Maki returns to the Zen'in clan to find that Ogi has emptied the vault and wounded Mai. He defeats her and leaves them to be devoured by curses. When Mai resuscitates Maki, she dreams they are on a beach; knowing she will always keep Maki from reaching her potential as she lives, Mai sacrifices herself by creating a replica of Toji's katana, asking her to destroy the clan. With her Heavenly Restriction now as powerful as Toji's, Maki exorcises the curses and kills her father. The clan's fighting unit and elite sorcerers are sent, but she massacres them. Naoya finally confronts her and they engage in a destructive battle. Naoya seemingly overwhelms her with his projection technique, but as he attempts to deliver a blow at his maximum speed, Maki reveals her speed has transcended beyond his projections, brutally defeating him. She finds her mother, and slices her throat for submitting to the clan's abuse toward them. Naoya attempts to find Maki, but her mother stabs him with a knife in her last moments, admitting she is proud of the twins. Maki leaves Mai's body with Momo and leaves to kill the rest of the clan.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

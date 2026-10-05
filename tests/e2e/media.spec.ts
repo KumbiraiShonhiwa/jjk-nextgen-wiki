@@ -16,22 +16,40 @@ test('the manga page lists arcs in chapter order', async ({ page }) => {
   await page.goto('/media/manga');
   const items = page.locator('ol li:visible');
   await expect(items.first()).toContainText('Fearsome Womb');
-  // Chapter ranges are rendered from the arc records, not hard-coded.
+  // Ranges are rendered from the arc records, not hard-coded.
   await expect(items.first()).toContainText('Chapters 1–18');
 });
 
-test('a season past the spoiler level is hidden, and appears when the level is raised', async ({ page }) => {
+test('a season card past the spoiler level is hidden until the level is raised', async ({ page }) => {
   await page.goto('/media/anime');
-  // Default is anime-s1: season 1 is visible, season 3 is not.
-  await expect(page.getByRole('heading', { name: 'Season 1' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Season 3' })).toBeHidden();
+  await expect(page.getByRole('link', { name: /Season 1/ })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Season 3/ })).toBeHidden();
 
   await page.getByRole('radio', { name: 'Manga' }).click();
-  await expect(page.getByRole('heading', { name: 'Season 3' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Season 3/ })).toBeVisible();
 });
 
-test('the anime page never names a hidden arc in its markup at the default level', async ({ page }) => {
-  await page.goto('/media/anime');
-  // Culling Game is anime-s3; its name must not be readable on screen at the default level.
-  await expect(page.getByText('Culling Game', { exact: false })).toBeHidden();
+test('a season page lists its episodes with titles, dates and arcs', async ({ page }) => {
+  await page.goto('/media/anime/1');
+  await expect(page.getByRole('heading', { level: 1, name: 'Season 1' })).toBeVisible();
+  const items = page.locator('ol li');
+  await expect(items).toHaveCount(24);
+  // Ingested from Wikipedia, so these are real values rather than fixtures.
+  await expect(items.first()).toContainText('Ryomen Sukuna');
+  await expect(items.first()).toContainText('2020-10-03');
+  await expect(items.first()).toContainText('Fearsome Womb');
+});
+
+test('a season above the spoiler level shows the wall, not its episode titles', async ({ page }) => {
+  await page.goto('/media/anime/3');
+  // Season 3 is anime-s3; the default level is anime-s1.
+  await expect(page.getByText('Hidden at your spoiler level')).toBeVisible();
+  await expect(page.getByText('Cursed Womb', { exact: false })).toBeHidden();
+});
+
+test('episode text credits Wikipedia under its licence', async ({ page }) => {
+  await page.goto('/media/anime/1');
+  const sources = page.getByRole('complementary', { name: 'Sources' });
+  await expect(sources).toContainText('Wikipedia');
+  await expect(sources.getByRole('link', { name: 'CC BY-SA 4.0' })).toBeVisible();
 });

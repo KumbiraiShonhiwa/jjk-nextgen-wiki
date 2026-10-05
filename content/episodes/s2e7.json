@@ -1,0 +1,30 @@
+{
+  "slug": "s2e7",
+  "level": "anime-s2",
+  "season": 2,
+  "numberInSeason": 7,
+  "number": 31,
+  "title": {
+    "en": "Evening Festival",
+    "ja": "宵祭り"
+  },
+  "airedAt": "2023-09-07",
+  "summary": [
+    {
+      "value": "Mahito regenerates most of the damage from Muta's attacks, but Muta manages to launch a cursed energy-imbued missile that damages his soul directly. Mahito activates his Domain Expansion, trapping Muta inside, but Muta counters with a Simple Domain, which destroys Mahito's. As Muta prepares to attack Geto, Mahito—having survived their battle—catches him off guard and kills him. Several days later, on Halloween, a veil is erected over Shibuya, trapping thousands of civilians, who are all manipulated into calling for Gojo. Several sorcerer teams, including Megumi, Nobara, Maki, Nanami, and Panda, are stationed at various entrances around the veil to respond, while Gojo enters it alone.",
+      "level": "anime-s2"
+    }
+  ],
+  "arc": "shibuya-incident",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 2",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_2",
+      "revisionId": 1374276445,
+      "fetchedAt": "2026-10-05T12:07:14.673Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

@@ -30,11 +30,11 @@ The ingest CLI lives in `scripts/ingest/` and is run locally and by the weekly `
 | 9. Write | 2-space JSON with a trailing newline into `content/`; `content/meta/sources.json` (`{ "<source>": { "<title>": <revisionId> } }`); `reports/ingest-<date>.md` (git-ignored) | `run.ts`, `report.ts` |
 | 10. Propose | The workflow opens or updates a PR "Content sync <date>" from `content/sync` into `develop` | `.github/workflows/content-sync.yml` |
 
-Only the Fandom wiki is ingested. The Wikipedia client settings exist (`config.ts`, with `maxlag=5`), but our schema has no series entity yet, so no Wikipedia page is mapped.
+Fandom is ingested by `run.ts`. Wikipedia is now ingested too, by `episodes.ts` (`pnpm ingest:episodes`): it reads the per-season pages (`Jujutsu Kaisen season 1`–3), which carry one `{{Episode list}}` per episode, and writes `content/episodes/*.json` with CC BY-SA 4.0 provenance. It is a separate entry point from the Fandom run, which discovers pages by category. The chapter list is not mapped yet.
 
 ### What the mappers read
 
-Infobox parameter names and category names on the live wiki are **unverified**: the sandbox that built this could not reach Fandom or Wikipedia. Each field therefore accepts several candidate parameter names (`P` in `map/common.ts`), for example `kanji`/`japanese`/`jname` for the Japanese name and `affiliation`/`affiliations`/`organization` for affiliations. Every non-empty parameter that no mapper reads is listed in the report's "Unmapped infobox parameters" table, with the pages that use it. `gender`, `birthday`, `height` and the debuts show up there because the schema has no field for them yet. A category that returns no pages is reported as a warning.
+Infobox parameter names and category names on the live wiki are **unverified**: the sandbox that built this could not reach Fandom or Wikipedia. Each field therefore accepts several candidate parameter names (`P` in `map/common.ts`), for example `kanji`/`japanese`/`jname` for the Japanese name and `affiliation`/`affiliations`/`organization` for affiliations. Every non-empty parameter that no mapper reads is listed in the report's "Unmapped infobox parameters" table, with the pages that use it. `gender`, `birthday`, `height` and the debuts used to show up there; they are mapped as of roadmap A5. A category that returns no pages is reported as a warning.
 
 | Entity | Created from the source? | Fields taken from the source |
 | --- | --- | --- |
