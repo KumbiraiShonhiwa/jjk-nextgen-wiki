@@ -1,5 +1,5 @@
 import { createScope, type Scope } from 'animejs/scope';
-import { REDUCED_MOTION_QUERY } from './reduced';
+import { prefersReducedMotion, REDUCED_MOTION_QUERY } from './reduced';
 
 export type MotionSetup = (ctx: { scope: Scope; reduced: boolean }) => void | (() => void);
 
@@ -12,7 +12,8 @@ export function motionScope(root: HTMLElement | SVGElement, setup: MotionSetup):
   const scope = createScope({
     root,
     mediaQueries: { reduced: REDUCED_MOTION_QUERY },
-  }).add((self) => setup({ scope: self!, reduced: Boolean(self?.matches.reduced) }));
+  })    // The media query covers the OS setting; prefersReducedMotion also reads the site toggle.
+    .add((self) => setup({ scope: self!, reduced: Boolean(self?.matches.reduced) || prefersReducedMotion() }));
 
   document.addEventListener('astro:before-swap', () => scope.revert(), { once: true });
   return scope;
