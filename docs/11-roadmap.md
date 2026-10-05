@@ -34,7 +34,7 @@ Sorted by audience (doc 01). Each feature lists its data, route, signature motio
 - Motion: the existing `spoiler-reveal` scramble, played only on the newly crossed facts.
 - Depends on A1 and A2.
 
-**B2 · Episode companion.** On each `/media/anime/s<n>e<m>`, list who appeared, the techniques shown, new glossary terms (B4) and the arc's position, all gated at that episode. Add a "Just watched this" button that sets the spoiler progress (B1) to this episode in one tap.
+**B2 · Episode companion. Done** (route is `/media/anime/<season>/<episode>`; the "just watched" button sets the season's level until B1 lands). On each `/media/anime/s<n>e<m>`, list who appeared, the techniques shown, new glossary terms (B4) and the arc's position, all gated at that episode. Add a "Just watched this" button that sets the spoiler progress (B1) to this episode in one tap.
 
 **B3 · "Previously on" recaps.** On arc pages, a short "before this arc" summary built from the previous arc's gated `events`, so returning viewers catch up without scrolling back.
 
