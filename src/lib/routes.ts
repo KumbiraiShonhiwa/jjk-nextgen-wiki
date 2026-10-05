@@ -1,4 +1,4 @@
-import type { Arc, Domain, Organization, SpoilerLevel, Technique } from '../content/schemas';
+import type { Arc, Domain, Location, Organization, SpoilerLevel, Technique } from '../content/schemas';
 import type { EntityType } from './graph';
 
 const BASE: Record<EntityType, string> = {
@@ -25,3 +25,4 @@ export const techniqueTitle = (t: Technique) => safeTitle(t, t.name.en, 'Cursed 
 export const domainTitle = (d: Domain) => safeTitle(d, d.name.en, 'Domain Expansion');
 export const arcTitle = (a: Arc) => safeTitle(a, a.name, `Story arc ${a.order}`);
 export const organizationTitle = (o: Organization) => safeTitle(o, o.name.en, 'Organization');
+export const locationTitle = (l: Location) => safeTitle(l, l.name.en, 'Location');

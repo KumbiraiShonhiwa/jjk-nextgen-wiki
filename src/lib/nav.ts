@@ -5,5 +5,6 @@ export const NAV = [
   { href: '/domains', label: 'Domains' },
   { href: '/arcs', label: 'Arcs' },
   { href: '/organizations', label: 'Organizations' },
+  { href: '/locations', label: 'Locations' },
   { href: '/graph', label: 'Graph' },
 ] as const;
