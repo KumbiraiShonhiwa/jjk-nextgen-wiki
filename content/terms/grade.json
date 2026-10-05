@@ -1,0 +1,23 @@
+{
+  "slug": "grade",
+  "level": "anime-s1",
+  "name": {
+    "en": "Grade",
+    "ja": "等級"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "The scale that ranks sorcerers and curses alike, running from grade 4 at the bottom through grade 1, then special grade. It is a measure of what something can be sent to deal with, not purely of strength.",
+      "level": "anime-s1"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

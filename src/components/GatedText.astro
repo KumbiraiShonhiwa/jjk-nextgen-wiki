@@ -1,19 +1,51 @@
 ---
+import { getCollection } from 'astro:content';
 import type { SpoilerLevel } from '../content/schemas';
+import { isVisible } from '../content/schemas/common';
 import Gated from './Gated.astro';
+import { linkFirstMentions, type GlossaryTerm } from '../lib/glossary';
 
 interface Props {
   values: { value: string; level: SpoilerLevel }[];
   class?: string;
+  /**
+   * Mark the first mention of each glossary term (roadmap B4). Off by default: a list of episode
+   * summaries would otherwise sprout a popover on every row.
+   */
+  glossary?: boolean;
 }
-const { values, class: className = 'space-y-4' } = Astro.props;
+const { values, class: className = 'space-y-4', glossary = false } = Astro.props;
+
+/*
+ * The terms are read once per component and the `seen` set is per render, so a page links a term
+ * on its first mention and leaves later ones alone (doc 04's first-mention rule). A term's
+ * definition is resolved to the sentence's own level, so an early reader gets the early wording.
+ */
+const terms: GlossaryTerm[] = glossary
+  ? (await getCollection('terms')).map((t) => ({
+      slug: t.data.slug,
+      name: t.data.name.en,
+      aliases: t.data.aliases,
+      level: t.data.level,
+      definition: '',
+    }))
+  : [];
+const definitions = glossary ? new Map((await getCollection('terms')).map((t) => [t.data.slug, t.data.definition])) : new Map();
+const seen = new Set<string>();
+
+const forLevel = (level: SpoilerLevel): GlossaryTerm[] =>
+  terms.map((t) => {
+    const entries = definitions.get(t.slug) ?? [];
+    const visible = entries.filter((d: { level: SpoilerLevel }) => isVisible(d.level, level));
+    return { ...t, definition: (visible[0] ?? entries[0])?.value ?? '' };
+  });
 ---
 
 <div class={className}>
   {
     values.map((v) => (
       <Gated level={v.level} as="p">
-        {v.value}
+        {glossary ? <Fragment set:html={linkFirstMentions(v.value, forLevel(v.level), seen, v.level)} /> : v.value}
       </Gated>
     ))
   }

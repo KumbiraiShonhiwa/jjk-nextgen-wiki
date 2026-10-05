@@ -1,0 +1,23 @@
+{
+  "slug": "simple-domain",
+  "level": "anime-s2",
+  "name": {
+    "en": "Simple Domain",
+    "ja": "簡易領域"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "A small defensive circle thrown up around the user, built to cancel the guaranteed hit of an enemy’s Domain Expansion. It buys time rather than winning anything.",
+      "level": "anime-s2"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

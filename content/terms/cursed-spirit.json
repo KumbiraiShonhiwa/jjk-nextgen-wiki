@@ -1,0 +1,27 @@
+{
+  "slug": "cursed-spirit",
+  "level": "none",
+  "name": {
+    "en": "Cursed spirit",
+    "ja": "呪霊"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "What cursed energy becomes when enough of it pools in one place with nobody to control it. A spirit has no origin in a particular dead person; it is the shape a crowd’s fear takes.",
+      "level": "none"
+    },
+    {
+      "value": "They are graded like sorcerers, from grade 4 up to special grade.",
+      "level": "none"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

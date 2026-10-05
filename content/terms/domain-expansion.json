@@ -1,0 +1,30 @@
+{
+  "slug": "domain-expansion",
+  "level": "anime-s1",
+  "name": {
+    "en": "Domain Expansion",
+    "ja": "領域展開"
+  },
+  "aliases": [
+    "domain expansions",
+    "domain"
+  ],
+  "definition": [
+    {
+      "value": "The most demanding use of a cursed technique: building the technique into a closed space and pulling an opponent inside it. Within the domain the caster’s technique is guaranteed to land.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "Opening one is expensive and exposes the caster, so a domain is rarely the opening move.",
+      "level": "anime-s1"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

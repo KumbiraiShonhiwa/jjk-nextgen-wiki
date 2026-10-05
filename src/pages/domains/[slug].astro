@@ -73,7 +73,7 @@ const [deep, glow] = d.palette ?? ['#0b0b10', user.accent ?? '#7cc4ff'];
 
       <div class="mt-12 grid gap-12 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <div>
-          <GatedText values={d.summary} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
+          <GatedText values={d.summary} glossary class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
           {
             d.sureHit.length > 0 && (
               <Section id="sure-hit" title="Sure-hit effect">
