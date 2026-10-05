@@ -1,0 +1,25 @@
+{
+  "slug": "reverse-cursed-technique",
+  "level": "anime-s1",
+  "name": {
+    "en": "Reverse Cursed Technique",
+    "ja": "反転術式"
+  },
+  "aliases": [
+    "reverse cursed techniques"
+  ],
+  "definition": [
+    {
+      "value": "Running cursed energy backwards to produce a positive output instead of a negative one, which is what makes healing possible. Most sorcerers can heal only themselves, if at all.",
+      "level": "anime-s1"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

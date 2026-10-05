@@ -1,0 +1,27 @@
+{
+  "slug": "cursed-technique",
+  "level": "none",
+  "name": {
+    "en": "Cursed technique",
+    "ja": "術式"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "An innate way of shaping cursed energy, fixed from birth and almost never changed. A sorcerer does not pick their technique; they find out what it is and learn its limits.",
+      "level": "none"
+    }
+  ],
+  "techniques": [
+    "limitless",
+    "ten-shadows",
+    "straw-doll-technique"
+  ],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

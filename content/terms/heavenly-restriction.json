@@ -1,0 +1,23 @@
+{
+  "slug": "heavenly-restriction",
+  "level": "anime-s2",
+  "name": {
+    "en": "Heavenly Restriction",
+    "ja": "天与呪縛"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "A binding set at birth rather than agreed to: the body is given something extraordinary and loses something else in exchange. The trade is total and permanent.",
+      "level": "anime-s2"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}
