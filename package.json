@@ -19,6 +19,7 @@
     "ingest": "tsx scripts/ingest/cli.ts",
     "ingest:offline": "tsx scripts/ingest/cli.ts --offline",
     "ingest:episodes": "tsx scripts/ingest/episodes.ts",
+    "ingest:chapters": "tsx scripts/ingest/chapters.ts",
     "art": "tsx scripts/art/cli.ts",
     "preview:static": "node scripts/preview/build.mjs"
   },

@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Gated from '../../../components/Gated.astro';
+import { loadIndex } from '../../../lib/content';
+
+const ix = await loadIndex();
+const chapters = (await getCollection('chapters')).map((c) => c.data);
+
+/*
+ * One card per collected volume. The chapters themselves live on the volume pages: all 271 titles
+ * on one page would be both unreadable and well over the HTML budget.
+ */
+const volumes = [...new Set(chapters.map((c) => c.volume))].sort((a, b) => a - b).map((volume) => {
+  const inVolume = chapters.filter((c) => c.volume === volume).sort((a, b) => a.number - b.number);
+  const arcs = [...new Set(inVolume.map((c) => c.arc).filter(Boolean))].map((s) => ix.arcs.get(s!)?.name).filter(Boolean);
+  return {
+    volume,
+    first: inVolume[0]!.number,
+    last: inVolume.at(-1)!.number,
+    count: inVolume.length,
+    arcs,
+    // A volume is visible once its earliest chapter is - chapters are in order, so that is the
+    // first one. The number range is not a spoiler, and titles are gated individually inside.
+    level: inVolume[0]!.level,
+  };
+});
+const total = chapters.length;
+---
+
+<Base title="Manga" description="Every volume of the Jujutsu Kaisen manga, chapter by chapter, kept behind your spoiler level.">
+  <section data-cascade class="py-12">
+    <p class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">Media</p>
+    <h1 data-kinetic class="mt-2 font-display text-step-5 leading-none">Manga</h1>
+    <p class="mt-3 max-w-prose text-paper-dim">
+      {total} chapters in {volumes.length} volumes. Chapter titles past your spoiler level stay hidden.
+    </p>
+
+    <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        volumes.map((v) => (
+          <Gated level={v.level} as="div" silent>
+            <a data-reveal href={`/media/manga/${v.volume}`} class="group block h-full rounded-md border border-line bg-ink-2 p-4 hover:border-ce-blue">
+              <span class="block font-display text-step-2 group-hover:text-ce-blue">Volume {v.volume}</span>
+              <span class="mt-1 block text-step--1 uppercase tracking-[0.14em] text-paper-dim">
+                Chapters {v.first}–{v.last}
+              </span>
+              {v.arcs.length > 0 && <span class="mt-3 block text-step--1 text-paper-dim">{v.arcs.join(' · ')}</span>}
+            </a>
+          </Gated>
+        ))
+      }
+    </div>
+  </section>
+</Base>

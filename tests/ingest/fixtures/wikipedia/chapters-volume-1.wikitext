@@ -1,0 +1,24 @@
+{{Graphic novel list
+| VolumeNumber    = 1
+| OriginalRelDate = July 4, 2018<ref name="vol1">{{cite web|script-title=ja:呪術廻戦 1|url=http://books.shueisha.co.jp/items/contents.html?isbn=978-4-08-881516-9|publisher=[[Shueisha]]|access-date=December 9, 2018|language=ja}}</ref>
+| OriginalISBN    = 978-4-08-881516-9
+| LicensedRelDate = December 3, 2019<ref name="vizvol1">{{cite web|title=Jujutsu Kaisen, Vol. 1|url=http://www.viz.com/read/manga/jujutsu-kaisen-volume-1/product/6116|publisher=[[Viz Media]]|access-date=November 14, 2019|archive-date=November 28, 2019|archive-url=https://web.archive.org/web/20191128014236/https://www.viz.com/read/manga/jujutsu-kaisen-volume-1/product/6116|url-status=live}}</ref>
+| LicensedISBN    = 978-1-9747-1002-7
+| ChapterListCol1 = 
+{{Numbered list|start=1
+|{{Nihongo|"Ryomen Sukuna"|両面宿儺|Ryōmen Sukuna}}
+|{{Nihongo|"Secret Execution"|秘匿死刑|Hitoku Shikei}}
+|{{Nihongo|"For Myself"|自分のために|Jibun no Tameni}}
+|{{Nihongo|"Girl of Steel"|鉄骨娘|Tekkotsu Musume}}
+}}
+| ChapterListCol2 = 
+{{Numbered list|start=5
+|{{Nihongo|"Start"|始まり|Hajimari}}
+|{{Nihongo|"Fearsome Womb"|呪胎戴天|Jutaitaiten}}
+|{{Nihongo|"Fearsome Womb, Part 2"|呪胎戴天 -弐-|Jutaitaiten -ni-}}
+}}
+| LicensedTitle   = Ryomen Sukuna
+| OriginalTitle   = 両面宿儺
+| TranslitTitle   = Ryōmen Sukuna
+| Summary     = Yuji Itadori is a boy who excels at using his physical skills in school sports, but who nevertheless prefers to be part of the Occult Club. The same day his grandfather passes away, he meets Megumi Fushiguro, a sorcerer from the Tokyo Institute of Occult Arts, who is looking for a cursed object of special rank from the most powerful cursed spirit in history: Ryomen Sukuna. Yuji's friends accidentally open the seal of the cursed item and lure the monsters to their location. Together, Yuji and Megumi try to fend off the curses but are cornered. Yuji ingests Sukuna's finger to gain his power and manages to control the demon from taking over his body. After saving his friends, Yuji is sentenced to be executed for becoming Sukuna's vessel, but thanks to Satoru Gojo, the most powerful sorcerer, he gets an extension on the execution so that he can consume all twenty of Sukuna's fingers and die with them. Yuji is thus accepted into the institute and gets to know another first year student, Nobara Kugisaki. As Megumi recovers from his injuries, Gojo sends Yuji and Nobara on a mission to exorcise a curse that haunts an abandoned building in Roppongi. The three are later sent on a mission to rescue survivors at the scene of an apparition of a cursed spirit. Once inside, they realize they are dealing with a high-level cursed spirit. Yuji decides to hold him alone while his companions flee.
+}}

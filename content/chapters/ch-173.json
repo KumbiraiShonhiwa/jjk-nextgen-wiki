@@ -1,0 +1,22 @@
+{
+  "slug": "ch-173",
+  "level": "anime-s3",
+  "number": 173,
+  "title": {
+    "en": "Tokyo No. 1 Colony, Part 13",
+    "ja": "東京第1結界⑬"
+  },
+  "volume": 20,
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "List of Jujutsu Kaisen chapters",
+      "url": "https://en.wikipedia.org/wiki/List_of_Jujutsu_Kaisen_chapters",
+      "revisionId": 1372942341,
+      "fetchedAt": "2026-10-05T14:00:01.905Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

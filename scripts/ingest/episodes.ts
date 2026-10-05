@@ -13,30 +13,13 @@
  */
 import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { WIKIPEDIA } from './config.ts';
+import { fetchPage, wikipediaProvenance } from './wikipedia-page.ts';
 import { mapEpisodes } from './map/episode.ts';
 import { episodeSlug, spoilerBoundaries, type SpoilerLevel } from '../../src/content/schemas/index.ts';
 import { levelForSeason } from '../../src/content/schemas/boundaries.ts';
 
-const UA = 'jjk-nextgen-wiki/0.1 (https://github.com/KumbiraiShonhiwa/jjk-nextgen-wiki; content ingest)';
 const CONTENT = 'content';
 const SEASON_PAGES = [1, 2, 3].map((season) => ({ season, title: `Jujutsu Kaisen season ${season}` }));
-
-interface Revision {
-  title: string;
-  revisionId: number;
-  wikitext: string;
-}
-
-async function fetchPage(title: string): Promise<Revision | undefined> {
-  const url = `${WIKIPEDIA.endpoint}?action=query&prop=revisions&rvprop=content|ids&rvslots=main&format=json&formatversion=2&maxlag=${WIKIPEDIA.maxlag}&titles=${encodeURIComponent(title)}`;
-  const res = await fetch(url, { headers: { 'User-Agent': UA } });
-  if (!res.ok) throw new Error(`${title}: HTTP ${res.status}`);
-  const body = (await res.json()) as { query?: { pages?: { title: string; missing?: boolean; revisions?: { revid: number; slots: { main: { content: string } } }[] }[] } };
-  const page = body.query?.pages?.[0];
-  if (!page || page.missing || !page.revisions?.length) return undefined;
-  return { title: page.title, revisionId: page.revisions[0]!.revid, wikitext: page.revisions[0]!.slots.main.content };
-}
 
 /** The arc covering an episode, from the arcs' own `[season, first, last]`. */
 function arcsBySeason() {
@@ -83,16 +66,7 @@ async function main() {
         summary: d.summary ? [{ value: d.summary, level }] : [],
         ...(arc ? { arc: arc.slug } : {}),
         fixture: false,
-        provenance: [
-          {
-            source: 'wikipedia' as const,
-            title: page.title,
-            url: `https://en.wikipedia.org/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`,
-            revisionId: page.revisionId,
-            fetchedAt,
-            licence: 'CC BY-SA 4.0' as const,
-          },
-        ],
+        provenance: [wikipediaProvenance(page, fetchedAt)],
       };
       if (!dryRun) writeFileSync(join(outDir, `${slug}.json`), JSON.stringify(record, null, 2) + '\n', 'utf8');
       written++;

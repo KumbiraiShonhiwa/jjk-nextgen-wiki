@@ -1,0 +1,22 @@
+{
+  "slug": "ch-263",
+  "level": "manga",
+  "number": 263,
+  "title": {
+    "en": "Inhuman Makyo Shinjuku Showdown, Part 35",
+    "ja": "人外魔境新宿決戦 ㉟"
+  },
+  "volume": 29,
+  "arc": "shinjuku-showdown",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "List of Jujutsu Kaisen chapters",
+      "url": "https://en.wikipedia.org/wiki/List_of_Jujutsu_Kaisen_chapters",
+      "revisionId": 1372942341,
+      "fetchedAt": "2026-10-05T14:00:01.905Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

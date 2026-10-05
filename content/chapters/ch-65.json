@@ -1,0 +1,22 @@
+{
+  "slug": "ch-65",
+  "level": "anime-s2",
+  "number": 65,
+  "title": {
+    "en": "Hidden Inventory",
+    "ja": "壊玉"
+  },
+  "volume": 8,
+  "arc": "hidden-inventory",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "List of Jujutsu Kaisen chapters",
+      "url": "https://en.wikipedia.org/wiki/List_of_Jujutsu_Kaisen_chapters",
+      "revisionId": 1372942341,
+      "fetchedAt": "2026-10-05T14:00:01.905Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}
