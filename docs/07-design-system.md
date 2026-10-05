@@ -62,6 +62,26 @@ Per-entity theming: each character carries an `accent` colour (ours, not sourced
 
 Every level ships in the HTML. An inline head script sets `html[data-spoiler]` from `localStorage` before first paint (and again after every client-side navigation), and CSS rules hide `[data-level]` above the setting while showing the matching `[data-redacted]` placeholder. With JavaScript off, the default is Anime S1. Page titles, descriptions and link previews only ever use level `none` values.
 
+
+### Episode and chapter progress (roadmap B1)
+
+A second, finer setting sits on top of the five buckets: "watched up to season 2 episode 5", "read
+up to chapter 120", stored in `localStorage` as `jjk:progress`.
+
+It can only ever hide *more* than the bucket, never less, so turning it on cannot leak anything and
+clearing it returns to bucket behaviour exactly. Setting it raises the bucket to match (never
+lowers it), because a bucket behind the progress point would hide what the reader has explicitly
+said they have reached.
+
+Gating stays CSS-first. Nodes carry `data-ep="s2e5"` / `data-ch="ch120"`, and one generated
+`<style>` lists the values beyond the reader's progress. CSS cannot compare numbers, so the
+comparison happens once in JavaScript and the result is a plain selector list. With no JavaScript
+nothing is generated and the bucket rules alone apply.
+
+The attribute sits on the *title block*, not the row: a chapter past the reader's progress still
+shows its number and its own "read up to here" control. Hiding the whole row would strand a reader
+at whatever point they first set, unable to advance.
+
 ## Accessibility rules
 
 - Visible focus ring (`--ce-blue`, 2 px, offset 3 px) on every interactive element; skip link to `#main`.

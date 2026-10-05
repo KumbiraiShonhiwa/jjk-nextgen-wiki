@@ -11,7 +11,6 @@ import { characterMeta } from '../../../../lib/format';
 import { maxLevel } from '../../../../lib/graph';
 import { mentionedIn } from '../../../../lib/mentions';
 import { hrefFor } from '../../../../lib/routes';
-import { LEVEL_LABELS } from '../../../../lib/spoiler';
 import type { Episode } from '../../../../content/schemas';
 
 export async function getStaticPaths() {
@@ -65,11 +64,11 @@ const episodeHref = (other: Episode) => `/media/anime/${other.season}/${other.nu
         {/* `data-watched-level`, not `data-level`: the spoiler CSS hides any element carrying a
             `data-level` above the reader's setting, so the button would hide itself on exactly the
             episodes it exists for. */}
-        <button type="button" data-watched data-watched-level={e.level} class="rounded-full border border-line px-4 py-1.5 text-step--1 hover:border-ce-blue hover:text-paper">
+        <button type="button" data-watched data-season={e.season} data-episode={e.numberInSeason} class="rounded-full border border-line px-4 py-1.5 text-step--1 hover:border-ce-blue hover:text-paper">
           I've watched this
         </button>
         <span data-watched-note hidden class="ml-3 text-step--1 text-paper-dim">
-          Spoiler level set to {LEVEL_LABELS[e.level].short}.
+          Progress saved: season {e.season}, episode {e.numberInSeason}.
         </span>
       </div>
     </div>
@@ -135,18 +134,25 @@ const episodeHref = (other: Episode) => `/media/anime/${other.season}/${other.nu
 </Base>
 
 <script>
-  import { readLevel, setLevel } from '../../../../lib/spoiler';
-  import { SPOILER_LEVELS, type SpoilerLevel } from '../../../../content/schemas/common';
+  import { readProgress, setProgress } from '../../../../lib/progress-runtime';
+  import { episodeReached } from '../../../../lib/progress';
 
-  // "I've watched this" raises the spoiler level to the one this episode sits at, and never lowers
-  // it: someone further along who revisits an early episode should not be walked backwards.
+  /*
+   * "I've watched this" now records episode-precise progress (roadmap B1), which also raises the
+   * bucket to the season's level. It never moves anyone backwards: revisiting an early episode
+   * when you are further along leaves your progress alone.
+   */
   document.addEventListener('astro:page-load', () => {
     const button = document.querySelector<HTMLButtonElement>('[data-watched]');
     const note = document.querySelector<HTMLElement>('[data-watched-note]');
     if (!button) return;
+    const season = Number(button.dataset.season);
+    const number = Number(button.dataset.episode);
     button.addEventListener('click', () => {
-      const target = button.dataset.watchedLevel as SpoilerLevel;
-      if (SPOILER_LEVELS.indexOf(target) > SPOILER_LEVELS.indexOf(readLevel())) setLevel(target);
+      const current = readProgress();
+      // `episodeReached` is true when this episode is at or before where the reader already is.
+      const alreadyPast = current.episode && episodeReached(current, season, number) && !(current.episode.season === season && current.episode.number === number);
+      if (!alreadyPast) setProgress({ episode: { season, number } });
       note?.removeAttribute('hidden');
     });
   });
