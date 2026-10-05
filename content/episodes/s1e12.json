@@ -1,0 +1,30 @@
+{
+  "slug": "s1e12",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 12,
+  "number": 12,
+  "title": {
+    "en": "To You, Someday",
+    "ja": "いつかの君へ"
+  },
+  "airedAt": "2020-12-19",
+  "summary": [
+    {
+      "value": "Disillusioned by his experiences and believing that humans lack compassion, Junpei confronts Yuji using his cursed technique: a jellyfish-shaped shikigami capable of poisoning its targets. Yuji attempts to reason with Junpei and encourages him to enroll at Jujutsu High. However, Mahito arrives and reveals his manipulation. Junpei tries to resist, but Mahito quickly transfigures him into a mutated creature. Yuji desperately pleads with Sukuna to save Junpei, but Sukuna mocks him and refuses, joining Mahito in laughing at Yuji's helplessness. Junpei dies in front of Yuji, causing him to break down and attack Mahito in a rage; his blows are able to damage the curse's physical body and soul. Mahito attempts to transfigure Yuji as well, but Sukuna intervenes, warning Mahito not to touch his vessel again. Nanami arrives and joins Yuji in battle, vowing to exorcise Mahito together.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "vs-mahito",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

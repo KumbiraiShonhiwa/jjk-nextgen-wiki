@@ -1,0 +1,30 @@
+{
+  "slug": "s1e22",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 22,
+  "number": 22,
+  "title": {
+    "en": "The Origin of Blind Obedience",
+    "ja": "起首雷同"
+  },
+  "airedAt": "2021-03-13",
+  "summary": [
+    {
+      "value": "Megumi, Nobara, and Yuji are assigned to investigate a series of deaths linked to Megumi's former school, Saitama Urami East Junior High. They deduce that the incidents are caused by a curse and learn that Megumi's step-sister, Tsumiki—who remains in a coma—could become its next target unless the curse is exorcised. Meanwhile, Mahito and Geto advance their plans by incarnating one of the \"Death Paintings\", dormant half-human half-curse cursed wombs, in its full form.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "death-painting",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

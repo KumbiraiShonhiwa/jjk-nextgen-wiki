@@ -1,0 +1,30 @@
+{
+  "slug": "s2e12",
+  "level": "anime-s2",
+  "season": 2,
+  "numberInSeason": 12,
+  "number": 36,
+  "title": {
+    "en": "Dull Knife",
+    "ja": "鈍刀"
+  },
+  "airedAt": "2023-10-12",
+  "summary": [
+    {
+      "value": "Nanami finds Ijichi critically wounded and carries him to safety. Meanwhile, Yuji and Megumi destroy the veil that had trapped sorcerers inside the city; however, the veils isolating Gojo and the civilians within Shibuya remain intact. They rescue Ino and split up; Megumi takes Ino to safety outside the veil while Yuji reconvenes with Nanami. Toji's soul completely takes control of the grandson's body and kills the grandmother. Elsewhere, Nobara and Akari fight Haruta but are quickly defeated. Nanami arrives before Haruta can kill them, and, enraged by the attack, brutally beats him before telling the two to await rescue. In the subway tunnels, Pseudo-Geto unleashes a special grade cursed spirit against Mei Mei and Ui Ui. Yuji encounters Choso, who seeks revenge for the deaths of his brothers at the hands of Yuji and Nobara.",
+      "level": "anime-s2"
+    }
+  ],
+  "arc": "shibuya-incident",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 2",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_2",
+      "revisionId": 1374276445,
+      "fetchedAt": "2026-10-05T12:07:14.673Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

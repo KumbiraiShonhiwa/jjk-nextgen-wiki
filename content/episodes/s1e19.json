@@ -1,0 +1,30 @@
+{
+  "slug": "s1e19",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 19,
+  "number": 19,
+  "title": {
+    "en": "Black Flash",
+    "ja": "黒閃"
+  },
+  "airedAt": "2021-02-20",
+  "summary": [
+    {
+      "value": "Hanami easily shrugs off the combined attacks of Toge, Megumi, Noritoshi, and Maki. Before it can kill Maki, Yuji and Todo arrive to intervene as Panda and Momo evacuate the remaining students. During the ensuing battle, Yuji demonstrates his mastery of the Black Flash technique, which he learned from Todo. In response, Hanami reveals a concealed second arm to continue fighting both sorcerers.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "kyoto-goodwill-event",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}
