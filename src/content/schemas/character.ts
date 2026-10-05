@@ -21,6 +21,19 @@ export const character = z.object({
   summary: z.array(gated(z.string())).min(1),
   status: z.array(gated(z.enum(['alive', 'deceased', 'unknown']))).default([]),
   grade: z.array(gated(grade)).default([]),
+  /*
+   * Profile fields from the source infobox (doc 02). Free text rather than enums or numbers: the
+   * wikis write "190 cm", "6'3\"", "December 7" and "Male" inconsistently, and normalising them
+   * would invent precision the source does not have.
+   */
+  gender: z.string().optional(),
+  birthday: z.string().optional(),
+  height: z.string().optional(),
+  /*
+   * Gated, unlike the three above: when a character first appears names the arc they show up in,
+   * which tells a reader that someone they have not met yet exists, and roughly when.
+   */
+  firstAppearance: z.array(gated(z.string())).default([]),
   affiliations: z.array(slug).default([]),
   techniques: z.array(slug).default([]),
   domain: slug.optional(),

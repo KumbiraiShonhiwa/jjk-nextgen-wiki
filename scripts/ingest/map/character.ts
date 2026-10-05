@@ -76,8 +76,27 @@ export function mapCharacter({ title, wikitext, policy }: MapInput): Draft | Ski
     return [{ kind: 'family' as const, to, label: item.note?.toLowerCase(), level: policy.matchArc(item.text)?.level ?? 'manga' }];
   });
 
+  /*
+   * Profile fields, kept as the source wrote them. `firstAppearance` is gated by the arc its text
+   * names, falling back to manga: naming a debut tells a reader that a character exists and
+   * roughly when, which is a spoiler on its own.
+   */
+  const firstAppearance = r.list(P.firstAppearance).map((item) => ({
+    value: item.text,
+    level: policy.matchArc(item.text)?.level ?? ('manga' as const),
+  }));
+
   const fields: Record<string, unknown> = { name };
   if (aliases.length) fields.aliases = aliases;
+  for (const [key, param] of [
+    ['gender', P.gender],
+    ['birthday', P.birthday],
+    ['height', P.height],
+  ] as const) {
+    const value = r.text(param)?.trim();
+    if (value) fields[key] = value;
+  }
+  if (firstAppearance.length) fields.firstAppearance = firstAppearance;
   if (species.length) fields.species = species;
   if (summary.length) fields.summary = summary;
   if (status.length) fields.status = status;
