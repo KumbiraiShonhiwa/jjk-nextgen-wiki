@@ -1,0 +1,30 @@
+{
+  "slug": "s3e11",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 11,
+  "number": 58,
+  "title": {
+    "en": "Tokyo Colony No. 1 - Part 5",
+    "ja": "東京第1コロニー⑤"
+  },
+  "airedAt": "2026-03-20",
+  "summary": [
+    {
+      "value": "Cornered inside Megumi's incomplete Domain, Reggie retaliates by summoning cars and a house in an attempt to crush him. However, Megumi undoes the Domain, and the weight of Reggie's summoned objects destroys the gym's floor, causing both to fall into the pool below. With Reggie's receipts now unusable, Megumi uses his Divine Dog to mortally wound him. Reggie commends his strength, before revealing he does not know either Kenjaku or Tengen enough to answer about the Culling Game's true purpose. Before dying, he gives all of his points to Megumi. Meanwhile, Hazenoki continually fails to harm Takaba, whose Comedian Cursed Technique allows whatever he thinks to be funny to manifest into reality, nullifying any damage he receives. Hazenoki's Kogane informs him of Reggie's death, prompting him to leave. Megumi attempts to kill the defenseless Remi, but Tsumiki's words stop him and he collapses from his wounds, just as Angel lowers down upon him. Elsewhere, in the Sendai Colony, Yuta disrupts a four-way deadlock between its strongest players, Takako Uro, Ryu Ishigori, the special-grade cursed spirit Kurourushi, and foreign sorcerer Dhruv Lakdawalla, by killing the latter.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

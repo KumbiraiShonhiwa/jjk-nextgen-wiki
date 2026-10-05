@@ -1,0 +1,30 @@
+{
+  "slug": "s3e12",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 12,
+  "number": 59,
+  "title": {
+    "en": "Sendai Colony",
+    "ja": "仙台コロニー"
+  },
+  "airedAt": "2026-03-27",
+  "summary": [
+    {
+      "value": "Yuta uses Rika to protect civilians caught in the colony, while he engages Kurourushi. After he exorcises the cursed spirit, Uro suddenly attacks him, her technique allowing her to manipulate the fabric of space around her. As they clash, Ishigori then appears and fends her off, able to fire powerful blasts of cursed energy. Hoping Yuta will satisfy his hunger for battle, they engage in a fierce fight. When Uro reappears, Yuta summons Rika to battle her and use her cursed energy. The confrontation reaches a stalemate, leading them to enter a three-way Domain Expansion, but it is disrupted by a nascent second incarnation of Kurourushi. After Ishigori defeats Uro and Yuta exorcises Kurourushi again, the two face off once more, with Yuta deciding to go all-out in order to grant Ishigori his desired \"feast\". Using his own technique, Copy, Yuta defeats Ishigori by weakening him with Uro's technique, before blasting him with his own redirected attack. After Yuta heals them, they give him their points. Uro warns him that he won't be able to grow stronger so long as he fights for others, pointing to how the most powerful sorcerers all have egos and fight for themselves alone.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

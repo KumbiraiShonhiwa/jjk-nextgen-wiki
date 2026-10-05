@@ -1,0 +1,30 @@
+{
+  "slug": "s3e8",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 8,
+  "number": 55,
+  "title": {
+    "en": "Tokyo Colony No. 1 - Part 2",
+    "ja": "東京第1コロニー②"
+  },
+  "airedAt": "2026-02-27",
+  "summary": [
+    {
+      "value": "Higuruma is a public defender who grew disillusioned with Japan's judicial system and his clients decrying him when he is unable to achieve favorable outcomes. When his emotional state breaks after his latest client is unfairly sentenced, Higuruma's cursed technique awakens, releasing an ominous shikigami as he declares a \"retrial\" in the court. In the present, Amai takes Yuji to the Tokyo Metropolitan Theatre in Ikebukuro, where Higuruma is stationed, while Remi lures Megumi to an apartment block in Shinjuku, to meet a reincarnated sorcerer, Reggie Star. Reggie is interested in Megumi and suggests working together, revealing his theories on the true purpose of the Culling Game; seeing as how the weakest players have already been culled, Reggie posits that Kenjaku has plans to drop a \"bomb\" on the remaining sorcerers. Yuji asks Higuruma to use his points to help end the Culling Game, but he refuses, believing the Game's rules are more just than society's way of administering justice. When Yuji challenges him, Higuruma activates his courtroom-themed Domain Expansion. Meanwhile, at an unknown location, Kenjaku meets with several men in a boardroom after receiving their invitation.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

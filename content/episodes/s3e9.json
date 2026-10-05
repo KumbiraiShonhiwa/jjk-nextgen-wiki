@@ -1,0 +1,30 @@
+{
+  "slug": "s3e9",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 9,
+  "number": 56,
+  "title": {
+    "en": "Tokyo Colony No. 1 - Part 3",
+    "ja": "東京第1コロニー③"
+  },
+  "airedAt": "2026-03-06",
+  "summary": [
+    {
+      "value": "Inside Higuruma's Domain, a target is trialled for a crime they've committed, with his shikigami, Judgeman, overseeing the case. Yuji is charged with entering a pachinko parlor while underage. When he claims he was merely using the bathroom, evidence provided reveals his intentions to gamble. Judgeman declares Yuji guilty and confiscates his cursed energy, allowing Higuruma to overwhelm him with his exceptional sorcerer abilities. Before he can be killed, Yuji demands a retrial, and they return to the Domain. He is then charged for the mass murder in Shibuya, which Yuji confesses to, sentencing him to death. Higuruma is granted a sword to execute him, but becomes shaken by Yuji's admission of guilt, aware that Sukuna was truly responsible. Recalling when he refused a promotion to become a judge, Higuruma releases his technique on the basis that he is innocent. After they talk about their shared experiences in guilt over killing, Higuruma uses his points to add a rule allowing Culling Game players to transfer points to one other. He gives one point to Yuji and leaves, intending to turn himself in for those he killed when the Game ends.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

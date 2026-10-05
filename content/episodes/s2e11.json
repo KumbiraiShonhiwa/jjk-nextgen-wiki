@@ -1,0 +1,30 @@
+{
+  "slug": "s2e11",
+  "level": "anime-s2",
+  "season": 2,
+  "numberInSeason": 11,
+  "number": 35,
+  "title": {
+    "en": "Seance",
+    "ja": "降霊"
+  },
+  "airedAt": "2023-10-06",
+  "summary": [
+    {
+      "value": "Nanami leaves to find Ijichi in Shibuya Station, instructing Yuji, Megumi, and Ino to investigate the veil preventing sorcerers from entering. The trio encounters the three curse users guarding the veil; Yuji and Megumi engage one of them while Ino fights the remaining two—a grandmother and her grandson. During the confrontation, the curse users boast about finally being free to act without fear of Gojo's power. The grandmother performs a séance, which transforms her grandson into the resurrected body of Toji Fushiguro, whose strength and abilities quickly overpower Ino. Meanwhile, Megumi deduces their opponent's Inverse technique, which reverses the effect of attacks to make powerful strikes weak and weak ones strong. He and Yuji overwhelm him with a barrage of both strong and weak attacks, defeating him.",
+      "level": "anime-s2"
+    }
+  ],
+  "arc": "shibuya-incident",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 2",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_2",
+      "revisionId": 1374276445,
+      "fetchedAt": "2026-10-05T12:07:14.673Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

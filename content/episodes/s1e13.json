@@ -1,0 +1,30 @@
+{
+  "slug": "s1e13",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 13,
+  "number": 13,
+  "title": {
+    "en": "Tomorrow",
+    "ja": "また明日"
+  },
+  "airedAt": "2020-12-26",
+  "summary": [
+    {
+      "value": "Nanami and Yuji exploit Mahito's vulnerabilities and gain the upper hand in battle. Cornered, Mahito activates his Domain Expansion and traps Nanami inside. Believing his death is imminent, Nanami reflects on his past and his reasons for returning to Jujutsu High, having felt his life lacked purpose until he exorcised a minor curse afflicting a bakery cashier. Meanwhile, Yuji breaks into Mahito's Domain Expansion, and in the ensuing attack, Mahito accidentally makes contact with Sukuna's soul for a second time. In retaliation, Sukuna gravely injures him, forcing Mahito to flee. A shaken Yuji tells Nanami that he was forced to kill a person and vows to never lose again.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "vs-mahito",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

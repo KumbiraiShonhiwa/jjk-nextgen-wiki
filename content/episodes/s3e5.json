@@ -1,0 +1,30 @@
+{
+  "slug": "s3e5",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 5,
+  "number": 52,
+  "title": {
+    "en": "Passion",
+    "ja": "熱"
+  },
+  "airedAt": "2026-01-30",
+  "summary": [
+    {
+      "value": "Principal Yaga is revealed to secretly hold power considerable for Special Grade, as he can create an army of autonomous cursed corpses like Panda, or Takeru, Kusakabe's nephew, whose soul he resurrected in a cursed corpse. Following the Shibuya Incident, his execution is carried out by Gakuganji, despairing Panda, who escaped custody with Kusakabe's help. Yuji and Megumi sign up for an illegal fight club for sorcerers, hosted by Hakari and fellow expelled third-year student from Jujutsu High, Kirara Hoshi. In a mock-match against Panda, Yuji impresses Hakari enough to get invited into his private security room. Panda advises them against revealing they're from Jujutsu High. Hakari wants to invite Yuji to be his champion and get rich together once his fight clubs are officially recognized by the higher-ups, but Yuji gives himself away, causing a stand-off with Hakari.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

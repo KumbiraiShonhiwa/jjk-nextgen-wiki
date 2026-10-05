@@ -1,0 +1,30 @@
+{
+  "slug": "s2e5",
+  "level": "anime-s2",
+  "season": 2,
+  "numberInSeason": 5,
+  "number": 29,
+  "title": {
+    "en": "Premature Death",
+    "ja": "玉折"
+  },
+  "airedAt": "2023-08-03",
+  "summary": [
+    {
+      "value": "One year later, Gojo has grown significantly stronger and is frequently assigned solo missions, leaving Geto increasingly isolated and conflicted with his beliefs about the worth of non-sorcerers. Special grade sorcerer Yuki Tsukumo shares her philosophy that curses can be eradicated if humanity no longer produced cursed energy, which originates from non-sorcerers. Geto concludes that such a world could only be achieved by killing all non-sorcerers, thus forcing an evolution. Two events push him over the edge: the death of his cheerful underclassman Haibara during a mission, and his discovery of the Hasaba sisters—young sorcerers being abused by the non-sorcerer villagers. Now fully despising them, Geto massacres the village and even kills his non-sorcerer parents, resulting in his death sentence. Much to Gojo's dismay, he then declares his plan to create a world with only sorcerers and takes over the Time Vessel Association. Years later, Gojo finds Megumi, now six years old, and takes him under his wing to protect him from the Zen'in clan. In the present, October 2018, Gojo is woken from his nap by Megumi, Yuji, and Nobara.",
+      "level": "anime-s2"
+    }
+  ],
+  "arc": "hidden-inventory",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 2",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_2",
+      "revisionId": 1374276445,
+      "fetchedAt": "2026-10-05T12:07:14.673Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

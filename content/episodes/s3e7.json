@@ -1,0 +1,30 @@
+{
+  "slug": "s3e7",
+  "level": "anime-s3",
+  "season": 3,
+  "numberInSeason": 7,
+  "number": 54,
+  "title": {
+    "en": "Tokyo Colony No. 1",
+    "ja": "東京第1コロニー①"
+  },
+  "airedAt": "2026-02-13",
+  "summary": [
+    {
+      "value": "In a dream-like state, Kenjaku speaks to Sasaki, one of Yuji's old friends. He offers to help her leave the Sendai colony, thanking her for being friends with his son. After Panda informs the group of Yaga's death, Hakari agrees to help in order to use Megumi's position as the Zen'in clan head for his own benefit. They use the Kogane to look for players that possess enough points to add new rules, to allow the ability to trade points and leave the Culling Game. Alongside Kashimo, they learn the other player with enough points is Hiromi Higuruma; Hakari and Panda decide to enter the Tokyo No. 2 Colony to find Kashimo and Angel, who is supposedly also there, while Yuji and Megumi head to the Tokyo No. 1 Colony to find Higuruma. They enter the Colony but are immediately separated across the city. After fighting several sorcerers, Yuji meets an old classmate, Amai, who tells him where to find Higuruma. Simultaneously, Megumi encounters a woman, Remi, who also tells him where Higuruma is. However, Amai and Remi give them different locations.",
+      "level": "anime-s3"
+    }
+  ],
+  "arc": "culling-game",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 3",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_3",
+      "revisionId": 1374750483,
+      "fetchedAt": "2026-10-05T12:07:14.982Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

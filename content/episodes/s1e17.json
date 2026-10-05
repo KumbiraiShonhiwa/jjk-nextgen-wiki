@@ -1,0 +1,30 @@
+{
+  "slug": "s1e17",
+  "level": "anime-s1",
+  "season": 1,
+  "numberInSeason": 17,
+  "number": 17,
+  "title": {
+    "en": "Kyoto Sister School Exchange Event – Group Battle 3 -",
+    "ja": "京都姉妹校交流会－団体戦③－"
+  },
+  "airedAt": "2021-02-06",
+  "summary": [
+    {
+      "value": "Miwa is defeated by Maki after underestimating her lack of cursed energy. Nobara fights Momo Nishimiya and is close to victory before being incapacitated by a shot from Mai's revolver. Maki then faces Mai, with flashbacks revealing the twins' childhood within the Zen'in clan. Maki left the clan determined to become a powerful sorcerer and eventually lead the family, while Mai remained and was forced to serve as a sorcerer in her sister's stead, later resenting Maki for abandoning her. Mai attempts to shoot her with a cursed energy-imbued bullet, but Maki catches it barehanded, revealing that although she lacks cursed energy, she possesses superhuman strength contributing to her combat ability. Following their defeats, Mai and Nobara are eliminated from the event.",
+      "level": "anime-s1"
+    }
+  ],
+  "arc": "kyoto-goodwill-event",
+  "fixture": false,
+  "provenance": [
+    {
+      "source": "wikipedia",
+      "title": "Jujutsu Kaisen season 1",
+      "url": "https://en.wikipedia.org/wiki/Jujutsu_Kaisen_season_1",
+      "revisionId": 1374276437,
+      "fetchedAt": "2026-10-05T12:07:14.244Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

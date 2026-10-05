@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import Gated from '../../../components/Gated.astro';
+import { loadIndex } from '../../../lib/content';
+import { maxLevel } from '../../../lib/graph';
+import { levelForSeason, spoilerBoundaries } from '../../../content/schemas';
+import boundariesJson from '../../../../content/meta/spoiler-boundaries.json';
+
+const boundaries = spoilerBoundaries.parse(boundariesJson);
+const ix = await loadIndex();
+const episodes = (await getCollection('episodes')).map((e) => e.data);
+
+/*
+ * One card per season, linking to the season's own page. The episodes are deliberately not listed
+ * here: all 59 summaries on one page put it 44% over the HTML budget, and a season page is the
+ * better shape anyway.
+ */
+const seasons = [...new Set(episodes.map((e) => e.season))].sort((a, b) => a - b).map((season) => {
+  const inSeason = episodes.filter((e) => e.season === season).sort((a, b) => a.numberInSeason - b.numberInSeason);
+  const arcs = [...new Set(inSeason.map((e) => e.arc).filter(Boolean))].map((slug) => ix.arcs.get(slug!)?.name).filter(Boolean);
+  return {
+    season,
+    count: inSeason.length,
+    years: [...new Set(inSeason.map((e) => e.airedAt?.slice(0, 4)).filter(Boolean))],
+    arcs,
+    level: inSeason.reduce((acc, e) => maxLevel(acc, e.level), levelForSeason(boundaries, season)),
+  };
+});
+---
+
+<Base title="Anime" description="Every season of the Jujutsu Kaisen anime, kept behind your spoiler level.">
+  <section data-cascade class="py-12">
+    <p class="text-step--1 uppercase tracking-[0.3em] text-paper-dim">Media</p>
+    <h1 data-kinetic class="mt-2 font-display text-step-5 leading-none">Anime</h1>
+    <p class="mt-3 max-w-prose text-paper-dim">
+      {episodes.length} episodes across {seasons.length} seasons. A season past your spoiler level stays hidden, and so do its episode titles.
+    </p>
+
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        seasons.map((s) => (
+          <Gated level={s.level} as="div" silent>
+            <a data-reveal href={`/media/anime/${s.season}`} class="group block h-full rounded-md border border-line bg-ink-2 p-5 hover:border-ce-blue">
+              <span class="block font-display text-step-3 group-hover:text-ce-blue">Season {s.season}</span>
+              <span class="mt-1 block text-step--1 uppercase tracking-[0.14em] text-paper-dim">
+                {s.count} episodes{s.years.length ? ` · ${s.years[0]}${s.years.length > 1 ? `–${s.years.at(-1)}` : ''}` : ''}
+              </span>
+              {s.arcs.length > 0 && <span class="mt-4 block text-step--1 text-paper-dim">{s.arcs.join(' · ')}</span>}
+            </a>
+          </Gated>
+        ))
+      }
+    </div>
+  </section>
+</Base>
