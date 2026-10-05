@@ -1,0 +1,27 @@
+{
+  "slug": "cursed-energy",
+  "level": "none",
+  "name": {
+    "en": "Cursed energy",
+    "ja": "呪力"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "The negative feeling people give off — fear, anger, regret — leaking out of them as a usable force. Sorcerers learn to hold onto their own and spend it deliberately; everyone else simply loses it.",
+      "level": "none"
+    },
+    {
+      "value": "Because it comes from negativity, the places that produce the most of it are ordinary ones: hospitals, schools, crowded stations.",
+      "level": "none"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

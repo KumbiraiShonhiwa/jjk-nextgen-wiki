@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntityHeader from '../../components/EntityHeader.astro';
+import GatedText from '../../components/GatedText.astro';
+import Section from '../../components/Section.astro';
+import Sources from '../../components/Sources.astro';
+import SpoilerWall from '../../components/SpoilerWall.astro';
+import EntityCard from '../../components/EntityCard.astro';
+import { loadIndex } from '../../lib/content';
+import { hrefFor, safeTitle } from '../../lib/routes';
+import { maxLevel } from '../../lib/graph';
+import type { Term } from '../../content/schemas';
+
+export async function getStaticPaths() {
+  const terms = await getCollection('terms');
+  return terms.map((t) => ({ params: { slug: t.data.slug }, props: { term: t.data } }));
+}
+
+const { term: t } = Astro.props as { term: Term };
+const ix = await loadIndex();
+const techniques = t.techniques.map((s) => ix.techniques.get(s)).filter(Boolean);
+const title = safeTitle(t, t.name.en, 'Glossary term');
+---
+
+<Base title={title} description={t.level === 'none' ? t.definition[0]!.value : 'A term in the Jujutsu Kaisen glossary.'}>
+  <article class="py-12" style="--accent: var(--ce-violet)">
+    <a href="/glossary" class="text-step--1 text-paper-dim hover:text-paper">← Glossary</a>
+    <SpoilerWall level={t.level} type="Term">
+      <EntityHeader title={t.name.en} ja={t.name.ja} eyebrow="Glossary" />
+      <div class="mt-10">
+        <GatedText values={t.definition} class="max-w-prose space-y-4 text-step-1 leading-relaxed" />
+
+        {
+          techniques.length > 0 && (
+            <Section id="techniques" title="Techniques that use it">
+              <div data-cascade class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {techniques.map((tech) => (
+                  <EntityCard href={hrefFor('techniques', tech!.slug)} title={tech!.name.en} subtitle={tech!.name.ja} level={maxLevel(tech!.level, t.level)} />
+                ))}
+              </div>
+            </Section>
+          )
+        }
+      </div>
+      <Sources provenance={t.provenance} fixture={false} />
+    </SpoilerWall>
+  </article>
+</Base>

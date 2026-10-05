@@ -1,0 +1,27 @@
+{
+  "slug": "black-flash",
+  "level": "anime-s1",
+  "name": {
+    "en": "Black Flash",
+    "ja": "黒閃"
+  },
+  "aliases": [],
+  "definition": [
+    {
+      "value": "A strike that lands cursed energy within a fraction of a second of the physical blow, distorting the space where they meet and multiplying the damage. It cannot be summoned reliably; it is closer to a batter catching a ball perfectly.",
+      "level": "anime-s1"
+    },
+    {
+      "value": "Landing one tends to steady a sorcerer afterwards, as though it clarified what their energy is supposed to feel like.",
+      "level": "anime-s1"
+    }
+  ],
+  "techniques": [],
+  "provenance": [
+    {
+      "source": "original",
+      "writtenAt": "2026-10-05T00:00:00.000Z",
+      "licence": "CC BY-SA 4.0"
+    }
+  ]
+}

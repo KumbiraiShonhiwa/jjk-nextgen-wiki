@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Gated from '../../components/Gated.astro';
+
+const terms = (await getCollection('terms')).map((t) => t.data).sort((a, b) => a.name.en.localeCompare(b.name.en));
+
+/** A–Z groups, skipping letters nothing starts with. */
+const groups = [...new Set(terms.map((t) => t.name.en[0]!.toUpperCase()))].sort().map((letter) => ({
+  letter,
+  terms: terms.filter((t) => t.name.en[0]!.toUpperCase() === letter),
+}));
+---
+
+<Base title="Glossary" description="The jujutsu vocabulary — cursed energy, domains, binding vows — explained without spoiling what you have not reached.">
+  <section data-cascade class="py-12">
+    <h1 data-kinetic class="font-display text-step-5 leading-none">Glossary</h1>
+    <p class="mt-3 max-w-prose text-paper-dim">
+      The vocabulary the series uses without stopping to explain. Each entry is written for this wiki and
+      appears only once you have reached the point where the series explains it.
+    </p>
+
+    <nav class="mt-8 flex flex-wrap gap-2" aria-label="Jump to letter">
+      {groups.map((g) => <a class="rounded-sm border border-line px-2.5 py-1 text-step--1 text-paper-dim hover:border-ce-blue hover:text-paper" href={`#letter-${g.letter}`}>{g.letter}</a>)}
+    </nav>
+
+    {
+      groups.map((g) => (
+        <section class="mt-12" aria-labelledby={`letter-${g.letter}`}>
+          <h2 id={`letter-${g.letter}`} class="font-display text-step-3 text-paper-dim">{g.letter}</h2>
+          <dl class="mt-4 divide-y divide-line border-y border-line">
+            {g.terms.map((t) => (
+              <Gated level={t.level} as="div" silent>
+                <div data-reveal class="py-4">
+                  <dt class="flex flex-wrap items-baseline gap-x-3">
+                    <a class="font-display text-step-2 hover:text-ce-blue" href={`/glossary/${t.slug}`}>{t.name.en}</a>
+                    {t.name.ja && <span class="text-step--1 text-paper-dim" lang="ja">{t.name.ja}</span>}
+                  </dt>
+                  <dd class="mt-1 max-w-prose text-paper-dim">{t.definition[0]!.value}</dd>
+                </div>
+              </Gated>
+            ))}
+          </dl>
+        </section>
+      ))
+    }
+  </section>
+</Base>
