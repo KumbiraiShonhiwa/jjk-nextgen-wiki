@@ -29,8 +29,8 @@
     "@fontsource/zen-antique": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "animejs": "4.5.0",
-    "astro": "^7.3.5",
-    "svelte": "^5.57.1",
+    "astro": "^7.3.6",
+    "svelte": "^5.57.2",
     "tailwindcss": "^4.3.3",
     "three": "0.186.1"
   },
